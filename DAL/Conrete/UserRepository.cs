@@ -36,6 +36,7 @@ namespace DAL.Conrete
 
         public void Add(DalUser entity)
         {
+            
             _context.Set<User>().Add(entity.ToOrmUser());
         }
 
@@ -59,9 +60,9 @@ namespace DAL.Conrete
             throw new NotImplementedException();
         }
 
-        public DalUser GetUserByName(string name)
+        public DalUser GetUserByEmail(string email)
         {
-            throw new NotImplementedException();
+            return _context.Set<User>().FirstOrDefault(u => u.Email == email).ToDalUser();
         }
     }
 }

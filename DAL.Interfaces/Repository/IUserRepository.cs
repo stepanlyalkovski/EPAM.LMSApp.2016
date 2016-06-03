@@ -10,6 +10,6 @@ namespace DAL.Interfaces.Repository
     public interface IUserRepository : IRepository<DalUser>
     {
         void UpdateRole(int id, int roleId);
-        DalUser GetUserByName(string name);
+        DalUser GetUserByEmail(string email);
     }
 }
