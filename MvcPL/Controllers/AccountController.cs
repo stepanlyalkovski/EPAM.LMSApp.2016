@@ -43,20 +43,16 @@ namespace MvcPL.Controllers
                 {
                     FormsAuthentication.SetAuthCookie(viewModel.Email, viewModel.RememberMe);
                     //Управляет службами проверки подлинности с помощью форм для веб-приложений
-                    if (Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect(returnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    //if (Url.IsLocalUrl(returnUrl))
+                    //{
+                    //    return Redirect(returnUrl);
+                    //}
+                    //return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Course");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Incorrect login or password.");
-                }
+                ModelState.AddModelError("", "Incorrect login or password.");
             }
+            
             return View(viewModel);
         }
 
