@@ -14,7 +14,7 @@ namespace ORM.Courses
         public int UserStorageId { get; set; }
         public string Title { get; set; }
         public string Decription { get; set; }
-
+        public bool Published { get; set; }
         public virtual IList<Module> Modules { get; set; }
         public virtual IList<Enrolment> Enrolment { get; set; }
         public virtual UserStorage UserStorage { get; set; }

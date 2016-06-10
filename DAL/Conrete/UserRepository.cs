@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using DAL.Interfaces.DTO;
+using DAL.Interfaces.DTO.Courses;
 using DAL.Interfaces.Repository;
 using DAL.Mappers;
 using ORM;
@@ -21,12 +22,12 @@ namespace DAL.Conrete
 
         public DalUser Get(int id)
         {
-            return _context.Set<User>().FirstOrDefault(u => u.Id == id).ToDalUser();
+            return _context.Set<User>().Include(u => u.Profile).FirstOrDefault(u => u.Id == id).ToDalUser();
         }
 
         public IEnumerable<DalUser> GetAll()
         {
-            return _context.Set<User>().ToList().Select(u => u.ToDalUser());
+            return _context.Set<User>().Include(u => u.Profile).ToList().Select(u => u.ToDalUser());
         }
 
         public IEnumerable<DalUser> Find(Expression<Func<DalUser, bool>> predicate)
@@ -36,7 +37,7 @@ namespace DAL.Conrete
 
         public void Add(DalUser entity)
         {
-            
+            entity.Profile = new DalProfile {Age = 0, LastName = "Student"};
             _context.Set<User>().Add(entity.ToOrmUser());
         }
 
@@ -62,7 +63,13 @@ namespace DAL.Conrete
 
         public DalUser GetUserByEmail(string email)
         {
-            return _context.Set<User>().FirstOrDefault(u => u.Email == email).ToDalUser();
+            return _context.Set<User>().Include(u => u.Profile)
+                                       .FirstOrDefault(u => u.Email == email).ToDalUser();
+        }
+
+        public void AttendCourse(DalCourse course)
+        {
+            throw new NotImplementedException();
         }
     }
 }

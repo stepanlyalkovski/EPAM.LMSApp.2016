@@ -40,14 +40,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\Courses\Content\DalHtmlArticle.cs" />
+    <Compile Include="DTO\Courses\Content\DalImage.cs" />
+    <Compile Include="DTO\Courses\Content\DalQuiz.cs" />
+    <Compile Include="DTO\Courses\Content\DalCodeSample.cs" />
+    <Compile Include="DTO\Courses\DalCourse.cs" />
+    <Compile Include="DTO\Courses\DalCourseProgress.cs" />
+    <Compile Include="DTO\Courses\DalEnrolment.cs" />
+    <Compile Include="DTO\Courses\DalLesson.cs" />
+    <Compile Include="DTO\Courses\DalLessonPage.cs" />
+    <Compile Include="DTO\Courses\DalModule.cs" />
+    <Compile Include="DTO\Courses\DalTag.cs" />
+    <Compile Include="DTO\DalProfile.cs" />
     <Compile Include="DTO\DalRole.cs" />
     <Compile Include="DTO\DalUser.cs" />
+    <Compile Include="DTO\DalUserStorage.cs" />
     <Compile Include="DTO\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ICourseRepository.cs" />
+    <Compile Include="Repository\IModuleRepository.cs" />
+    <Compile Include="Repository\IProfileRepository.cs" />
     <Compile Include="Repository\IRoleRepository.cs" />
     <Compile Include="Repository\IUnitOfWork.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\ILessonRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

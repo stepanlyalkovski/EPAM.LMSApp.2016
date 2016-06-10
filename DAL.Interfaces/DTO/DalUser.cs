@@ -13,6 +13,8 @@ namespace DAL.Interfaces.DTO
         public string Password { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public virtual DalRole Role { get; set; }
+        public DalRole Role { get; set; }
+        public virtual DalProfile Profile { get; set; }
+        public virtual DalUserStorage UserStorage { get; set; }
     }
 }
