@@ -12,8 +12,14 @@ namespace DAL.Conrete
     {
         private readonly DbContext _context;
         private readonly IRepositoryFactory _repositoryFactory;
+
         public IUserRepository Users { get; }
         public IRoleRepository Roles { get; }
+        public ILessonRepository Lessons { get; set; }
+        public ICourseRepository Courses { get; set; }
+        public IModuleRepository Modules { get; set; }
+        public IProfileRepository Profiles { get; set; }
+
         public UnitOfWork(DbContext context, IRepositoryFactory factory)
         {
             _context = context;

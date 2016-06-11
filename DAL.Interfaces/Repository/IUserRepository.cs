@@ -7,6 +7,7 @@ namespace DAL.Interfaces.Repository
     {
         void UpdateRole(int id, int roleId);
         DalUser GetUserByEmail(string email);
-        void AttendCourse(DalCourse course);
+        DalUser Get(string email);
+        //void AttendCourse(DalCourse course);
     }
 }

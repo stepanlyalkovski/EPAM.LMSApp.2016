@@ -26,6 +26,11 @@ namespace DAL.Conrete
                                 : null;
         }
 
+        public void Update(DalRole entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<DalRole> GetAll()
         {
             var roles =
@@ -52,17 +57,7 @@ namespace DAL.Conrete
             throw new NotImplementedException();
         }
 
-        public void AddRange(IEnumerable<DalRole> entities)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Remove(DalRole entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRange(IEnumerable<DalRole> entities)
         {
             throw new NotImplementedException();
         }

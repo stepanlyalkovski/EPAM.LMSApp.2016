@@ -22,14 +22,17 @@ namespace DAL.Conrete
 
         public DalModule Get(int id)
         {
-            var module = _context.Set<Module>().Include(m => m.Lesson)
-                                               .Include(m => m.Quiz)
-                                               .Include(m => m.HtmlArticles)
-                                               .FirstOrDefault(m => m.Id == id);
-            if(module == null)
-                throw new NullReferenceException("Module is not exist");
+            return _context.Set<Module>().Find(id).ToDalModule();
 
-            return module.ToDalModule();
+        }
+
+        public void Update(DalModule entity)
+        {
+            var module = _context.Set<Module>().Find(entity.Id);
+            var newModule = entity.ToOrmModule();
+            module.Description = newModule.Description;
+            module.Title = newModule.Title;
+
         }
 
         public IEnumerable<DalModule> GetAll()
@@ -49,37 +52,33 @@ namespace DAL.Conrete
             _context.Set<Module>().Add(entity.ToOrmModule());
         }
 
-        public void AddRange(IEnumerable<DalModule> entities)
-        {
-            _context.Set<Module>().AddRange(entities.Select(e => e.ToOrmModule()));
-        }
-
         public void Remove(DalModule entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRange(IEnumerable<DalModule> entities)
-        {
-            throw new NotImplementedException();
+            var module = _context.Set<Module>().Find(entity.Id);
+            _context.Set<Module>().Remove(module);
         }
 
         public void AddQuiz(int moduleId, DalQuiz quiz)
         {
-            throw new NotImplementedException();
+            var ormModule = _context.Set<Module>().Find(moduleId);
+            if (ormModule.Quiz != null)
+                throw new OperationCanceledException("Quiz is already exist");
+            ormModule.Quiz = quiz.ToOrmQuiz();
         }
 
         public void AddArticle(int moduleId, DalHtmlArticle article)
         {
             var ormModule = _context.Set<Module>().Find(moduleId);
-            if(ormModule.HtmlArticles == null)
-                ormModule.HtmlArticles = new List<HtmlArticle>();
-            ormModule.HtmlArticles.Add(article.ToOrmHtmlArticle());
+            var articles = ormModule.HtmlArticles ?? new List<HtmlArticle>();
+            articles.Add(article.ToOrmHtmlArticle());
+            ormModule.HtmlArticles = articles;
         }
 
         public void AddLesson(int moduleId, DalLesson lesson)
         {
            var ormModule = _context.Set<Module>().Find(moduleId);
+            if (ormModule.Lesson != null)
+                throw new OperationCanceledException("Lesson is already exist");
             ormModule.Lesson = lesson.ToOrmLesson();
         }
     }

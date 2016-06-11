@@ -9,6 +9,6 @@ namespace DAL.Interfaces.DTO.Courses
         public string Description { get; set; }
 
         //public virtual IList<DalModule> Modules { get; set; }
-        public virtual IList<DalLessonPage> Pages { get; set; }
+        //public virtual IList<DalLessonPage> Pages { get; set; }
     }
 }

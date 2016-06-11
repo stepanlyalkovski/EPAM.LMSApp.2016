@@ -14,7 +14,7 @@ namespace ORM
         //TODO string connectionString
         public EntityModel() : base("EntityModel")
         {
-            Configuration.LazyLoadingEnabled = false;
+            //Configuration.LazyLoadingEnabled = false;
 
         }
            

@@ -2,7 +2,7 @@
 
 namespace DAL.Interfaces.Repository
 {
-    public interface IProfileRepository : IRepository<DalProfile>
+    public interface IProfileRepository
     {
          
     }

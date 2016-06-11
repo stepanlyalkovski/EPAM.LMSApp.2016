@@ -8,8 +8,6 @@ namespace DAL.Interfaces.Repository
     {
         void AddPage(int lessonId, DalLessonPage page);
         IEnumerable<DalLessonPage> GetPages(int lessonId);
-        void AddImage(int pageId, DalImage image);
-        void AddCodeSample(int pageId, DalCodeSample codeSample);
-        void SetText(int pageId, string text);
+
     }
 }

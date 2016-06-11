@@ -26,6 +26,11 @@ namespace DAL.Conrete
                                                .FirstOrDefault(l => l.Id == id).ToDalLesson();        
         }
 
+        public void Update(DalLesson entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<DalLesson> GetAll()
         {
             throw new NotImplementedException();
@@ -41,17 +46,7 @@ namespace DAL.Conrete
             _context.Set<Lesson>().Add(entity.ToOrmLesson());
         }
 
-        public void AddRange(IEnumerable<DalLesson> entities)
-        {
-            _context.Set<Lesson>().AddRange(entities.Select(e => e.ToOrmLesson()));
-        }
-
         public void Remove(DalLesson entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRange(IEnumerable<DalLesson> entities)
         {
             throw new NotImplementedException();
         }
@@ -65,26 +60,12 @@ namespace DAL.Conrete
 
         public IEnumerable<DalLessonPage> GetPages(int lessonId)
         {
-            //var ormLesson =_context.Set<Lesson>().Find(lesson.Id);
-            return _context.Set<Lesson>().Include(l => l.Pages)
-                                        .FirstOrDefault(l => l.Id == lessonId)
-                                        ?.Pages.Select(p => p.ToDalLessonPage());
+            //return _context.Set<LessonPage>().Include(p => p.CodeSample)
+            //                          .Include(p => p.Image)
+            //                          .Where(p => p.LessonId == lessonId)
+            //                          .Select(p => p.ToDalLessonPage());
+            return _context.Set<Lesson>().Find(lessonId).Pages.Select(p => p.ToDalLessonPage());
         }
 
-        public void AddImage(int pageId, DalImage image)
-        {
-            //var ormPage = _context.Set<LessonPage>().Include(p => p.Image).FirstOrDefault(p => p.Id == pageId);
-            _context.Set<LessonPage>().Find(pageId).Image = image.ToOrmImage();
-        }
-
-        public void AddCodeSample(int pageId, DalCodeSample codeSample)
-        {
-            _context.Set<LessonPage>().Find(pageId).CodeSample = codeSample.ToOrmCodeSample();
-        }
-
-        public void SetText(int pageId, string text)
-        {
-            _context.Set<LessonPage>().Find(pageId).Text = text;
-        }
     }
 }

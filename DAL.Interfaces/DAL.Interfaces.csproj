@@ -58,9 +58,11 @@
     <Compile Include="DTO\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ICourseRepository.cs" />
+    <Compile Include="Repository\ILessonPageRepository.cs" />
     <Compile Include="Repository\IModuleRepository.cs" />
     <Compile Include="Repository\IProfileRepository.cs" />
     <Compile Include="Repository\IRoleRepository.cs" />
+    <Compile Include="Repository\IStorageRepository.cs" />
     <Compile Include="Repository\IUnitOfWork.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />

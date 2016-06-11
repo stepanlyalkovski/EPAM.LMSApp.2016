@@ -38,7 +38,6 @@ namespace DAL.Mappers
                 cfg.CreateMap<LessonPage, DalLessonPage>();
                 cfg.CreateMap<DalLessonPage, LessonPage>();
 
-
                 cfg.CreateMap<HtmlArticle, DalHtmlArticle>();
                 cfg.CreateMap<DalHtmlArticle, HtmlArticle>();
 

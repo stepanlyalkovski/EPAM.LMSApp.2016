@@ -9,6 +9,6 @@ namespace DAL.Interfaces.DTO
         public string StorageName { get; set; }
 
         public DalUser User { get; set; }
-        public IList<DalCourse> Courses { get; set; }
+        //public IList<DalCourse> Courses { get; set; }
     }
 }
