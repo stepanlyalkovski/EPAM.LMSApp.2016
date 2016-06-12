@@ -15,10 +15,12 @@ namespace DAL.Conrete
 
         public IUserRepository Users { get; }
         public IRoleRepository Roles { get; }
-        public ILessonRepository Lessons { get; set; }
+        public IProfileRepository Profiles { get; set; }
+        public IStorageRepository Storages { get; set; }
         public ICourseRepository Courses { get; set; }
         public IModuleRepository Modules { get; set; }
-        public IProfileRepository Profiles { get; set; }
+        public ILessonRepository Lessons { get; set; }
+        public ILessonPageRepository LessonPages { get; set; }
 
         public UnitOfWork(DbContext context, IRepositoryFactory factory)
         {
@@ -27,6 +29,12 @@ namespace DAL.Conrete
 
             Users = factory.CreateUserRepository(context);
             Roles = factory.CreateRoleRepository(context);
+            Profiles = factory.CreateProfileRepository(context);
+            Storages = factory.CreateStorageRepository(context);
+            Courses = factory.CreateCourseRepository(context);
+            Modules = factory.CreateModuleRepository(context);
+            Lessons = factory.CreateLessonRepository(context);
+            LessonPages = factory.CreateLessonPageRepository(context);
 
         }
         public void Dispose()

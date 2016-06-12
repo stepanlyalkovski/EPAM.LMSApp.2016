@@ -44,10 +44,12 @@ namespace DependencyResolver
 
             kernel.Bind<IUserRepository>().To<UserRepository>();
             kernel.Bind<IRoleRepository>().To<RoleRepository>();
-            kernel.Bind<ILessonRepository>().To<LessonRepository>();
+            kernel.Bind<IProfileRepository>().To<ProfileRepository>();
+            kernel.Bind<IStorageRepository>().To<StorageRepository>();
             kernel.Bind<ICourseRepository>().To<CourseRepository>();
             kernel.Bind<IModuleRepository>().To<ModuleRepository>();
-            kernel.Bind<IProfileRepository>().To<ProfileRepository>();
+            kernel.Bind<ILessonRepository>().To<LessonRepository>();
+            kernel.Bind<ILessonPageRepository>().To<LessonPageRepository>();
 
             kernel.Bind<IRepositoryFactory>().ToFactory();
 

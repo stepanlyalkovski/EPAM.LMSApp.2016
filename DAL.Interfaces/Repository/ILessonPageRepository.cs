@@ -7,6 +7,11 @@ namespace DAL.Interfaces.Repository
     {
         void AddImage(int pageId, DalImage image);
         void AddCodeSample(int pageId, DalCodeSample codeSample);
-        void SetText(int pageId, string text);
+        void Update(DalLessonPage page);
+        DalImage GetImage(int pageId);
+        void RemoveImage(int pageId);
+        void RemoveCodeSample(int pageId);
+        DalCodeSample GetCodeSample(int pageId);
+
     }
 }

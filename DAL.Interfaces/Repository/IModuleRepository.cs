@@ -8,5 +8,6 @@ namespace DAL.Interfaces.Repository
         void AddQuiz(int moduleId, DalQuiz quiz);
         void AddArticle(int moduleId, DalHtmlArticle article);
         void AddLesson(int moduleId, DalLesson lesson);
+        DalLesson GetLesson(int moduleId);
     }
 }

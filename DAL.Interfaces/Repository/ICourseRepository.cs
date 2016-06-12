@@ -12,6 +12,7 @@ namespace DAL.Interfaces.Repository
     {
         DalCourse GetByTitle(string title);
         void AddModule(int courseId, DalModule module);
-
+        IEnumerable<DalModule> GetModules(int courseId);
+        DalModule GetModule(int courseId, string title);
     }
 }

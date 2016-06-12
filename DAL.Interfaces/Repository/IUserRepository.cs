@@ -1,4 +1,5 @@
-﻿using DAL.Interfaces.DTO;
+﻿using System.Collections.Generic;
+using DAL.Interfaces.DTO;
 using DAL.Interfaces.DTO.Courses;
 
 namespace DAL.Interfaces.Repository
@@ -7,7 +8,6 @@ namespace DAL.Interfaces.Repository
     {
         void UpdateRole(int id, int roleId);
         DalUser GetUserByEmail(string email);
-        DalUser Get(string email);
-        //void AttendCourse(DalCourse course);
+        DalUser Get(string email);     
     }
 }

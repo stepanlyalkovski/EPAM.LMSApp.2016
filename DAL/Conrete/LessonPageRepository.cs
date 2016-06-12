@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using DAL.Interfaces.DTO.Courses;
 using DAL.Interfaces.DTO.Courses.Content;
 using DAL.Interfaces.Repository;
 using DAL.Mappers;
@@ -48,9 +49,12 @@ namespace DAL.Conrete
             return _context.Set<LessonPage>().Find(pageId).CodeSample.ToDalCodeSample();
         }
 
-        public void SetText(int pageId, string text)
+        public void Update(DalLessonPage page)
         {
-            _context.Set<LessonPage>().Find(pageId).Text = text;
+            var ormPage = _context.Set<LessonPage>().Find(page.Id);
+            ormPage.Title = page.Title;
+            ormPage.Text = ormPage.Text;
+            
         }
 
     }

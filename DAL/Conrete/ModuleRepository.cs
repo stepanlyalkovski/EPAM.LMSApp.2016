@@ -81,5 +81,10 @@ namespace DAL.Conrete
                 throw new OperationCanceledException("Lesson is already exist");
             ormModule.Lesson = lesson.ToOrmLesson();
         }
+
+        public DalLesson GetLesson(int moduleId)
+        {
+           return _context.Set<Module>().Find(moduleId).Lesson.ToDalLesson();
+        }
     }
 }

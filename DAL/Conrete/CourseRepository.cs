@@ -70,5 +70,15 @@ namespace DAL.Conrete
             modules.Add(module.ToOrmModule());
             ormCourse.Modules = modules;
         }
+
+        public IEnumerable<DalModule> GetModules(int courseId)
+        {
+            return _context.Set<Course>().Find(courseId).Modules.Select(m => m.ToDalModule());
+        }
+
+        public DalModule GetModule(int courseId, string title)
+        {
+            return _context.Set<Course>().Find(courseId).Modules.FirstOrDefault(m => m.Title == title).ToDalModule();
+        }
     }
 }

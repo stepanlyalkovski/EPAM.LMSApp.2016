@@ -8,6 +8,7 @@ using DAL.Interfaces.DTO.Courses;
 using DAL.Interfaces.Repository;
 using DAL.Mappers;
 using ORM;
+using ORM.Courses;
 
 namespace DAL.Conrete
 {
@@ -35,6 +36,7 @@ namespace DAL.Conrete
                                        .Include(u => u.UserStorage)
                                        .FirstOrDefault(u => u.Email== email).ToDalUser();
         }
+
 
         public void Update(DalUser entity)
         {
@@ -84,10 +86,7 @@ namespace DAL.Conrete
                                        .FirstOrDefault(u => u.Email == email).ToDalUser();
         }
 
-        public void AttendCourse(DalCourse course)
-        {
-            throw new NotImplementedException();
-        }
+        
 
     }
 }
