@@ -18,12 +18,9 @@ namespace DAL.Conrete
             _context = context;
         }
 
-        public void Add(int moduleId, DalHtmlArticle article)
+        public void Add(DalHtmlArticle article)
         {
-            var ormModule = _context.Set<Module>().Find(moduleId);
-            var articles = ormModule.HtmlArticles ?? new List<HtmlArticle>();
-            articles.Add(article.ToOrmHtmlArticle());
-            ormModule.HtmlArticles = articles;
+            _context.Set<DalHtmlArticle>().Find(article);
         }
 
         public DalHtmlArticle Get(int articleId)
@@ -36,11 +33,11 @@ namespace DAL.Conrete
             return _context.Set<Module>().Find(moduleId).HtmlArticles.Select(a => a.ToDalHtmlArticle()).ToList();
         }
 
-        public void Remove(int articleId)
+        public void Remove(DalHtmlArticle article)
         {
-            var article = _context.Set<HtmlArticle>().Find(articleId);
-            if (article != null)
-                _context.Set<HtmlArticle>().Remove(article);
+            var ormArticle = _context.Set<HtmlArticle>().Find(article.Id);
+            if (ormArticle != null)
+                _context.Set<HtmlArticle>().Remove(ormArticle);
         }
 
         public void Update(DalHtmlArticle article)
@@ -48,6 +45,11 @@ namespace DAL.Conrete
             var ormArticle = _context.Set<HtmlArticle>().Find(article.Id);
             ormArticle.HtmlData = article.HtmlData;
             ormArticle.Title = article.Title;
+        }
+
+        public IEnumerable<DalHtmlArticle> GetAll()
+        {
+           return _context.Set<HtmlArticle>().Select(a => a.ToDalHtmlArticle()).ToList();
         }
     }
 }

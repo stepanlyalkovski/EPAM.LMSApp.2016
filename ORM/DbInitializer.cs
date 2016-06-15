@@ -140,7 +140,11 @@ namespace ORM
                 Title = "Page 1"
             };
 
-            HtmlArticle article = new HtmlArticle { Title = "Aticle", HtmlData = "<h1>AwesomeTitle!</h1>" };
+            UserStorage userStorage = new UserStorage { User = student, StorageName = "Ivan's Storage" };
+            db.UserStorages.Add(userStorage);
+            db.SaveChanges();
+
+            HtmlArticle article = new HtmlArticle { Title = "Aticle", HtmlData = "<h1>AwesomeTitle!</h1>", UserStorage = userStorage};
             db.HtmlArticles.Add(article);
             db.Lessons.Add(lesson);
             db.Lessons.Add(lessonMod2);
@@ -156,9 +160,7 @@ namespace ORM
             lessonMod2.Pages = new List<LessonPage> {page1Mod2};
             db.SaveChanges();
 
-            UserStorage userStorage = new UserStorage { User = student, StorageName = "Ivan's Storage" };
-            db.UserStorages.Add(userStorage);
-            db.SaveChanges();
+           
 
             Enrolment enr = new Enrolment
             {

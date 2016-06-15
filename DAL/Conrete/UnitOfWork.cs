@@ -23,6 +23,10 @@ namespace DAL.Conrete
         public IHtmlArticleRepository Articles { get; set; }
         public ILessonRepository Lessons { get; set; }
         public ILessonPageRepository LessonPages { get; set; }
+        public IImageRepository Images { get; set; }
+        public ICodeSampleRepository CodeSamples { get; set; }
+        public IEnrolmentRepository Enrolments { get; set; }
+        public ICourseProgressRepository CourseProgresses { get; set; }
 
 
         public UnitOfWork(DbContext context, IRepositoryFactory factory)
@@ -40,7 +44,10 @@ namespace DAL.Conrete
             Articles = factory.CreaHtmlArticleRepository(context);
             Lessons = factory.CreateLessonRepository(context);
             LessonPages = factory.CreateLessonPageRepository(context);
-
+            Images = factory.CreaImageRepository(context);
+            CodeSamples = factory.CreateCodeSampleRepository(context);
+            Enrolments = factory.CreatEnrolmentRepository(context);
+            CourseProgresses = factory.CreateCourseProgressRepository(context);
         }
         public void Dispose()
         {

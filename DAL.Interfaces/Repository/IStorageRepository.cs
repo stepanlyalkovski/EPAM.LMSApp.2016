@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
+using DAL.Interfaces.DTO;
 using DAL.Interfaces.DTO.Courses;
 
 namespace DAL.Interfaces.Repository
 {
-    public interface IStorageRepository
+    public interface IStorageRepository : IRepository<DalUserStorage>
     {
-        void AddCourse(int storageId, DalCourse course);
-        IEnumerable<DalCourse> GetCreatedCourses(int storageId);
-        void RemoveCourse(int storageId, DalCourse course);
-        void UpdateCourse(int storageId, DalCourse course);
+        
     }
 }

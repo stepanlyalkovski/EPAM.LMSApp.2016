@@ -5,7 +5,7 @@ namespace DAL.Interfaces.DTO
 {
     public class DalUserStorage
     {
-        //public int UserId { get; set; }
+        public int UserId { get; set; }
         public string StorageName { get; set; }
 
         //public DalUser User { get; set; }

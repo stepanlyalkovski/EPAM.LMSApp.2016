@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using DAL.Interfaces.DTO;
 using DAL.Interfaces.DTO.Courses;
 using DAL.Interfaces.Repository;
 using DAL.Mappers;
@@ -17,45 +18,32 @@ namespace DAL.Conrete
         {
             _context = context;
         }
-        public void AddCourse(int storageId, DalCourse course)
-        {
-            var storage = _context.Set<UserStorage>().Find(storageId);
-            var courses = storage.Courses ?? new List<Course>();
-            Course ormCourse = course.ToOrmCourse();
-            for (int i = 0; i < ormCourse.Tags.Count; i++)
-            {
-                var tag = ormCourse.Tags[i];
-                var dbTag = _context.Set<Tag>().FirstOrDefault(t => t.TagField == tag.TagField);
 
-                if (dbTag != null)
-                {
-                    ormCourse.Tags.Remove(tag);
-                    ormCourse.Tags.Add(dbTag);
-                }
-            }
-            courses.Add(ormCourse);
-            storage.Courses = courses;
+        public DalUserStorage Get(int id)
+        {
+            return _context.Set<UserStorage>().Find(id).ToDalUserStorage();
         }
 
-        public IEnumerable<DalCourse> GetCreatedCourses(int storageId)
+        public void Add(DalUserStorage entity)
         {
-            return _context.Set<UserStorage>().Find(storageId).Courses.ToDalCourses();
+            _context.Set<UserStorage>().Add(entity.ToOrmUserStorage());
         }
 
-        public void RemoveCourse(int storageId, DalCourse course)
+        public void Remove(DalUserStorage entity)
         {
-            var dbCourse = _context.Set<UserStorage>().Find(storageId).Courses.FirstOrDefault(c => c.Id == course.Id);
-            if(dbCourse != null)
-                _context.Set<Course>().Remove(dbCourse);
+            var ormStorage = _context.Set<UserStorage>().Find(entity.UserId);
+            _context.Set<UserStorage>().Remove(ormStorage);
         }
 
-        public void UpdateCourse(int storageId, DalCourse course)
+        public void Update(DalUserStorage entity)
         {
-            var ormCourse = _context.Set<Course>().Find(course.Id);
-            ormCourse.Title = course.Title;
-            ormCourse.Description = course.Description;
-            ormCourse.Published = course.Published;
-            ormCourse.Tags = course.TagList.Select(t => new Tag(t)).ToList();
+            var ormStorage = _context.Set<UserStorage>().Find(entity.UserId);
+            ormStorage.StorageName = entity.StorageName;
+        }
+
+        public IEnumerable<DalUserStorage> GetAll()
+        {
+            return _context.Set<UserStorage>().Select(s => s.ToDalUserStorage());
         }
     }
 }

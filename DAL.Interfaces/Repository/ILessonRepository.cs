@@ -4,11 +4,8 @@ using DAL.Interfaces.DTO.Courses.Content;
 
 namespace DAL.Interfaces.Repository
 {
-    public interface ILessonRepository
+    public interface ILessonRepository : IRepository<DalLesson>
     {
-        void Add(int moduleId, DalLesson lesson);
-        DalLesson Get(int moduleId);
-        void Update(DalLesson lesson);
-        void Remove(int lessonId);
+
     }
 }

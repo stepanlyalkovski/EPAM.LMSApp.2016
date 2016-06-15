@@ -53,8 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conrete\CodeSampleRepository.cs" />
+    <Compile Include="Conrete\CourseProgressRepository.cs" />
     <Compile Include="Conrete\CourseRepository.cs" />
+    <Compile Include="Conrete\EnrolmentRepository.cs" />
     <Compile Include="Conrete\HtmlArticleRepository.cs" />
+    <Compile Include="Conrete\ImageRepository.cs" />
     <Compile Include="Conrete\LessonPageRepository.cs" />
     <Compile Include="Conrete\LessonRepository.cs" />
     <Compile Include="Conrete\ModuleRepository.cs" />

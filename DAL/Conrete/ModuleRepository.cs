@@ -20,13 +20,10 @@ namespace DAL.Conrete
             _context = context;
         }
 
-        public void Add(int courseId, DalModule module)
+        public void Add(DalModule module)
         {
-            //TODO search for another way
-            var ormCourse = _context.Set<Course>().Find(courseId);
-            var modules = ormCourse.Modules ?? new List<Module>();
-            modules.Add(module.ToOrmModule());
-            ormCourse.Modules = modules;
+            if(module != null)
+                _context.Set<Module>().Add(module.ToOrmModule());
         }
 
         public IEnumerable<DalModule> GetCourseModules(int courseId)
@@ -54,10 +51,15 @@ namespace DAL.Conrete
 
         }
 
-        public void Remove(int moduleId)
+        public IEnumerable<DalModule> GetAll()
         {
-            var module = _context.Set<Module>().Find(moduleId);
-            _context.Set<Module>().Remove(module);
+            return _context.Set<Module>().Select(m => m.ToDalModule()).ToList();
+        }
+
+        public void Remove(DalModule module)
+        {
+            var ormModule = _context.Set<Module>().Find(module.Id);
+            _context.Set<Module>().Remove(ormModule);
         }       
 
         //public IEnumerable<DalModule> GetAll()

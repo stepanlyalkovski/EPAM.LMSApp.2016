@@ -21,14 +21,11 @@ namespace DAL.Conrete
             _context = context;
         }
 
-        public void Add(int storageId, DalCourse course)
+        public void Add(DalCourse course)
         {
-            var storage = _context.Set<UserStorage>().Find(storageId);
-            var courses = storage.Courses ?? new List<Course>();
             Course ormCourse = course.ToOrmCourse();
             ormCourse.Tags = DistinctTags(ormCourse.Tags);
-            courses.Add(ormCourse);
-            storage.Courses = courses;
+            _context.Set<Course>().Add(ormCourse);
         }
 
         public DalCourse Get(int id)
@@ -46,14 +43,14 @@ namespace DAL.Conrete
             return _context.Set<UserStorage>().Find(storageId).Courses.ToDalCourses();
         }
 
-        public void Remove(int storageId, DalCourse course)
+        public void Remove(DalCourse course)
         {
-            var dbCourse = _context.Set<UserStorage>().Find(storageId).Courses.FirstOrDefault(c => c.Id == course.Id);
+            var dbCourse = _context.Set<Course>().Find(course.Id);
             if (dbCourse != null)
                 _context.Set<Course>().Remove(dbCourse);
         }
 
-        public void Update(int storageId, DalCourse course)
+        public void Update(DalCourse course)
         {
             var ormCourse = _context.Set<Course>().Find(course.Id);
             ormCourse.Title = course.Title;
@@ -62,10 +59,10 @@ namespace DAL.Conrete
             ormCourse.Tags = course.TagList.Select(t => new Tag(t)).ToList();
         }
 
-        //public IEnumerable<DalCourse> GetAll()
-        //{
-        //    return _context.Set<Course>().Include(c => c.Tags).ToDalCourses();
-        //}
+        public IEnumerable<DalCourse> GetAll()
+        {
+            return _context.Set<Course>().Select(c => c.ToDalCourse()).ToList();
+        }
 
         private IList<Tag> DistinctTags(IList<Tag> tags)
         {

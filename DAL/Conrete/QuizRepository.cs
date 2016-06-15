@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using DAL.Interfaces.DTO.Courses.Content;
 using DAL.Interfaces.Repository;
 using DAL.Mappers;
@@ -17,12 +19,9 @@ namespace DAL.Conrete
             _context = context;
         }
 
-        public void Add(int moduleId, DalQuiz quiz)
+        public void Add(DalQuiz quiz)
         {
-            var ormModule = _context.Set<Module>().Find(moduleId);
-            if (ormModule.Quiz != null)
-                throw new OperationCanceledException("Quiz is already exist");
-            ormModule.Quiz = quiz.ToOrmQuiz();
+            _context.Set<Quiz>().Add(quiz.ToOrmQuiz());
         }
 
         public DalQuiz Get(int quizId)
@@ -35,11 +34,11 @@ namespace DAL.Conrete
             return _context.Set<Module>().Find(moduleId).Quiz.ToDalQuiz();
         }
 
-        public void Remove(int quizId)
+        public void Remove(DalQuiz quiz)
         {
-            var quiz = _context.Set<Quiz>().Find(quizId);
-            if (quiz != null)
-                _context.Set<Quiz>().Remove(quiz);
+            var ormQuiz = _context.Set<Quiz>().Find(quiz.Id);
+            if (ormQuiz != null)
+                _context.Set<Quiz>().Remove(ormQuiz);
         }
 
         public void Update(DalQuiz quiz)
@@ -47,6 +46,11 @@ namespace DAL.Conrete
             var ormQuiz = _context.Set<Quiz>().Find(quiz.Id);
             ormQuiz.DataFilePath = quiz.DataFilePath;
             ormQuiz.Title = quiz.Title;
+        }
+
+        public IEnumerable<DalQuiz> GetAll()
+        {
+            return _context.Set<Quiz>().Select(q => q.ToDalQuiz());
         }
     }
 }

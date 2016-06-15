@@ -20,12 +20,10 @@ namespace DAL.Conrete
             _context = context;
         }
 
-        public void Add(int moduleId, DalLesson lesson)
+        public void Add(DalLesson lesson)
         {
-            var ormModule = _context.Set<Module>().Find(moduleId);
-            if (ormModule.Lesson != null)
-                throw new OperationCanceledException("Lesson is already exist in current module ");
-            ormModule.Lesson = lesson.ToOrmLesson();
+            if (lesson != null)
+                _context.Set<Lesson>().Add(lesson.ToOrmLesson());
         }
 
         public DalLesson Get(int id)
@@ -42,10 +40,15 @@ namespace DAL.Conrete
             ormLesson.Description = lesson.Description;
         }
 
-        public void Remove(int lessonId)
+        public IEnumerable<DalLesson> GetAll()
         {
-            var lesson = _context.Set<Lesson>().Find(lessonId);
-            _context.Set<Lesson>().Remove(lesson);
+            return _context.Set<Lesson>().Select(l => l.ToDalLesson());
+        }
+
+        public void Remove(DalLesson lesson)
+        {
+            var ormLesson = _context.Set<Lesson>().Find(lesson.Id);
+            _context.Set<Lesson>().Remove(ormLesson);
         }
     }
 }

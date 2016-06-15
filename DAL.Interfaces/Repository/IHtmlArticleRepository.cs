@@ -3,12 +3,8 @@ using DAL.Interfaces.DTO.Courses.Content;
 
 namespace DAL.Interfaces.Repository
 {
-    public interface IHtmlArticleRepository
+    public interface IHtmlArticleRepository : IRepository<DalHtmlArticle>
     {
-        void Add(int moduleId, DalHtmlArticle article);
-        DalHtmlArticle Get(int articleId);
         IEnumerable<DalHtmlArticle> GetModuleArticles(int moduleId);
-        void Remove(int articleId);
-        void Update(DalHtmlArticle article);
     }
 }

@@ -15,6 +15,9 @@ namespace DAL
         IHtmlArticleRepository CreaHtmlArticleRepository(DbContext context);
         ILessonRepository CreateLessonRepository(DbContext context);
         ILessonPageRepository CreateLessonPageRepository(DbContext context);
-        
+        IImageRepository CreaImageRepository(DbContext context);
+        ICodeSampleRepository CreateCodeSampleRepository(DbContext context);
+        IEnrolmentRepository CreatEnrolmentRepository(DbContext context);
+        ICourseProgressRepository CreateCourseProgressRepository(DbContext context);
     }
 }

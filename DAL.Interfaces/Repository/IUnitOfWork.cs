@@ -18,6 +18,10 @@ namespace DAL.Interfaces.Repository
         IHtmlArticleRepository Articles { get; set; }
         ILessonRepository Lessons { get; set; }
         ILessonPageRepository LessonPages { get; set; }
+        IImageRepository Images { get; set; }
+        ICodeSampleRepository CodeSamples { get; set; }
+        IEnrolmentRepository Enrolments { get; set; }
+        ICourseProgressRepository CourseProgresses { get; set; }
         int Complete();
     }
 }

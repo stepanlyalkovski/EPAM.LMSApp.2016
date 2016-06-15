@@ -52,6 +52,10 @@ namespace DependencyResolver
             kernel.Bind<IQuizRepository>().To<QuizRepository>();
             kernel.Bind<IHtmlArticleRepository>().To<HtmlArticleRepository>();
             kernel.Bind<ILessonPageRepository>().To<LessonPageRepository>();
+            kernel.Bind<IImageRepository>().To<ImageRepository>();
+            kernel.Bind<ICodeSampleRepository>().To<CodeSampleRepository>();
+            kernel.Bind<IEnrolmentRepository>().To<EnrolmentRepository>();
+            kernel.Bind<ICourseProgressRepository>().To<CourseProgressRepository>();
 
             kernel.Bind<IRepositoryFactory>().ToFactory();
 

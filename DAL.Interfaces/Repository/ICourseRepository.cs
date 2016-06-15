@@ -8,13 +8,9 @@ using DAL.Interfaces.DTO.Courses;
 
 namespace DAL.Interfaces.Repository
 {
-    public interface ICourseRepository
+    public interface ICourseRepository : IRepository<DalCourse>
     {
-        void Add(int storageId, DalCourse course);
         DalCourse Get(string title);
-        DalCourse Get(int id);
         IEnumerable<DalCourse> GetStorageCourses(int storageId);
-        void Remove(int storageId, DalCourse course);
-        void Update(int storageId, DalCourse course);
     }
 }

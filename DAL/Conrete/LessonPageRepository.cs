@@ -19,10 +19,8 @@ namespace DAL.Conrete
             _context = context;
         }
 
-        public void Add(int lessonId, DalLessonPage page)
+        public void Add(DalLessonPage page)
         {
-            var ormLesson = _context.Set<Lesson>().Find(lessonId);
-            page.LessonId = ormLesson.Id;
             _context.Set<LessonPage>().Add(page.ToOrmLessonPage());
         }
 
@@ -44,44 +42,17 @@ namespace DAL.Conrete
 
         }
 
-        public void Remove(int pageId)
+        public IEnumerable<DalLessonPage> GetAll()
         {
-            var page = _context.Set<LessonPage>().Find(pageId);
-            if (page != null)
-                _context.Set<LessonPage>().Remove(page);
+            throw new System.NotImplementedException();
+        }
+
+        public void Remove(DalLessonPage page)
+        {
+            var ormPage = _context.Set<LessonPage>().Find(page.Id);
+            if (ormPage != null)
+                _context.Set<LessonPage>().Remove(ormPage);
         }      
-
-        public void AddImage(int pageId, DalImage image)
-        {
-            _context.Set<LessonPage>().Find(pageId).Image = image.ToOrmImage();
-        }
-
-        public DalImage GetImage(int pageId)
-        {
-            return _context.Set<LessonPage>().Find(pageId).Image.ToDalImage();
-        }
-
-        public void RemoveImage(int pageId)
-        {
-            var image = _context.Set<LessonPage>().Find(pageId).Image;
-            _context.Set<Image>().Remove(image);
-        }
-
-        public void AddCodeSample(int pageId, DalCodeSample codeSample)
-        {
-            _context.Set<LessonPage>().Find(pageId).CodeSample = codeSample.ToOrmCodeSample();
-        }
-
-        public void RemoveCodeSample(int pageId)
-        {
-            var code = _context.Set<LessonPage>().Find(pageId).CodeSample;
-            _context.Set<CodeSample>().Remove(code);
-        }
-
-        public DalCodeSample GetCodeSample(int pageId)
-        {
-            return _context.Set<LessonPage>().Find(pageId).CodeSample.ToDalCodeSample();
-        }
 
     }
 }

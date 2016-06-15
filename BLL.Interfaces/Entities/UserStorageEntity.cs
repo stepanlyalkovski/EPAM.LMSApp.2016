@@ -5,7 +5,7 @@ namespace BLL.Interfaces.Entities
 {
     public class UserStorageEntity
     {
-        //public int UserId { get; set; }
+        public int UserId { get; set; }
         public string StorageName { get; set; }
 
         //public DalUser User { get; set; }
