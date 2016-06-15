@@ -14,6 +14,6 @@ namespace BLL.Interfaces.Entities
 
         public DateTime DateAdded { get; set; }
         public int RoleId { get; set; }
-        public virtual RoleEntity Role { get; set; }
+        public IList<string> Tags { get; set; }
     }
 }

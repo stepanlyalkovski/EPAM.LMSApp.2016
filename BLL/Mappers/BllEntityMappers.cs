@@ -20,19 +20,15 @@ namespace BLL.Mappers
             {
                 cfg.CreateMap<UserEntity, DalUser>();
                 cfg.CreateMap<DalUser, UserEntity>();
-                //.ForMember("Role", opt => opt.MapFrom(c => new RoleEntity
-                // {
-                //     Id = c.Role.Id,
-                //     Description = c.Role.Description,
-                //     Name = c.Role.Name
-                // })
+
                 cfg.CreateMap<RoleEntity, DalRole>();
                 cfg.CreateMap<DalRole, RoleEntity>();
             });
-
+            
             mapper = config.CreateMapper();
+            
         }
-
+        
         public static DalUser ToDalUser(this UserEntity entity)
         {
             //TODO check null

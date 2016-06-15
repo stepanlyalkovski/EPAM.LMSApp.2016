@@ -39,7 +39,7 @@ namespace MvcPL.Providers
             var role = RoleService.GetRoleEntity("Student");
             if (role != null)
             {
-                user.Role = role;
+                user.RoleId = role.Id;
             }
             else
                 throw new NullReferenceException();
