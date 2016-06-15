@@ -7,6 +7,7 @@ using DAL.Interfaces.DTO;
 using DAL.Interfaces.DTO.Courses;
 using DAL.Interfaces.Repository;
 using DAL.Mappers;
+using ORM;
 using ORM.Courses;
 
 namespace DAL.Conrete
@@ -20,65 +21,63 @@ namespace DAL.Conrete
             _context = context;
         }
 
+        public void Add(int storageId, DalCourse course)
+        {
+            var storage = _context.Set<UserStorage>().Find(storageId);
+            var courses = storage.Courses ?? new List<Course>();
+            Course ormCourse = course.ToOrmCourse();
+            ormCourse.Tags = DistinctTags(ormCourse.Tags);
+            courses.Add(ormCourse);
+            storage.Courses = courses;
+        }
+
         public DalCourse Get(int id)
         {
             return _context.Set<Course>().Find(id).ToDalCourse();
         }
 
-        public void Update(DalCourse entity)
-        {
-            // TODO change not very pretty way to update entity
-            var course = _context.Set<Course>().Find(entity.Id);
-            var newCourse = entity.ToOrmCourse();
-            course.Decription = newCourse.Decription;
-            course.Title = newCourse.Title;
-            course.Published = newCourse.Published;
-                                   
-        }
-
-        public IEnumerable<DalCourse> GetAll()
-        {
-            return _context.Set<Course>().Include(c => c.Tags).ToDalCourses();
-        }
-
-        public IEnumerable<DalCourse> Find(Expression<Func<DalCourse, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Add(DalCourse entity)
-        {
-            _context.Set<Course>().Add(entity.ToOrmCourse());
-        }
-
-        public void Remove(DalCourse entity)
-        {
-            var course = _context.Set<Course>().Find(entity.Id);
-            _context.Set<Course>().Remove(course);
-        }
-
-        public DalCourse GetByTitle(string title)
+        public DalCourse Get(string title)
         {
             return _context.Set<Course>().FirstOrDefault(c => c.Title == title).ToDalCourse();
         }
 
-        public void AddModule(int courseId, DalModule module)
+        public IEnumerable<DalCourse> GetStorageCourses(int storageId)
         {
-            //TODO search for another way
-            var ormCourse = _context.Set<Course>().Find(courseId);
-            var modules = ormCourse.Modules ?? new List<Module>();
-            modules.Add(module.ToOrmModule());
-            ormCourse.Modules = modules;
+            return _context.Set<UserStorage>().Find(storageId).Courses.ToDalCourses();
         }
 
-        public IEnumerable<DalModule> GetModules(int courseId)
+        public void Remove(int storageId, DalCourse course)
         {
-            return _context.Set<Course>().Find(courseId).Modules.Select(m => m.ToDalModule());
+            var dbCourse = _context.Set<UserStorage>().Find(storageId).Courses.FirstOrDefault(c => c.Id == course.Id);
+            if (dbCourse != null)
+                _context.Set<Course>().Remove(dbCourse);
         }
 
-        public DalModule GetModule(int courseId, string title)
+        public void Update(int storageId, DalCourse course)
         {
-            return _context.Set<Course>().Find(courseId).Modules.FirstOrDefault(m => m.Title == title).ToDalModule();
+            var ormCourse = _context.Set<Course>().Find(course.Id);
+            ormCourse.Title = course.Title;
+            ormCourse.Description = course.Description;
+            ormCourse.Published = course.Published;
+            ormCourse.Tags = course.TagList.Select(t => new Tag(t)).ToList();
+        }
+
+        //public IEnumerable<DalCourse> GetAll()
+        //{
+        //    return _context.Set<Course>().Include(c => c.Tags).ToDalCourses();
+        //}
+
+        private IList<Tag> DistinctTags(IList<Tag> tags)
+        {
+            var distinctTags = new List<Tag>();
+
+            foreach (var tag in tags)
+            {
+                var dbTag = _context.Set<Tag>().FirstOrDefault(t => t.TagField == tag.TagField);
+                distinctTags.Add(dbTag ?? tag);
+            }
+
+            return distinctTags;
         }
     }
 }

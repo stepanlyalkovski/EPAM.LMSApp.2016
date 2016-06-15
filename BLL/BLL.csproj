@@ -44,9 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappers\BllContentMapper.cs" />
+    <Compile Include="Mappers\BllEnrolmentMapper.cs" />
     <Compile Include="Mappers\BllEntityMappers.cs" />
+    <Compile Include="Mappers\BllCourseMapper.cs" />
+    <Compile Include="Mappers\BllProfileMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CourseService.cs" />
+    <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\RoleService.cs" />
+    <Compile Include="Services\StorageService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

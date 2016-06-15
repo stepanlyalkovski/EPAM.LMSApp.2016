@@ -79,7 +79,7 @@ namespace ORM
 
             Course course = new Course
             {
-                Decription = "Introduction to Platform",
+                Description = "Introduction to Platform",
                 UserStorage = storage,
                 Title = "Welcome to Demo Platform Course!"
             };

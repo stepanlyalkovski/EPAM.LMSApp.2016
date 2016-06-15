@@ -20,6 +20,25 @@ namespace DAL.Conrete
             _context = context;
         }
 
+        public void Add(int courseId, DalModule module)
+        {
+            //TODO search for another way
+            var ormCourse = _context.Set<Course>().Find(courseId);
+            var modules = ormCourse.Modules ?? new List<Module>();
+            modules.Add(module.ToOrmModule());
+            ormCourse.Modules = modules;
+        }
+
+        public IEnumerable<DalModule> GetCourseModules(int courseId)
+        {
+            return _context.Set<Course>().Find(courseId).Modules.Select(m => m.ToDalModule());
+        }
+
+        public DalModule Get(int courseId, string title)
+        {
+            return _context.Set<Course>().Find(courseId).Modules.FirstOrDefault(m => m.Title == title).ToDalModule();
+        }
+
         public DalModule Get(int id)
         {
             return _context.Set<Module>().Find(id).ToDalModule();
@@ -35,56 +54,18 @@ namespace DAL.Conrete
 
         }
 
-        public IEnumerable<DalModule> GetAll()
+        public void Remove(int moduleId)
         {
-            return _context.Set<Module>().Include(m => m.HtmlArticles)
-                                         .Include(m => m.Lesson)
-                                         .Include(m => m.Quiz).Select(m => m.ToDalModule());
-        }
-
-        public IEnumerable<DalModule> Find(Expression<Func<DalModule, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Add(DalModule entity)
-        {
-            _context.Set<Module>().Add(entity.ToOrmModule());
-        }
-
-        public void Remove(DalModule entity)
-        {
-            var module = _context.Set<Module>().Find(entity.Id);
+            var module = _context.Set<Module>().Find(moduleId);
             _context.Set<Module>().Remove(module);
-        }
+        }       
 
-        public void AddQuiz(int moduleId, DalQuiz quiz)
-        {
-            var ormModule = _context.Set<Module>().Find(moduleId);
-            if (ormModule.Quiz != null)
-                throw new OperationCanceledException("Quiz is already exist");
-            ormModule.Quiz = quiz.ToOrmQuiz();
-        }
+        //public IEnumerable<DalModule> GetAll()
+        //{
+        //    return _context.Set<Module>().Include(m => m.HtmlArticles)
+        //                                 .Include(m => m.Lesson)
+        //                                 .Include(m => m.Quiz).Select(m => m.ToDalModule());
+        //}
 
-        public void AddArticle(int moduleId, DalHtmlArticle article)
-        {
-            var ormModule = _context.Set<Module>().Find(moduleId);
-            var articles = ormModule.HtmlArticles ?? new List<HtmlArticle>();
-            articles.Add(article.ToOrmHtmlArticle());
-            ormModule.HtmlArticles = articles;
-        }
-
-        public void AddLesson(int moduleId, DalLesson lesson)
-        {
-           var ormModule = _context.Set<Module>().Find(moduleId);
-            if (ormModule.Lesson != null)
-                throw new OperationCanceledException("Lesson is already exist");
-            ormModule.Lesson = lesson.ToOrmLesson();
-        }
-
-        public DalLesson GetLesson(int moduleId)
-        {
-           return _context.Set<Module>().Find(moduleId).Lesson.ToDalLesson();
-        }
     }
 }

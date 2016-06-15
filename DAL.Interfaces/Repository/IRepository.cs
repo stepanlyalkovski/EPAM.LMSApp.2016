@@ -15,7 +15,7 @@ namespace DAL.Interfaces.Repository
         void Update(TEntity entity);
 
         IEnumerable<TEntity> GetAll();
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        //IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
         
         
     }

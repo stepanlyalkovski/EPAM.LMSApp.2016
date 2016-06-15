@@ -13,8 +13,9 @@ namespace ORM.Courses
         [ForeignKey("UserStorage")]
         public int UserStorageId { get; set; }
         public string Title { get; set; }
-        public string Decription { get; set; }
+        public string Description { get; set; }
         public bool Published { get; set; }
+        public int ModulesNumber { get; set; }
         public virtual IList<Module> Modules { get; set; }
         public virtual IList<Enrolment> Enrolment { get; set; }
         public virtual UserStorage UserStorage { get; set; }

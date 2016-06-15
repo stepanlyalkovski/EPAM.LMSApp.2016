@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using AutoMapper;
 using DAL.Interfaces.DTO;
 using DAL.Interfaces.DTO.Courses;
 using DAL.Interfaces.DTO.Courses.Content;
@@ -20,8 +23,10 @@ namespace DAL.Mappers
                 cfg.CreateMap<User, DalUser>();
                 cfg.CreateMap<DalUser, User>();
 
-                cfg.CreateMap<Course, DalCourse>();
-                cfg.CreateMap<DalCourse, Course>();
+                cfg.CreateMap<Course, DalCourse>()
+                    .ForMember("TagList", c => c.MapFrom(cl => cl.Tags.Select(t => t.TagField)));
+                cfg.CreateMap<DalCourse, Course>().ForMember("Tags", c => c.MapFrom(cr =>
+                                                                     cr.TagList.Select(tag => new Tag(tag)).ToList()));
 
                 cfg.CreateMap<Role, DalRole>();
                 cfg.CreateMap<DalRole, Role>();

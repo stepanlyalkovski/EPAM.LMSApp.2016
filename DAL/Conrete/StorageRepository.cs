@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using DAL.Interfaces.DTO.Courses;
 using DAL.Interfaces.Repository;
 using DAL.Mappers;
@@ -20,27 +21,41 @@ namespace DAL.Conrete
         {
             var storage = _context.Set<UserStorage>().Find(storageId);
             var courses = storage.Courses ?? new List<Course>();
-            courses.Add(course.ToOrmCourse());
+            Course ormCourse = course.ToOrmCourse();
+            for (int i = 0; i < ormCourse.Tags.Count; i++)
+            {
+                var tag = ormCourse.Tags[i];
+                var dbTag = _context.Set<Tag>().FirstOrDefault(t => t.TagField == tag.TagField);
+
+                if (dbTag != null)
+                {
+                    ormCourse.Tags.Remove(tag);
+                    ormCourse.Tags.Add(dbTag);
+                }
+            }
+            courses.Add(ormCourse);
             storage.Courses = courses;
         }
-        //public void Add(DalCourse entity)
-        //{
-        //    _context.Set<Course>().Add(entity.ToOrmCourse());
-        //}
 
-        public void GetCreatedCourse(int storageId, DalCourse course)
+        public IEnumerable<DalCourse> GetCreatedCourses(int storageId)
         {
-            throw new System.NotImplementedException();
+            return _context.Set<UserStorage>().Find(storageId).Courses.ToDalCourses();
         }
 
         public void RemoveCourse(int storageId, DalCourse course)
         {
-            throw new System.NotImplementedException();
+            var dbCourse = _context.Set<UserStorage>().Find(storageId).Courses.FirstOrDefault(c => c.Id == course.Id);
+            if(dbCourse != null)
+                _context.Set<Course>().Remove(dbCourse);
         }
 
         public void UpdateCourse(int storageId, DalCourse course)
         {
-            throw new System.NotImplementedException();
+            var ormCourse = _context.Set<Course>().Find(course.Id);
+            ormCourse.Title = course.Title;
+            ormCourse.Description = course.Description;
+            ormCourse.Published = course.Published;
+            ormCourse.Tags = course.TagList.Select(t => new Tag(t)).ToList();
         }
     }
 }

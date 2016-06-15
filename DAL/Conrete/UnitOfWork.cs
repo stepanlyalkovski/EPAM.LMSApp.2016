@@ -19,8 +19,11 @@ namespace DAL.Conrete
         public IStorageRepository Storages { get; set; }
         public ICourseRepository Courses { get; set; }
         public IModuleRepository Modules { get; set; }
+        public IQuizRepository Quizzes { get; set; }
+        public IHtmlArticleRepository Articles { get; set; }
         public ILessonRepository Lessons { get; set; }
         public ILessonPageRepository LessonPages { get; set; }
+
 
         public UnitOfWork(DbContext context, IRepositoryFactory factory)
         {
@@ -33,6 +36,8 @@ namespace DAL.Conrete
             Storages = factory.CreateStorageRepository(context);
             Courses = factory.CreateCourseRepository(context);
             Modules = factory.CreateModuleRepository(context);
+            Quizzes = factory.CreateQuizRepository(context);
+            Articles = factory.CreaHtmlArticleRepository(context);
             Lessons = factory.CreateLessonRepository(context);
             LessonPages = factory.CreateLessonPageRepository(context);
 

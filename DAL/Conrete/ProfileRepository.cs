@@ -17,7 +17,7 @@ namespace DAL.Conrete
         {
             _context = context;
         }
-        public void AttendCourse(int profileId, int courseId)
+        public void AddEnrolment(int profileId, int courseId)
         {
             var enrolment = new DalEnrolment { CourseId = courseId, ProfileId = profileId };
             var course = _context.Set<Course>().Find(courseId);

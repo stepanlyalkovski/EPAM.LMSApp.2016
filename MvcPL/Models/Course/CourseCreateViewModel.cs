@@ -15,10 +15,13 @@ namespace MvcPL.Models.Course
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Enter number of chapters")]
-        public int Chapters { get; set; }
-        public bool WeeklyFormat { get; set; }
+        [Display(Name = "Chapters", Description = "Number of modules that is going to be created")]
+        public int ModulesNumber { get; set; }
+        [Required(ErrorMessage = "write at least one tag")]
+        public string Tags { get; set; }
+        //public bool WeeklyFormat { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime? StartDate { get; set; }
+        //[DataType(DataType.Date)]
+        //public DateTime? StartDate { get; set; }
     }
 }

@@ -54,10 +54,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conrete\CourseRepository.cs" />
+    <Compile Include="Conrete\HtmlArticleRepository.cs" />
     <Compile Include="Conrete\LessonPageRepository.cs" />
     <Compile Include="Conrete\LessonRepository.cs" />
     <Compile Include="Conrete\ModuleRepository.cs" />
     <Compile Include="Conrete\ProfileRepository.cs" />
+    <Compile Include="Conrete\QuizRepository.cs" />
     <Compile Include="Conrete\RoleRepository.cs" />
     <Compile Include="Conrete\StorageRepository.cs" />
     <Compile Include="Conrete\UnitOfWork.cs" />

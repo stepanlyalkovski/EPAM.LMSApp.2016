@@ -8,7 +8,7 @@ namespace DAL.Interfaces.DTO
         //public int UserId { get; set; }
         public string StorageName { get; set; }
 
-        public DalUser User { get; set; }
+        //public DalUser User { get; set; }
         //public IList<DalCourse> Courses { get; set; }
     }
 }

@@ -19,53 +19,33 @@ namespace DAL.Conrete
         {
             _context = context;
         }
+
+        public void Add(int moduleId, DalLesson lesson)
+        {
+            var ormModule = _context.Set<Module>().Find(moduleId);
+            if (ormModule.Lesson != null)
+                throw new OperationCanceledException("Lesson is already exist in current module ");
+            ormModule.Lesson = lesson.ToOrmLesson();
+        }
+
         public DalLesson Get(int id)
         {
             return _context.Set<Lesson>().Include(l => l.Pages.Select(p => p.Image))
                                                .Include(l => l.Pages.Select(p => p.CodeSample))
-                                               .FirstOrDefault(l => l.Id == id).ToDalLesson();        
+                                              .FirstOrDefault(l => l.Id == id).ToDalLesson();        
         }
 
-        public void Update(DalLesson entity)
+        public void Update(DalLesson lesson)
         {
-            throw new NotImplementedException();
+            var ormLesson = _context.Set<Lesson>().Find(lesson.Id);
+            ormLesson.Title = lesson.Title;
+            ormLesson.Description = lesson.Description;
         }
 
-        public IEnumerable<DalLesson> GetAll()
+        public void Remove(int lessonId)
         {
-            throw new NotImplementedException();
+            var lesson = _context.Set<Lesson>().Find(lessonId);
+            _context.Set<Lesson>().Remove(lesson);
         }
-
-        public IEnumerable<DalLesson> Find(Expression<Func<DalLesson, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Add(DalLesson entity)
-        {
-            _context.Set<Lesson>().Add(entity.ToOrmLesson());
-        }
-
-        public void Remove(DalLesson entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddPage(int lessonId, DalLessonPage page)
-        {
-            var ormLesson = _context.Set<Lesson>().Find(lessonId);
-            page.LessonId = ormLesson.Id;
-            _context.Set<LessonPage>().Add(page.ToOrmLessonPage());
-        }
-
-        public IEnumerable<DalLessonPage> GetPages(int lessonId)
-        {
-            //return _context.Set<LessonPage>().Include(p => p.CodeSample)
-            //                          .Include(p => p.Image)
-            //                          .Where(p => p.LessonId == lessonId)
-            //                          .Select(p => p.ToDalLessonPage());
-            return _context.Set<Lesson>().Find(lessonId).Pages.Select(p => p.ToDalLessonPage());
-        }
-
     }
 }

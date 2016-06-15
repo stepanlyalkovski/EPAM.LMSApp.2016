@@ -6,12 +6,13 @@ namespace DAL.Interfaces.DTO.Courses
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Decription { get; set; }
+        public string Description { get; set; }
         public bool Published { get; set; }
+        public int ModulesNumber { get; set; }
         public int UserStorageId { get; set; }
+        public IList<string> TagList { get; set; }
         //public virtual IList<DalModule> Modules { get; set; }
         //public virtual IList<DalEnrolment> Enrolment { get; set; }
         ////public virtual DalUserStorage UserStorage { get; set; }
-        //public virtual IList<DalTag> Tags { get; set; }
     }
 }

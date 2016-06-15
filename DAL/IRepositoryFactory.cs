@@ -11,7 +11,10 @@ namespace DAL
         IStorageRepository CreateStorageRepository(DbContext context);
         ICourseRepository CreateCourseRepository(DbContext context);
         IModuleRepository CreateModuleRepository(DbContext context);
+        IQuizRepository CreateQuizRepository(DbContext context);
+        IHtmlArticleRepository CreaHtmlArticleRepository(DbContext context);
         ILessonRepository CreateLessonRepository(DbContext context);
         ILessonPageRepository CreateLessonPageRepository(DbContext context);
+        
     }
 }
