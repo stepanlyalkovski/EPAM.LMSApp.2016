@@ -45,6 +45,11 @@ namespace DAL.Conrete
             return _context.Set<Lesson>().Select(l => l.ToDalLesson());
         }
 
+        public DalLesson GetModuleLesson(int moduleId)
+        {
+            return _context.Set<Module>().Find(moduleId).Lesson.ToDalLesson();
+        }
+
         public void Remove(DalLesson lesson)
         {
             var ormLesson = _context.Set<Lesson>().Find(lesson.Id);

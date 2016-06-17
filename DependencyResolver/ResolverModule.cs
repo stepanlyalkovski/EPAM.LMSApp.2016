@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.Interfaces.Entities.Courses.Content;
 using BLL.Interfaces.Services;
 using BLL.Services;
 using DAL;
@@ -56,13 +57,17 @@ namespace DependencyResolver
             kernel.Bind<ICodeSampleRepository>().To<CodeSampleRepository>();
             kernel.Bind<IEnrolmentRepository>().To<EnrolmentRepository>();
             kernel.Bind<ICourseProgressRepository>().To<CourseProgressRepository>();
-
             kernel.Bind<IRepositoryFactory>().ToFactory();
 
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IRoleService>().To<RoleService>();
             kernel.Bind<IStorageService>().To<StorageService>();
             kernel.Bind<IProfileService>().To<ProfileService>();
+            kernel.Bind<ICourseService>().To<CourseService>();
+            kernel.Bind<IModuleService>().To<ModuleService>();
+            kernel.Bind<ILessonService>().To<LessonService>();
+            kernel.Bind<IEnrolmentService>().To<EnrolmentService>();
+            kernel.Bind<ILessonPageService>().To<ILessonPageService>();
         }
     }
 }

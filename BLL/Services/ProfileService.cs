@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BLL.Interfaces.Entities.Courses;
 using BLL.Interfaces.Services;
@@ -15,38 +16,15 @@ namespace BLL.Services
         {
             _uow = uiOfWork;
         }
-        public void AttendCourse(ProfileEntity profile, int courseId)
+
+        public void Update(ProfileEntity profile)
         {
-            
-            _uow.Profiles.AddEnrolment(profile.ProfileId, courseId);
-            _uow.Complete();
+            _uow.Profiles.Update(profile.ToDalProfile());
         }
 
-        public EnrolmentEntity GetEnrolment(int profileId, int courseId)
+        public ProfileEntity Get(int userId)
         {
-            return _uow.Profiles.GetEnrolment(profileId, courseId).ToEnrolmentEntity();         
-        }
-
-        public IEnumerable<CourseProgressEntity> GetModulesProgress(int enrolmentId)
-        {
-            return _uow.Profiles.GetModulesProgress(enrolmentId).Select(p => p.ToCourseProgressEntity()).ToList();
-        }
-
-        public void ChangeQuizProgress(int enrolmentId, int moduleId, bool completeStatus)
-        {
-            _uow.Profiles.ChangeQuizProgress(enrolmentId, moduleId, completeStatus);
-            _uow.Complete();
-        }
-
-        public void ChangeLessonProgress(int enrolmentId, int moduleId, bool completeStatus)
-        {
-            _uow.Profiles.ChangeLessonProgress(enrolmentId, moduleId, completeStatus);
-            _uow.Complete();
-        }
-
-        public void ChangeCourseProgress(int profileId, int courseId, bool completeStatus)
-        {
-            _uow.Profiles.ChangeCourseProgress(profileId, courseId, completeStatus);
+            return _uow.Profiles.Get(userId).ToProfileEntity();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace DAL.Conrete
 
         public void Add(DalHtmlArticle article)
         {
-            _context.Set<DalHtmlArticle>().Find(article);
+            _context.Set<HtmlArticle>().Add(article.ToOrmHtmlArticle());
         }
 
         public DalHtmlArticle Get(int articleId)
@@ -31,6 +31,14 @@ namespace DAL.Conrete
         public IEnumerable<DalHtmlArticle> GetModuleArticles(int moduleId)
         {
             return _context.Set<Module>().Find(moduleId).HtmlArticles.Select(a => a.ToDalHtmlArticle()).ToList();
+        }
+
+        public IEnumerable<DalHtmlArticle> GetStorageArticles(int storageId)
+        {
+            return _context.Set<HtmlArticle>().Where(a => a.StorageId == storageId)
+                                              .AsEnumerable()
+                                              .Select(a => a.ToDalHtmlArticle())
+                                              .ToList();
         }
 
         public void Remove(DalHtmlArticle article)

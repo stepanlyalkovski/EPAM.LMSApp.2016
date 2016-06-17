@@ -45,6 +45,11 @@ namespace DAL.Conrete
             return _context.Set<LessonPage>().Find(pageId).CodeSample.ToDalCodeSample();
         }
 
+        public IEnumerable<DalCodeSample> GetStorageCodeSamples(int storageId)
+        {
+            return _context.Set<CodeSample>().Where(c => c.StorageId == storageId).Select(c => c.ToDalCodeSample()).ToList();
+        }
+
         public DalCodeSample Get(int codeId)
         {
             return _context.Set<CodeSample>().Find(codeId).ToDalCodeSample();

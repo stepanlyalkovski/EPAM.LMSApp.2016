@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BLL.Interfaces.Entities.Courses;
+using BLL.Interfaces.Entities.Courses.Content;
 using BLL.Interfaces.Services;
 using BLL.Mappers;
 using DAL.Interfaces.Repository;
@@ -15,15 +17,69 @@ namespace BLL.Services
         {
             _uow = uow;
         }
-        public void AddCourse(int storageId, CourseEntity course)
-        {
-            _uow.Storages.AddCourse(storageId, course.ToDalCourse());
+
+        public void AddImage(ImageEntity image)
+        {           
+            _uow.Images.Add(image.ToDalImage());
             _uow.Complete();
         }
 
-        public IEnumerable<CourseEntity> GetCreatedCourses(int storageId)
+        public IEnumerable<ImageEntity> GetImages(int storageId)
         {
-            return _uow.Storages.GetCreatedCourses(storageId).Select(c => c.ToBllCourseEntity());
+            return _uow.Images.GetStorageImages(storageId).Select(im => im.ToImageEntity()).ToList();
+        }
+
+        public void RemoveImage(ImageEntity image)
+        {
+            _uow.Images.Remove(image.ToDalImage());
+        }
+
+        public void AddCodeSample(CodeSampleEntity code)
+        {
+            _uow.CodeSamples.Add(code.ToDalCodeSample());
+            _uow.Complete();
+        }
+
+        public IEnumerable<CodeSampleEntity> GetCodeSamples(int storageId)
+        {
+            return _uow.CodeSamples.GetStorageCodeSamples(storageId).Select(c => c.ToCodeSampleEntity()).ToList();
+        }
+
+        public void RemoveCodeSample(CodeSampleEntity code)
+        {
+            _uow.CodeSamples.Remove(code.ToDalCodeSample());
+        }
+
+        public void AddQuiz(QuizEntity quiz)
+        {
+            _uow.Quizzes.Add(quiz.ToDalQuiz());
+            _uow.Complete();
+        }
+
+        public IEnumerable<QuizEntity> GetQuizess(int storageId)
+        {
+            return _uow.Quizzes.GetStorageQuizzes(storageId).Select(q => q.ToQuizEntity()).ToList();
+        }
+
+        public void RemoveQuiz(QuizEntity quiz)
+        {
+            _uow.Quizzes.Remove(quiz.ToDalQuiz());
+        }
+
+        public void AddHtmlArticle(HtmlArticleEntity article)
+        {
+            _uow.Articles.Add(article.ToDalHtmlArticle());
+            _uow.Complete();
+        }
+
+        public IEnumerable<HtmlArticleEntity> GetArticles(int storageId)
+        {
+            return _uow.Articles.GetStorageArticles(storageId).Select(a => a.ToHtmlArticleEntity()).ToList();
+        }
+
+        public void RemoveHtmlArticle(HtmlArticleEntity article)
+        {
+            _uow.Articles.Remove(article.ToDalHtmlArticle());
         }
     }
 }

@@ -12,5 +12,6 @@ namespace DAL.Interfaces.Repository
     {
         DalCourse Get(string title);
         IEnumerable<DalCourse> GetStorageCourses(int storageId);
+        void AttachModule(DalModule module, DalCourse course);
     }
 }

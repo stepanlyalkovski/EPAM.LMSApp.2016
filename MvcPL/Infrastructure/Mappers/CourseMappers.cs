@@ -5,6 +5,7 @@ using System.Web;
 using AutoMapper;
 using BLL.Interfaces.Entities.Courses;
 using MvcPL.Models.Course;
+using MvcPL.Models.Module;
 
 namespace MvcPL.Infrastructure.Mappers
 {
@@ -37,6 +38,18 @@ namespace MvcPL.Infrastructure.Mappers
             Mapper.Initialize(cfg => cfg.CreateMap<CourseBaseViewModel, CourseEntity>()
                                         .ForMember("TagList", c => c.MapFrom(cr => cr.Tags.Split(','))));
             return Mapper.Map<CourseEntity>(course);
+        }
+
+        public static ModuleBaseViewModel ToModuleBaseViewModel(this ModuleEntity module)
+        {
+            Mapper.Initialize(cfg => cfg.CreateMap<ModuleEntity, ModuleBaseViewModel>());
+            return Mapper.Map<ModuleBaseViewModel>(module);
+        }
+
+        public static ModuleEntity ToModuleEntity(this ModuleBaseViewModel module)
+        {
+            Mapper.Initialize(cfg => cfg.CreateMap<ModuleBaseViewModel, ModuleEntity>());
+            return Mapper.Map<ModuleEntity>(module);
         }
     }
 }

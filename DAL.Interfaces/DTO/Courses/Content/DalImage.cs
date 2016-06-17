@@ -11,7 +11,7 @@ namespace DAL.Interfaces.DTO.Courses.Content
         public int Id { get; set; }
         public string Title { get; set; }
         public byte[] Data { get; set; }
-
+        public int StorageId { get; set; }
         //public virtual IList<DalLessonPage> Pages { get; set; }
     }
 }

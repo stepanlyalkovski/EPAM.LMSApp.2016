@@ -26,6 +26,7 @@ namespace DAL.Conrete
             Course ormCourse = course.ToOrmCourse();
             ormCourse.Tags = DistinctTags(ormCourse.Tags);
             _context.Set<Course>().Add(ormCourse);
+            _context.Entry(ormCourse).State = EntityState.Added;
         }
 
         public DalCourse Get(int id)
@@ -41,6 +42,20 @@ namespace DAL.Conrete
         public IEnumerable<DalCourse> GetStorageCourses(int storageId)
         {
             return _context.Set<UserStorage>().Find(storageId).Courses.ToDalCourses();
+        }
+
+        public void AttachModule(DalModule module, DalCourse course)
+        {
+            var ormCourse = _context.Set<Course>().Local.First(c => c.Title == course.Title);
+
+                                //try this one
+
+            //var tCourse = _context.Entry(course.ToOrmCourse()).Entity;
+            
+            if(ormCourse.Modules == null)
+                ormCourse.Modules = new List<Module>();
+
+            ormCourse.Modules.Add(module.ToOrmModule());
         }
 
         public void Remove(DalCourse course)

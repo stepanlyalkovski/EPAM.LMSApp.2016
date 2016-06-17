@@ -4,6 +4,7 @@ using System.Linq;
 using DAL.Interfaces.DTO.Courses;
 using DAL.Interfaces.Repository;
 using DAL.Mappers;
+using ORM;
 using ORM.Courses;
 
 namespace DAL.Conrete
@@ -43,6 +44,18 @@ namespace DAL.Conrete
         public IEnumerable<DalCourseProgress> GetAll()
         {
             return _context.Set<CourseProgress>().Select(p => p.ToDalCourseProgress()).ToList();
+        }
+
+        public IEnumerable<DalCourseProgress> GetEnrolmentProgress(int enrolmentId)
+        {
+            return _context.Set<Enrolment>().Find(enrolmentId).Progress.Select(p => p.ToDalCourseProgress()).ToList();
+        }
+
+        public DalCourseProgress Get(int enrolmentId, int moduleId)
+        {
+            return _context.Set<Enrolment>().Find(enrolmentId)
+                                            .Progress.FirstOrDefault(p => p.ModuleId == moduleId)
+                                            .ToDalCourseProgress();
         }
     }
 }

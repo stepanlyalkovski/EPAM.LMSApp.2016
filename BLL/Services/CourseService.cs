@@ -1,34 +1,49 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BLL.Interfaces.Entities.Courses;
 using BLL.Interfaces.Services;
+using BLL.Mappers;
+using DAL.Interfaces.DTO.Courses;
+using DAL.Interfaces.Repository;
 
 namespace BLL.Services
 {
     public class CourseService : ICourseService
     {
+        private readonly IUnitOfWork _uow;
+
+        public CourseService(IUnitOfWork uow)
+        {
+            _uow = uow;
+        }
+
         public CourseEntity GetByTitle(string title)
         {
-            throw new System.NotImplementedException();
+            return _uow.Courses.Get(title).ToBllCourseEntity();
         }
 
         public CourseEntity Get(int courseId)
         {
-            throw new System.NotImplementedException();
+            return _uow.Courses.Get(courseId).ToBllCourseEntity();
         }
 
-        public void AddModule(int courseId, ModuleEntity module)
+        public void AddCourse(CourseEntity course)
         {
-            throw new System.NotImplementedException();
+            var dalCourse = course.ToDalCourse();
+            _uow.Courses.Add(dalCourse);
+            int modules = course.ModulesNumber;
+
+            for (int i = 0; i < modules; i++)
+            {
+                var emptyModule = new DalModule {Title = $"Chapter {i}", Description = $"Chapter {i} Description" };
+                _uow.Courses.AttachModule(emptyModule, dalCourse);
+            }
+            _uow.Complete();
         }
 
-        public IEnumerable<ModuleEntity> GetModules(int courseId)
+        public IEnumerable<CourseEntity> GetCreatedCourses(int storageId)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public ModuleEntity GetModule(int courseId, string title)
-        {
-            throw new System.NotImplementedException();
+           return _uow.Courses.GetStorageCourses(storageId).Select(c => c.ToBllCourseEntity());
         }
     }
 }

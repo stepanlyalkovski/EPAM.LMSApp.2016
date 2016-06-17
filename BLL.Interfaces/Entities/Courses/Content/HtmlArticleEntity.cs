@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public string Title { get; set; }
         public string HtmlData { get; set; }
+        public int StorageId { get; set; }
     }
 }

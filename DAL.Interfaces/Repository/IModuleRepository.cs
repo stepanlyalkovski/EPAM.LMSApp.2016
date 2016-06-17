@@ -8,5 +8,10 @@ namespace DAL.Interfaces.Repository
     {
         IEnumerable<DalModule> GetCourseModules(int courseId);
         DalModule Get(int courseId, string title);
+
+        void AttachLesson(DalLesson lesson, int moduleId);
+        void AttachQuiz(DalQuiz quiz, int moduleId);
+        void AttachArticle(DalHtmlArticle article, int moduleId);
+
     }
 }

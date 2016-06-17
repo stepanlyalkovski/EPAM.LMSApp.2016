@@ -34,6 +34,18 @@ namespace DAL.Conrete
             return _context.Set<Lesson>().Find(lessonId).Pages.Select(p => p.ToDalLessonPage());
         }
 
+        public void AttachImage(DalImage image, int pageId)
+        {
+            var ormPage = _context.Set<LessonPage>().Find(pageId);
+            var ormImage = _context.Set<Image>().Find(image.Id);
+            ormPage.Image = ormImage;
+        }
+
+        public void AttachCodeSample(DalCodeSample code, int pageId)
+        {
+            _context.Set<LessonPage>().Find(pageId).CodeSampleId = code.Id;
+        }
+
         public void Update(DalLessonPage page)
         {
             var ormPage = _context.Set<LessonPage>().Find(page.Id);

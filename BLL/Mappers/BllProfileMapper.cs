@@ -2,7 +2,6 @@
 using BLL.Interfaces.Entities.Courses;
 using DAL.Interfaces.DTO;
 using DAL.Interfaces.DTO.Courses;
-using ProfileEntity = BLL.Interfaces.Entities.ProfileEntity;
 
 namespace BLL.Mappers
 {

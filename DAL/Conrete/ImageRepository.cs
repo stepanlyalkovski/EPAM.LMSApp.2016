@@ -43,6 +43,12 @@ namespace DAL.Conrete
             return _context.Set<LessonPage>().Find(pageId).Image.ToDalImage();
         }
 
+        public IEnumerable<DalImage> GetStorageImages(int storageId)
+        {
+            return _context.Set<Image>().Where(im => im.StorageId == storageId)
+                                        .AsEnumerable().Select(im => im.ToDalImage()).ToList();
+        }
+
 
         public void Remove(DalImage image)
         {

@@ -34,6 +34,11 @@ namespace DAL.Conrete
             return _context.Set<Module>().Find(moduleId).Quiz.ToDalQuiz();
         }
 
+        public IEnumerable<DalQuiz> GetStorageQuizzes(int storageId)
+        {
+           return _context.Set<Quiz>().Where(q => q.StorageId == storageId).AsEnumerable().Select(q => q.ToDalQuiz()).ToList();
+        }
+
         public void Remove(DalQuiz quiz)
         {
             var ormQuiz = _context.Set<Quiz>().Find(quiz.Id);

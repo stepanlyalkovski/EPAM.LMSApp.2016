@@ -5,6 +5,7 @@ using DAL.Interfaces.DTO.Courses;
 using DAL.Interfaces.Repository;
 using DAL.Mappers;
 using ORM;
+using ORM.Courses;
 
 namespace DAL.Conrete
 {
@@ -42,6 +43,35 @@ namespace DAL.Conrete
         public IEnumerable<DalEnrolment> GetAll()
         {
             return _context.Set<Enrolment>().Select(en => en.ToDalEnrolment()).ToList();
+        }
+
+        public DalEnrolment Get(int profileId, int courseId)
+        {
+            return _context.Set<Enrolment>().FirstOrDefault(e => e.ProfileId == profileId 
+                                                              && e.CourseId == courseId)
+                                            .ToDalEnrolment();
+        }
+
+        public void AttachProgress(DalEnrolment enrolment)
+        {
+            var localEnrolment = _context.Set<Enrolment>().Local.First(e => e.CourseId == enrolment.CourseId);
+            var course = _context.Set<Course>().Find(enrolment.CourseId);
+            localEnrolment.Progress = new List<CourseProgress>();
+            foreach (var module in course.Modules)
+            {
+                localEnrolment.Progress.Add(new CourseProgress
+                {
+                    Module = module
+                });
+            }
+            
+        }
+
+        public IEnumerable<DalEnrolment> GetStudentEnrolments(int profileId)
+        {
+            return _context.Set<Profile>().Find(profileId).Enrolment
+                                                          .AsEnumerable()
+                                                          .Select(e => e.ToDalEnrolment());
         }
     }
 }

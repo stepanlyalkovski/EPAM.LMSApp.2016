@@ -6,6 +6,6 @@ namespace DAL.Interfaces.Repository
 {
     public interface ILessonRepository : IRepository<DalLesson>
     {
-
+        DalLesson GetModuleLesson(int moduleId);
     }
 }

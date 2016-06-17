@@ -7,5 +7,8 @@ namespace DAL.Interfaces.Repository
     public interface ILessonPageRepository : IRepository<DalLessonPage>
     {
         IEnumerable<DalLessonPage> GetLessonPages(int lessonId);
+
+        void AttachImage(DalImage image, int pageId);
+        void AttachCodeSample(DalCodeSample code, int pageId);
     }
 }

@@ -36,6 +36,27 @@ namespace DAL.Conrete
             return _context.Set<Course>().Find(courseId).Modules.FirstOrDefault(m => m.Title == title).ToDalModule();
         }
 
+        public void AttachLesson(DalLesson lesson, int moduleId)
+        {
+            var module = _context.Set<Module>().Find(moduleId);
+            module.Lesson = lesson.ToOrmLesson();
+        }
+
+        public void AttachQuiz(DalQuiz quiz, int moduleId)
+        {
+            var module = _context.Set<Module>().Find(moduleId);
+            module.QuizId = quiz.Id;
+        }
+
+        public void AttachArticle(DalHtmlArticle article, int moduleId)
+        {
+            var module = _context.Set<Module>().Find(moduleId);
+            var dbArticle = _context.Set<HtmlArticle>().Find(article.Id);
+            if(module.HtmlArticles == null)
+                module.HtmlArticles = new List<HtmlArticle>();
+            module.HtmlArticles.Add(dbArticle);
+        }
+
         public DalModule Get(int id)
         {
             return _context.Set<Module>().Find(id).ToDalModule();

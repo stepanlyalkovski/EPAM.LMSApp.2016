@@ -6,5 +6,6 @@ namespace DAL.Interfaces.Repository
     public interface IHtmlArticleRepository : IRepository<DalHtmlArticle>
     {
         IEnumerable<DalHtmlArticle> GetModuleArticles(int moduleId);
+        IEnumerable<DalHtmlArticle> GetStorageArticles(int storageId);
     }
 }
