@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.Interfaces.Entities;
 using BLL.Interfaces.Entities.Courses;
 using DAL.Interfaces.DTO;
 using DAL.Interfaces.DTO.Courses;

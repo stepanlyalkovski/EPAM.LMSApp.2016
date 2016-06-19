@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BLL.Interfaces.Entities;
 using BLL.Interfaces.Entities.Courses;
 
 namespace BLL.Interfaces.Services

@@ -18,7 +18,7 @@ namespace MvcPL.Providers
         public IRoleService RoleService
             => (IRoleService)WebDependencyResolver.Current.GetService(typeof(IRoleService));
 
-        public MembershipUser CreateUser(string email, string password)
+        public MembershipUser CreateUser(string email, string password, bool isManager)
         {
             MembershipUser membershipUser = GetUser(email, false);
 
@@ -32,11 +32,12 @@ namespace MvcPL.Providers
                 Email = email,
                 Password = Crypto.HashPassword(password),
                
-                DateAdded = DateTime.Now
+                CreationDate = DateTime.Now
             };
               //About Crypto http://msdn.microsoft.com/ru-ru/library/system.web.helpers.crypto(v=vs.111).aspx
 
-            var role = RoleService.GetRoleEntity("Student");
+            var role = RoleService.GetRoleEntity(isManager ? "Manager" : "Student");
+
             if (role != null)
             {
                 user.RoleId = role.Id;
@@ -67,8 +68,8 @@ namespace MvcPL.Providers
             if (user == null) return null;
 
             var memberUser = new MembershipUser("CustomMembershipProvider", user.Email,
-                null, null, null, null,
-                false, false, user.DateAdded,
+                user.Id, null, null, null,
+                false, false, user.CreationDate,
                 DateTime.MinValue, DateTime.MinValue,
                 DateTime.MinValue, DateTime.MinValue);
 

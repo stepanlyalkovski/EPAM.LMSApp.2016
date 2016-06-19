@@ -22,6 +22,9 @@ namespace MvcPL.Models
         [Display(Name = "Enter your password")]
         public string Password { get; set; }
 
+        [Display(Name = "I want to be a manager")]
+        public bool IsManager { get; set; }
+
         [Required(ErrorMessage = "Confirm the password")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm the password")]

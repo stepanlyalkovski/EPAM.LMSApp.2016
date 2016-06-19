@@ -1,8 +1,47 @@
-﻿@model IEnumerable<MvcPL.Models.Course.CourseBaseViewModel>
+﻿@model IEnumerable<MvcPL.Models.CourseModels.CourseBaseViewModel>
 @{
     ViewBag.Title = "List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_CourseLayout.cshtml";
 }
 
-<h2>List</h2>
-@{Html.RenderPartial("_CourseBaseViewList", Model)}
+<h2>Course Catalog</h2>
+<div class="row">
+    <div class="input-group" id="adv-search">
+        <input type="text" class="form-control" placeholder="Search for snippets" />
+        <div class="input-group-btn">
+            <div class="btn-group" role="group">
+                <div class="dropdown dropdown-lg">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="filter">Filter by</label>
+                                <select class="form-control">
+                                    <option value="0" selected>All Snippets</option>
+                                    <option value="1">Featured</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="contain">Author</label>
+                                <input class="form-control" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <label for="contain">Contains the words</label>
+                                <input class="form-control" type="text" />
+                            </div>
+                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        </form>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+ @foreach (var course in Model)
+ {
+     Html.RenderAction("SetCourseBlock", course);
+ }   
+</div>
+

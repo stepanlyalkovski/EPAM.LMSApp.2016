@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BLL.Interfaces.Entities;
 using BLL.Interfaces.Services;
+using Microsoft.Ajax.Utilities;
+using MvcPL.Infrastructure.Mappers;
+using MvcPL.Models.ProfileModels;
+
 namespace MvcPL.Controllers
 {
     [Authorize]
@@ -20,31 +25,33 @@ namespace MvcPL.Controllers
         public ActionResult Index()
         {
             ViewBag.Id = _userService.GetUserEntity(User.Identity.Name).Id;
+
             return View();
         }
 
         // GET: Profile/Details/5
         public ActionResult Details(int id)
         {
+            var profile = _profileService.Get(id);
 
-            return View();
+            return View(profile.ToProfileViewModel());
         }
 
         // GET: Profile/Edit/5
         public ActionResult Edit(int id)
         {
-            
-            return View();
+            var profile = _profileService.Get(id);
+            return View(profile.ToProfileViewModel());
         }
 
         // POST: Profile/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(ProfileViewModule profile)
         {
             try
             {
-                // TODO: Add update logic here
-
+               
+                _profileService.Update(profile.ToProfileViewModel());              
                 return RedirectToAction("Index");
             }
             catch
@@ -53,11 +60,7 @@ namespace MvcPL.Controllers
             }
         }
 
-        // GET: Profile/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+
 
         // POST: Profile/Delete/5
         [HttpPost]

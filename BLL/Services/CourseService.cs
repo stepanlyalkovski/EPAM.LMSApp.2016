@@ -24,7 +24,21 @@ namespace BLL.Services
 
         public CourseEntity Get(int courseId)
         {
-            return _uow.Courses.Get(courseId).ToBllCourseEntity();
+            var bllCourse = _uow.Courses.Get(courseId).ToBllCourseEntity();
+            bllCourse.Author = GetAuthorName(bllCourse.UserStorageId); // note that UserStorageID = UserID = profileID
+            return bllCourse;
+        }
+
+        public IEnumerable<CourseEntity> GetaAll()
+        {
+           var courses = _uow.Courses.GetAll().Select(c => c.ToBllCourseEntity()).ToList();
+
+            foreach (var course in courses)
+            {
+                course.Author = GetAuthorName(course.UserStorageId);
+            }
+
+            return courses;
         }
 
         public void AddCourse(CourseEntity course)
@@ -44,6 +58,16 @@ namespace BLL.Services
         public IEnumerable<CourseEntity> GetCreatedCourses(int storageId)
         {
            return _uow.Courses.GetStorageCourses(storageId).Select(c => c.ToBllCourseEntity());
+        }
+
+        private string GetAuthorName(int profileId)
+        {
+            var authorProfile = _uow.Profiles.Get(profileId);
+
+            if (authorProfile.LastName == null)
+                return "Anonymous";
+
+            return authorProfile.FirstName + " " + authorProfile.LastName;
         }
     }
 }

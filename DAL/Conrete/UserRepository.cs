@@ -63,9 +63,15 @@ namespace DAL.Conrete
         public void Add(DalUser entity)
         {
 
-            entity.Profile = new DalProfile {Age = 0, LastName = "Student"};
-            _context.Set<User>().Add(entity.ToOrmUser());
+            entity.Profile = new DalProfile {Age = 0};
+            var role = _context.Set<Role>().Find(entity.RoleId);
 
+            if (role.Name == "Manager")
+            {
+                entity.UserStorage = new DalUserStorage();
+            }
+
+            _context.Set<User>().Add(entity.ToOrmUser());
         }
 
         public void Remove(DalUser entity)

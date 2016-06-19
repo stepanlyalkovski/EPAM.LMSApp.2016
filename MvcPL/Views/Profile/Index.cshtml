@@ -4,12 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Your Profile</h2>
+<h2>Profile Menu</h2>
 <ul>
     <li>
         @Html.ActionLink("My Profile", "Details", new { id = ViewBag.Id })
     </li>
     <li>
         Course Progress
+    </li>
+    <li>
+        Storage
     </li>
 </ul>

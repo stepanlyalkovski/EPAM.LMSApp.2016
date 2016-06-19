@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Interfaces.Entities;
 using BLL.Interfaces.Entities.Courses;
 using BLL.Interfaces.Entities.Courses.Content;
 using BLL.Interfaces.Services;
@@ -18,6 +19,11 @@ namespace BLL.Services
             _uow = uow;
         }
 
+        public UserStorageEntity GetStorage(int id)
+        {
+            return _uow.Storages.Get(id).ToUserStorageEntity();
+        }
+
         public void AddImage(ImageEntity image)
         {           
             _uow.Images.Add(image.ToDalImage());
@@ -32,6 +38,7 @@ namespace BLL.Services
         public void RemoveImage(ImageEntity image)
         {
             _uow.Images.Remove(image.ToDalImage());
+            _uow.Complete();
         }
 
         public void AddCodeSample(CodeSampleEntity code)
@@ -48,6 +55,7 @@ namespace BLL.Services
         public void RemoveCodeSample(CodeSampleEntity code)
         {
             _uow.CodeSamples.Remove(code.ToDalCodeSample());
+            _uow.Complete();
         }
 
         public void AddQuiz(QuizEntity quiz)
@@ -64,6 +72,7 @@ namespace BLL.Services
         public void RemoveQuiz(QuizEntity quiz)
         {
             _uow.Quizzes.Remove(quiz.ToDalQuiz());
+            _uow.Complete();
         }
 
         public void AddHtmlArticle(HtmlArticleEntity article)
@@ -80,6 +89,7 @@ namespace BLL.Services
         public void RemoveHtmlArticle(HtmlArticleEntity article)
         {
             _uow.Articles.Remove(article.ToDalHtmlArticle());
+            _uow.Complete();
         }
     }
 }

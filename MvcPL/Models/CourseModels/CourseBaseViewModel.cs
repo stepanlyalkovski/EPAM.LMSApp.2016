@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MvcPL.Models.Course
+namespace MvcPL.Models.CourseModels
 {
     public class CourseBaseViewModel
     {
@@ -9,7 +9,10 @@ namespace MvcPL.Models.Course
         public string Title { get; set; }
         [Display(Name = "Chapters")]
         public int ModulesNumber { get; set; }
-
+        public int UserStorageId { get; set; }
+        public string Author { get; set; }
+        public bool IsEditable { get; set; }
+        public bool Published { get; set; }
         public string Tags { get; set; }
     }
 }

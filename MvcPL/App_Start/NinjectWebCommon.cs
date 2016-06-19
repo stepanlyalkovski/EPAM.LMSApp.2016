@@ -1,15 +1,15 @@
 using System;
 using System.Web;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-using MvcPL;
+using MvcPL.Controllers;
+using MvcPL.Infrastructure;
 using Ninject;
 using Ninject.Web.Common;
-using MvcPL.Infrastructure;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
 
-namespace MvcPL
+namespace MvcPL.Controllers
 {
     public static class NinjectWebCommon 
     {

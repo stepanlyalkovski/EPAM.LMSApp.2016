@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BLL.Interfaces.Entities;
 using BLL.Interfaces.Entities.Courses;
 using BLL.Interfaces.Entities.Courses.Content;
 
@@ -6,6 +7,8 @@ namespace BLL.Interfaces.Services
 {
     public interface IStorageService
     {
+        UserStorageEntity GetStorage(int id);
+
         void AddImage(ImageEntity image);
         IEnumerable<ImageEntity> GetImages(int storageId); 
         void RemoveImage(ImageEntity image);

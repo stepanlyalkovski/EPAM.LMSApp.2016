@@ -76,7 +76,7 @@ namespace DAL.Conrete
 
         public IEnumerable<DalCourse> GetAll()
         {
-            return _context.Set<Course>().Select(c => c.ToDalCourse()).ToList();
+            return _context.Set<Course>().AsEnumerable().Select(c => c.ToDalCourse()).ToList();
         }
 
         private IList<Tag> DistinctTags(IList<Tag> tags)

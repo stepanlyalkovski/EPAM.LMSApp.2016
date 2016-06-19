@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+            <li>@Html.ActionLink("Course Catalog", "List", "Course")</li>
+            <li>@Html.ActionLink("My Profile", "Details", "Profile", new {id = ViewBag.Id}, null)</li>
+            <li><a href="#">My Courses</a></li>
+        </ul>
+        
+        @if (User.IsInRole("Manager"))
+        {
+            <hr />
+            <ul class="nav nav-sidebar">
+                <li><a href="#">@Html.ActionLink("Manage Courses", "ManageList", "Course", new { storageId = ViewBag.Id }, null)</a></li>
+                <li><a href="">Storage</a></li>
+            </ul>
+        }
+    </div>
+    <div class="col-sm-9 col-md-10">
+        @RenderBody()
+    </div>
+</div>   
+

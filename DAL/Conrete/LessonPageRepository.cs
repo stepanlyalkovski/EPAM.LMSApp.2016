@@ -22,6 +22,7 @@ namespace DAL.Conrete
         public void Add(DalLessonPage page)
         {
             _context.Set<LessonPage>().Add(page.ToOrmLessonPage());
+            _context.Set<Lesson>().Find(page.LessonId).PageCount++;
         }
 
         public DalLessonPage Get(int pageId)
@@ -61,9 +62,11 @@ namespace DAL.Conrete
 
         public void Remove(DalLessonPage page)
         {
+            _context.Set<Lesson>().Find(page.LessonId).PageCount--;
             var ormPage = _context.Set<LessonPage>().Find(page.Id);
             if (ormPage != null)
                 _context.Set<LessonPage>().Remove(ormPage);
+            
         }      
 
     }

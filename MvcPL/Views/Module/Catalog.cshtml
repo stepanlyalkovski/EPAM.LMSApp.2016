@@ -1,0 +1,35 @@
+﻿@model MvcPL.Models.ModuleModels.ModuleContentViewModel
+
+@{
+    ViewBag.Title = "Catalog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.BaseInfo.Title</h2>
+
+<ul>
+    @foreach (var article in Model.Articles)
+    {
+        <li>
+            @Html.ActionLink(article.Title, "Article", "Details", new {articleId = article.Id}, null)
+        </li>
+    }
+</ul>
+@if (Model.Quiz != null)
+{
+    <p> @Html.ActionLink(Model.Quiz.Title, "Quiz", "Details", new {quizId = Model.Quiz.Id}, null)</p>
+}
+else
+{
+    <p>No quiz here</p>
+}
+
+@if (Model.Lesson != null)
+{
+    <p>@Html.ActionLink(Model.Lesson.Title, "Lesson", "Details", new {lessonId = Model.Lesson.Id}, null)</p>
+}
+else
+{
+    <p>No lesson here</p>
+}
+

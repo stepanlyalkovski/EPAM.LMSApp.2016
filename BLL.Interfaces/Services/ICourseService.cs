@@ -7,6 +7,7 @@ namespace BLL.Interfaces.Services
     {
         CourseEntity GetByTitle(string title);
         CourseEntity Get(int courseId);
+        IEnumerable<CourseEntity> GetaAll(); 
         void AddCourse(CourseEntity course);
         IEnumerable<CourseEntity> GetCreatedCourses(int storageId);
 

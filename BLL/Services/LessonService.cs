@@ -17,6 +17,7 @@ namespace BLL.Services
         public void AddLesson(LessonEntity lesson)
         {
             _uow.Lessons.Add(lesson.ToDalLesson());
+            _uow.Complete();
         }
 
         public void RemoveLesson(LessonEntity lesson)
@@ -27,6 +28,7 @@ namespace BLL.Services
         public void Update(LessonEntity lesson)
         {
             _uow.Lessons.Update(lesson.ToDalLesson());
+            _uow.Complete();
         }
 
         public LessonEntity GetLesson(int lessonId)

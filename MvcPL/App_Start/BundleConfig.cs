@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace MvcPL
+namespace MvcPL.Controllers
 {
     public class BundleConfig
     {

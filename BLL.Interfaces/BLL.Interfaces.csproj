@@ -51,7 +51,6 @@
     <Compile Include="Entities\Courses\LessonPageEntity.cs" />
     <Compile Include="Entities\Courses\LessonPageFullEntity.cs" />
     <Compile Include="Entities\Courses\ModuleEntity.cs" />
-    <Compile Include="Entities\Courses\ProfileEntity.cs" />
     <Compile Include="Entities\ProfileEntity.cs" />
     <Compile Include="Entities\RoleEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />

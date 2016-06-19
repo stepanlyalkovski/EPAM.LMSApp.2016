@@ -92,7 +92,7 @@ namespace MvcPL.Controllers
             if (ModelState.IsValid)
             {
                 var membershipUser = ((CustomMembershipProvider)Membership.Provider)
-                    .CreateUser(viewModel.Email, viewModel.Password);
+                    .CreateUser(viewModel.Email, viewModel.Password, viewModel.IsManager);
 
                 if (membershipUser != null)
                 {

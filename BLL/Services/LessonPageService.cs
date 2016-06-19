@@ -31,6 +31,7 @@ namespace BLL.Services
         public void Update(LessonPageEntity page)
         {
             _uow.LessonPages.Update(page.ToDalLessonPage());
+            _uow.Complete();
         }
 
         public LessonPageEntity Get(int pageId)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Interfaces.Entities;
 using BLL.Interfaces.Entities.Courses;
 using BLL.Interfaces.Services;
 using BLL.Mappers;
@@ -20,6 +21,7 @@ namespace BLL.Services
         public void Update(ProfileEntity profile)
         {
             _uow.Profiles.Update(profile.ToDalProfile());
+            _uow.Complete();
         }
 
         public ProfileEntity Get(int userId)

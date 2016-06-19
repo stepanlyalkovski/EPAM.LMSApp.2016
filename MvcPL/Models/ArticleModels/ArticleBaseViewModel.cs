@@ -4,13 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MvcPL.Models.Module
+namespace MvcPL.Models.ArticleModels
 {
-    public class ModuleBaseViewModel
+    public class ArticleBaseViewModel
     {
         [ScaffoldColumn(false)]
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
+        public string HtmlData { get; set; }
+        [ScaffoldColumn(false)]
+        public int StorageId { get; set; }
     }
 }

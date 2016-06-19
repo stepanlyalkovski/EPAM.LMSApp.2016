@@ -1,0 +1,45 @@
+﻿@model MvcPL.Models.CourseModels.CourseBaseViewModel
+@{
+    Layout = null;
+}
+<div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModulesNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModulesNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tags)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tags)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+    </dl>
+    @Html.ActionLink("Show more", "Content", "Course", new {courseId = Model.Id}, null)
+    @if (Model.IsEditable)
+    {
+        @Html.ActionLink("Edit", "Edit", "Course", new { courseId = Model.Id }, null)
+    }
+    <hr />
+</div>

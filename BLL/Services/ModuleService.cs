@@ -28,6 +28,7 @@ namespace BLL.Services
         public void Remove(ModuleEntity module)
         {
             _uow.Modules.Remove(module.ToDalModule());
+            _uow.Complete();
         }
 
         public ModuleEntity Get(int moduleId)
@@ -43,6 +44,7 @@ namespace BLL.Services
         public void Update(ModuleEntity module)
         {
             _uow.Modules.Update(module.ToDalModule());
+            _uow.Complete();
         }
 
         public void AttachLesson(LessonEntity lesson, int moduleId)
@@ -61,6 +63,21 @@ namespace BLL.Services
         {
            _uow.Modules.AttachArticle(article.ToDalHtmlArticle(), moduleId);
             _uow.Complete();
+        }
+
+        public LessonEntity GetModuleLesson(int moduleId)
+        {
+            return _uow.Lessons.GetModuleLesson(moduleId).ToLessonEntity();
+        }
+
+        public QuizEntity GetModuleQuiz(int moduleId)
+        {
+            return _uow.Quizzes.GetModuleQuiz(moduleId).ToQuizEntity();
+        }
+
+        public IEnumerable<HtmlArticleEntity> GetModuleArticles(int moduleId)
+        {
+            return _uow.Articles.GetModuleArticles(moduleId).Select(a => a.ToHtmlArticleEntity()).ToList();
         }
     }
 }
