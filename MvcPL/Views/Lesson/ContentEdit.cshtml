@@ -1,0 +1,35 @@
+﻿@model MvcPL.Models.LessonModels.LessonContentViewModel
+
+@{
+    ViewBag.Title = "ContentEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.BaseInfo.Title</h2>
+@using (Html.BeginForm("ContentEdit", "Lesson"))
+{
+
+    foreach (var page in Model.Pages)
+    {
+        <div class="row">
+            <h3>@page.Title</h3>
+            <div class="well clearfix">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <textarea class="form-control" rows="5" id="comment" placeholder="Enter your info"> @page.Text</textarea>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    @if (page.ImageData == null)
+                    {
+                        <p>here must be an image</p>
+                    }
+                </div>
+            </div>
+
+        </div>
+    }
+<button class="btn btn-primary" type="submit">Save Changes</button>
+}
+
+

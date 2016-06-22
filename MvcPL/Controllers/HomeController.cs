@@ -17,7 +17,7 @@ namespace MvcPL.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-            ViewBag.Id = Membership.GetUser(User.Identity.Name)?.ProviderUserKey;
+            ViewBag.Id = Session["userId"];
             return View();
         }
 

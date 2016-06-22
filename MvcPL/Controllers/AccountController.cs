@@ -39,15 +39,11 @@ namespace MvcPL.Controllers
             if (ModelState.IsValid)
             {
                 if (Membership.ValidateUser(viewModel.Email, viewModel.Password))
-                //Проверяет учетные данные пользователя и управляет параметрами пользователей
                 {
                     FormsAuthentication.SetAuthCookie(viewModel.Email, viewModel.RememberMe);
-                    //Управляет службами проверки подлинности с помощью форм для веб-приложений
-                    //if (Url.IsLocalUrl(returnUrl))
-                    //{
-                    //    return Redirect(returnUrl);
-                    //}
-                    //return RedirectToAction("Index", "Home");
+
+                    Session["userId"] = _service.GetUserEntity(viewModel.Email).Id;
+
                     return RedirectToAction("Index", "Course");
                 }
                 ModelState.AddModelError("", "Incorrect login or password.");
@@ -97,6 +93,7 @@ namespace MvcPL.Controllers
                 if (membershipUser != null)
                 {
                     FormsAuthentication.SetAuthCookie(viewModel.Email, false);
+                    Session["userId"] = _service.GetUserEntity(viewModel.Email).Id;
                     return RedirectToAction("Index", "Home");
                 }
                 else

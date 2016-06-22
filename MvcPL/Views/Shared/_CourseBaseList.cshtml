@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MvcPL.Models.CourseModels.CourseBaseViewModel>
+@{
+    Layout = null;
+}
+
+@foreach (var course in Model)
+{
+    <div>
+
+        <dl class="dl-horizontal">
+            <dt>
+                Title
+            </dt>
+
+            <dd>
+                @course.Title
+            </dd>
+
+            <dt>
+                Modules
+            </dt>
+
+            <dd>
+                @course.ModulesNumber
+            </dd>
+
+            <dt>
+                Tags
+            </dt>
+
+            <dd>
+                @foreach (var tag in course.Tags)
+                {
+                    <span class="label label-info">@tag</span>
+                }
+            </dd>
+@if (!course.IsEditable)
+{
+    <dt>
+        Author
+    </dt>
+
+            <dd>
+                @course.Author
+            </dd>
+}
+           
+        </dl>
+        @Html.ActionLink("Show more", "Content", "Course", new { courseId = course.Id }, null)
+
+        @if (course.IsEditable)
+        {
+            @Html.ActionLink("Edit", "Edit", "Course", new { courseId = course.Id }, null)
+            @Html.ActionLink("Delete", "Delete", "Course", new { courseId = course.Id }, null)
+        }
+        <hr />
+    </div>
+}
+
+

@@ -27,7 +27,7 @@ namespace DAL.Conrete
         public ICodeSampleRepository CodeSamples { get; set; }
         public IEnrolmentRepository Enrolments { get; set; }
         public ICourseProgressRepository CourseProgresses { get; set; }
-
+        public ITagRepository Tags { get; set; }
 
         public UnitOfWork(DbContext context, IRepositoryFactory factory)
         {
@@ -48,6 +48,7 @@ namespace DAL.Conrete
             CodeSamples = factory.CreateCodeSampleRepository(context);
             Enrolments = factory.CreatEnrolmentRepository(context);
             CourseProgresses = factory.CreateCourseProgressRepository(context);
+            Tags = factory.CreaTagRepository(context);
         }
         public void Dispose()
         {

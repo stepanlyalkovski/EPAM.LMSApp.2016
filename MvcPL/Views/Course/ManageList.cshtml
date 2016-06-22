@@ -1,0 +1,10 @@
+﻿@model IEnumerable<MvcPL.Models.CourseModels.CourseBaseViewModel>
+
+@{
+    ViewBag.Title = "ManageList";
+    Layout = "~/Views/Shared/_CourseLayout.cshtml";
+}
+
+<h2>ManageList</h2>
+ @{Html.RenderPartial("_CourseBaseList", Model);}
+

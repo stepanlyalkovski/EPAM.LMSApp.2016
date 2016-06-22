@@ -36,8 +36,7 @@ namespace MvcPL.Providers
 
         public override string[] GetRolesForUser(string email)
         {
-
-            
+         
                 var roles = new string[] { };
             var user = UserRepository.GetUserEntity(email);//context.Users.FirstOrDefault(u => u.Email == email);
 

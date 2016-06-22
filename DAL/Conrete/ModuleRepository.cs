@@ -36,6 +36,11 @@ namespace DAL.Conrete
             return _context.Set<Course>().Find(courseId).Modules.FirstOrDefault(m => m.Title == title).ToDalModule();
         }
 
+        public void Remove(IEnumerable<DalModule> modules)
+        {
+            _context.Set<Module>().RemoveRange(modules.Select(m => m.ToOrmModule()));
+        }
+
         public void AttachLesson(DalLesson lesson, int moduleId)
         {
             var module = _context.Set<Module>().Find(moduleId);

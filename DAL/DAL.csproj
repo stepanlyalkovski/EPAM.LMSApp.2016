@@ -66,6 +66,7 @@
     <Compile Include="Conrete\QuizRepository.cs" />
     <Compile Include="Conrete\RoleRepository.cs" />
     <Compile Include="Conrete\StorageRepository.cs" />
+    <Compile Include="Conrete\TagREpository.cs" />
     <Compile Include="Conrete\UnitOfWork.cs" />
     <Compile Include="Conrete\UserRepository.cs" />
     <Compile Include="IRepositoryFactory.cs" />

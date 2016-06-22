@@ -11,6 +11,9 @@ namespace DAL.Interfaces.Repository
     public interface ICourseRepository : IRepository<DalCourse>
     {
         DalCourse Get(string title);
+        IEnumerable<DalCourse> GetRandom(int number);
+        IEnumerable<DalCourse> GetByTags(IEnumerable<string> tags);
+        IEnumerable<DalCourse> GetBySubString(string substring);
         IEnumerable<DalCourse> GetStorageCourses(int storageId);
         void AttachModule(DalModule module, DalCourse course);
     }

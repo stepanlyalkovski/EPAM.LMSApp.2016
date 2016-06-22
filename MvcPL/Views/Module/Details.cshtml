@@ -26,10 +26,10 @@ else
 
 @if (Model.Lesson != null)
 {
-    <p>@Html.ActionLink(Model.Lesson.Title, "Lesson", "Details", new {lessonId = Model.Lesson.Id}, null)</p>
+    <p>@Html.ActionLink(Model.Lesson.Title, "ContentEdit", "Lesson", new {lessonId = Model.Lesson.Id}, null)</p>
 }
 else
 {
-    <p>No lesson here</p>
+   @Html.ActionLink("Create Lesson", "Create", "Lesson", new {moduleId = Model.BaseInfo.Id}, null)
 }
 

@@ -29,11 +29,12 @@ namespace MvcPL.Controllers
             return View();
         }
 
-        public ActionResult Catalog(int moduleId)
+        // GET: Module/Details/5
+        public ActionResult Details(int moduleId)
         {
-           var quiz = _moduleService.GetModuleQuiz(moduleId).ToQuizBaseViewModel();
-           var lesson = _moduleService.GetModuleLesson(moduleId)?.ToLessonBaseViewModel();
-           var articles = _moduleService.GetModuleArticles(moduleId)?.Select(a => a.ToArticleBaseViewModel());
+            var quiz = _moduleService.GetModuleQuiz(moduleId).ToQuizBaseViewModel();
+            var lesson = _moduleService.GetModuleLesson(moduleId)?.ToLessonBaseViewModel();
+            var articles = _moduleService.GetModuleArticles(moduleId)?.Select(a => a.ToArticleBaseViewModel());
             var module = _moduleService.Get(moduleId)?.ToModuleBaseViewModel();
             var fullModule = new ModuleContentViewModel
             {
@@ -45,49 +46,22 @@ namespace MvcPL.Controllers
             return View(fullModule);
         }
 
-        // GET: Module/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Module/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Module/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // GET: Module/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var module = _moduleService.Get(id).ToModuleBaseViewModel();
+
+            return View(module);
         }
 
         // POST: Module/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(ModuleBaseViewModel module)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                _moduleService.Update(module.ToModuleEntity());
+                return RedirectToAction("ManageList","Course");
             }
             catch
             {
@@ -95,26 +69,5 @@ namespace MvcPL.Controllers
             }
         }
 
-        // GET: Module/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Module/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

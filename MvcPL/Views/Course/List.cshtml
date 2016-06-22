@@ -3,45 +3,40 @@
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_CourseLayout.cshtml";
 }
-
 <h2>Course Catalog</h2>
 <div class="row">
     <div class="input-group" id="adv-search">
-        <input type="text" class="form-control" placeholder="Search for snippets" />
-        <div class="input-group-btn">
-            <div class="btn-group" role="group">
-                <div class="dropdown dropdown-lg">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                    <div class="dropdown-menu dropdown-menu-right" role="menu">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label for="filter">Filter by</label>
-                                <select class="form-control">
-                                    <option value="0" selected>All Snippets</option>
-                                    <option value="1">Featured</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="contain">Author</label>
-                                <input class="form-control" type="text" />
-                            </div>
-                            <div class="form-group">
-                                <label for="contain">Contains the words</label>
-                                <input class="form-control" type="text" />
-                            </div>
-                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                        </form>
-                    </div>
+        @using (Html.BeginForm("List", "Course", FormMethod.Get))
+        {
+            <div class="form-group">
+                <b>Search By</b>
+                @Html.RadioButton("searchBy", "Name", true) Name
+                @Html.RadioButton("searchBy", "Author") Author
+                <div class="form-group">
+                    <label for="contain">
+                        Contains the tags
+                        <input class="form-control" type="text" name="tags" placeholder="You can enter tags here"/>
+                    </label>
+                    @*<label for="contain">
+                <input class="form-control" type="text" name="searchField"/>
+            </label>*@
                 </div>
-                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <input type="text" class="form-control" placeholder="Search for courses" name="searchField"/>
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </div>
-        </div>
+        }
     </div>
+    <hr/>
 </div>
-<div class="row">
- @foreach (var course in Model)
- {
-     Html.RenderAction("SetCourseBlock", course);
- }   
-</div>
+@if (!Model.Any())
+{
+    <p>There is no courses:(</p>
+}
+else
+{
+    <div class="row" id="searchResult">
+        @{Html.RenderPartial("_CourseBaseList", Model);}
+    </div>
+}
+
 

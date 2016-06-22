@@ -156,6 +156,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LessonController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StorageController.cs" />
@@ -171,8 +172,12 @@
     <Compile Include="Models\ArticleModels\ArticleBaseViewModel.cs" />
     <Compile Include="Models\CourseModels\CourseBaseViewModel.cs" />
     <Compile Include="Models\CourseModels\CourseCreateViewModel.cs" />
+    <Compile Include="Models\CourseModels\CourseEditViewModel.cs" />
     <Compile Include="Models\CourseModels\CourseFullViewModel.cs" />
+    <Compile Include="Models\ImageViewModel.cs" />
+    <Compile Include="Models\LessonModels\LessonContentViewModel.cs" />
     <Compile Include="Models\LessonModels\LessonBaseViewModel.cs" />
+    <Compile Include="Models\LessonModels\LessonPageEditModel.cs" />
     <Compile Include="Models\LogOnViewModel.cs" />
     <Compile Include="Models\ModuleModels\ModuleBaseViewModel.cs" />
     <Compile Include="Models\ModuleModels\ModuleContentViewModel.cs" />
@@ -194,6 +199,7 @@
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\loader.gif" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -217,6 +223,8 @@
     <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -251,15 +259,23 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\Details.cshtml" />
     <Content Include="Views\Course\Content.cshtml" />
-    <Content Include="Views\Shared\_CourseBase.cshtml" />
     <Content Include="Views\Shared\_ModuleBasePreview.cshtml" />
-    <Content Include="Views\Module\Catalog.cshtml" />
+    <Content Include="Views\Module\Details.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Shared\_CourseLayout.cshtml" />
+    <Content Include="Views\Lesson\Create.cshtml" />
+    <Content Include="Views\Lesson\ContentEdit.cshtml" />
+    <Content Include="Views\Course\Edit.cshtml" />
+    <Content Include="Views\Storage\Index.cshtml" />
+    <Content Include="Views\Storage\ImageCatalog.cshtml" />
+    <Content Include="Views\Storage\Test.cshtml" />
+    <Content Include="Views\Course\Delete.cshtml" />
+    <Content Include="Views\Shared\_CourseBaseList.cshtml" />
+    <Content Include="Views\Course\ManageList.cshtml" />
+    <Content Include="Views\Module\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Storage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -295,7 +311,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51125</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51127/</IISUrl>
+          <IISUrl>http://localhost:51128/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

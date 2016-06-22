@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using BLL.Interfaces.Services;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models;
@@ -28,31 +29,69 @@ namespace MvcPL.Controllers
 
         // GET: Course
 
-        public ActionResult Index()
-        {
-            
-            return View();
-        }
-
-        public ActionResult List()
+        public ActionResult Index(string searchBy, string searchField, string tags)
         {
             ViewBag.Title = "Courses";
             ViewBag.Id = _userService.GetUserEntity(User.Identity.Name).Id;
-            var courses = _courseService.GetaAll().Select(c => c.ToCourseBaseViewModel()).ToList();
-            //int userId = _userService.GetUserEntity(User.Identity.Name).Id;
-            //var courses = _storageService.GetCreatedCourses(userId).Select(c => c.ToCourseBaseViewModel()).ToList();
+            IEnumerable<CourseBaseViewModel> courses;
+
+            //TODO searchBy
+            if (String.IsNullOrEmpty(searchField) && String.IsNullOrEmpty(tags))
+            {
+                int courseNumber = 5;
+
+                courses = _courseService.GetRandom(courseNumber).Select(c => c.ToCourseBaseViewModel()).ToList();
+            }
+            else
+            {
+                courses = _courseService.Search(searchField, tags.Split()).Select(c => c.ToCourseBaseViewModel()).ToList();
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_CourseBaseList", courses);
+            }
+
             return View(courses);
         }
+
+        //[ChildActionOnly]
+        //public ActionResult List(string searchBy, string searchField, string tags)
+        //{
+        //    ViewBag.Title = "Courses";
+        //    int userId = _userService.GetUserEntity(User.Identity.Name).Id;
+        //    ViewBag.Id = userId;
+        //    IEnumerable<CourseBaseViewModel> courses;
+            
+        //    //TODO searchBy
+        //    if (String.IsNullOrEmpty(searchField) && String.IsNullOrEmpty(tags))
+        //    {
+        //        int courseNumber = 5;
+
+        //        courses = _courseService.GetRandom(courseNumber).Select(c => c.ToCourseBaseViewModel()).ToList();
+        //    }
+        //    else
+        //    {
+        //        courses = _courseService.Search(searchField, tags.Split(',')).Select(c => c.ToCourseBaseViewModel()).ToList();
+        //    }
+
+        //    ViewBag.FormData = new {SearchFiled = searchField, SearchBy = searchBy, Tags = tags};
+        //    //int userId = _userService.GetUserEntity(User.Identity.Name).Id;
+        //    //var courses = _storageService.GetCreatedCourses(userId).Select(c => c.ToCourseBaseViewModel()).ToList();
+        //    return View(courses); 
+        //}
+
         [Authorize(Roles = "Manager")]
-        public ActionResult ManageList(int storageId)
+        public ActionResult ManageList()
         {
+            int storageId = _userService.GetUserEntity(User.Identity.Name).Id;
             var courses = _courseService.GetCreatedCourses(storageId).Select(c =>
             {
                 var course = c.ToCourseBaseViewModel();
                 course.IsEditable = true;
                 return course;
             }).ToList();
-            return View("List", courses);
+            return View(courses);
         }
 
         [Authorize(Roles = "Manager")]
@@ -66,25 +105,35 @@ namespace MvcPL.Controllers
         {
             var modules = _moduleService.GetCourseModules(courseId).Select(m => m.ToModuleBaseViewModel()).ToList();
             var course = _courseService.Get(courseId).ToCourseBaseViewModel();
+            int userId = (int)Session["userId"];
+            foreach (var module in modules)
+            {
+                module.CourseId = courseId;
+
+                if (userId == course.UserStorageId)
+                {
+                    module.IsEditable = true;
+                }
+            }
             var fullCourse = new CourseFullViewModel(course, modules);
             return View(fullCourse);
         }
 
-        [ChildActionOnly]
-        public ActionResult SetCourseBlock(CourseBaseViewModel course)
-        {
+        //[ChildActionOnly]
+        //public ActionResult SetCourseBlock(CourseBaseViewModel course)
+        //{
             
-            if (User.IsInRole("Manager"))
-            {
-                int userId = _userService.GetUserEntity(User.Identity.Name).Id;
-                if (course.UserStorageId == userId && !course.Published)
-                {
-                    course.IsEditable = true;
-                }
-            }
+        //    if (User.IsInRole("Manager"))
+        //    {
+        //        int userId = _userService.GetUserEntity(User.Identity.Name).Id;
+        //        if (course.UserStorageId == userId && !course.Published)
+        //        {
+        //            course.IsEditable = true;
+        //        }
+        //    }
 
-            return View("_CourseBase", course);
-        }
+        //    return View("_CourseBase", course);
+        //}
 
         [Authorize(Roles = "Manager")]
         [HttpPost]
@@ -101,36 +150,40 @@ namespace MvcPL.Controllers
             }
             return View(courseModel);
         }
+        [HttpGet]
+        public ActionResult Delete(int courseId)
+        {
+            var course = _courseService.Get(courseId).ToCourseBaseViewModel();
+            if (course == null)
+                return RedirectToAction("Index", "Course");
+            return View(course);
+        }
 
-        
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var course = _courseService.Get(id);
+            _courseService.Remove(course);
+            return RedirectToAction("ManageList");
+        }
 
-        //[Authorize(Roles = "Manager")]
-        //public ActionResult Manage()
-        //{
-        //}
+        [HttpGet]
+        public ActionResult Edit(int courseId)
+        {           
+           var course = _courseService.Get(courseId).ToCourseEditViewModel();
+            
+            return View(course);
+        }
 
-        //[Authorize]
-        //public ActionResult Catalog()
-        //{
-        //    var name = User.Identity.Name;
-        //    CatalogViewModel model = new CatalogViewModel
-        //    {
-                
-        //    };
+        [HttpPost]
+        public ActionResult Edit(CourseEditViewModel course)
+        {
+                _courseService.Update(course.ToCourseEntity());
+               return RedirectToAction("ManageList", "Course");
 
-        //    return View();
-        //}
-        //public ActionResult Edit(int courseid)
-        //{
-        //    try
-        //    {
-
-        //    }
-        //    catch
-        //    {
-
-        //        return View();
-        //    }
-        //}
+        }
     }
+
+
 }

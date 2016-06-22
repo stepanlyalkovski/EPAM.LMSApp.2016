@@ -69,6 +69,7 @@
     <Compile Include="Repository\IRoleRepository.cs" />
     <Compile Include="Repository\ICodeSampleRepository.cs" />
     <Compile Include="Repository\IStorageRepository.cs" />
+    <Compile Include="Repository\ITagRepository.cs" />
     <Compile Include="Repository\IUnitOfWork.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />

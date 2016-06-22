@@ -1,6 +1,7 @@
 ﻿using BLL.Interfaces.Entities.Courses;
 using BLL.Interfaces.Services;
 using BLL.Mappers;
+using DAL.Interfaces.DTO.Courses;
 using DAL.Interfaces.Repository;
 
 namespace BLL.Services
@@ -16,7 +17,18 @@ namespace BLL.Services
 
         public void AddLesson(LessonEntity lesson)
         {
-            _uow.Lessons.Add(lesson.ToDalLesson());
+            //_uow.Lessons.Add(lesson.ToDalLesson());
+            _uow.Modules.AttachLesson(lesson.ToDalLesson(), lesson.ModuleId);
+            for (int i = 1; i < lesson.PageCount + 1; i++)
+            {
+                var page = new DalLessonPage
+                {
+                    Title = $"Page {i}"
+                };
+                //TODO try with no Local
+                _uow.Lessons.AttachPage(page, lesson.ToDalLesson());
+            }
+
             _uow.Complete();
         }
 

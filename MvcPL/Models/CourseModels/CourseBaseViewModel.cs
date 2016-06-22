@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MvcPL.Models.CourseModels
 {
@@ -11,8 +12,12 @@ namespace MvcPL.Models.CourseModels
         public int ModulesNumber { get; set; }
         public int UserStorageId { get; set; }
         public string Author { get; set; }
+
+        public string Description { get; set; }
         public bool IsEditable { get; set; }
+        public bool InProgress { get; set; }
+        public bool Completed { get; set; }
         public bool Published { get; set; }
-        public string Tags { get; set; }
+        public IList<string> Tags { get; set; }
     }
 }

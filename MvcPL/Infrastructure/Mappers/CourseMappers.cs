@@ -5,6 +5,7 @@ using System.Web;
 using AutoMapper;
 using BLL.Interfaces.Entities.Courses;
 using BLL.Interfaces.Entities.Courses.Content;
+using MvcPL.Models;
 using MvcPL.Models.ArticleModels;
 using MvcPL.Models.CourseModels;
 using MvcPL.Models.LessonModels;
@@ -37,7 +38,7 @@ namespace MvcPL.Infrastructure.Mappers
         public static CourseBaseViewModel ToCourseBaseViewModel(this CourseEntity course)
         {
             Mapper.Initialize(cfg => cfg.CreateMap<CourseEntity, CourseBaseViewModel>()
-                                        .ForMember("Tags", c => c.MapFrom(cr => string.Join(",", cr.TagList)))
+                                        .ForMember("Tags", c => c.MapFrom(cr => cr.TagList))
                                         .ForMember("ModulesNumber", c => c.MapFrom(cr => cr.ModulesNumber)));
             return Mapper.Map<CourseBaseViewModel>(course);
         }
@@ -45,9 +46,25 @@ namespace MvcPL.Infrastructure.Mappers
         public static CourseEntity ToCourseEntity(this CourseBaseViewModel course)
         {
             Mapper.Initialize(cfg => cfg.CreateMap<CourseBaseViewModel, CourseEntity>()
-                                        .ForMember("TagList", c => c.MapFrom(cr => cr.Tags.Split(','))));
+                                        .ForMember("TagList", c => c.MapFrom(cr => cr.Tags)));
             return Mapper.Map<CourseEntity>(course);
         }
+
+        public static CourseEditViewModel ToCourseEditViewModel(this CourseEntity course)
+        {
+            Mapper.Initialize(cfg => cfg.CreateMap<CourseEntity, CourseEditViewModel>()
+                                        .ForMember("Tags", c => c.MapFrom(cr => string.Join(",", cr.TagList)))
+                                        .ForMember("ModulesNumber", c => c.MapFrom(cr => cr.ModulesNumber)));
+            return Mapper.Map<CourseEditViewModel>(course);
+        }
+
+        public static CourseEntity ToCourseEntity(this CourseEditViewModel course)
+        {
+            Mapper.Initialize(cfg => cfg.CreateMap<CourseEditViewModel, CourseEntity>()
+                               .ForMember("TagList", c => c.MapFrom(cr => cr.Tags.Split(','))));
+            return Mapper.Map<CourseEntity>(course);
+        }
+
 
         public static ModuleBaseViewModel ToModuleBaseViewModel(this ModuleEntity module)
         {
@@ -68,12 +85,35 @@ namespace MvcPL.Infrastructure.Mappers
             return Mapper.Map<LessonBaseViewModel>(lesson);
         }
 
-        public static LessonEntity ToLessonBaseViewModel(this LessonBaseViewModel lesson)
+        public static LessonEntity ToLessonEntity(this LessonBaseViewModel lesson)
         {
             InitMapper<LessonBaseViewModel, LessonEntity>();
             return Mapper.Map<LessonEntity>(lesson);
         }
 
+        public static LessonContentViewModel ToLessonContentViewModel(this LessonEntity lesson)
+        {
+            InitMapper<LessonEntity, LessonContentViewModel>();
+            return Mapper.Map<LessonContentViewModel>(lesson);
+        }
+
+        public static LessonEntity ToLessonEntity(this LessonContentViewModel lesson)
+        {
+            InitMapper<LessonContentViewModel, LessonEntity>();
+            return Mapper.Map<LessonEntity>(lesson);
+        }
+
+        public static LessonPageEditModel ToLessonPageEditModel(this LessonPageEntity page)
+        {
+            InitMapper<LessonPageEntity, LessonPageEditModel>();
+            return Mapper.Map<LessonPageEditModel>(page);
+        }
+
+        public static LessonPageEntity ToLessonPageEntity(this LessonPageEditModel page)
+        {
+            InitMapper<LessonPageEditModel, LessonPageEntity>();
+            return Mapper.Map<LessonPageEntity>(page);
+        }
 
 
         public static QuizBaseViewModel ToQuizBaseViewModel(this QuizEntity quiz)
@@ -99,6 +139,18 @@ namespace MvcPL.Infrastructure.Mappers
         {
             InitMapper<ArticleBaseViewModel, HtmlArticleEntity>();
             return Mapper.Map<HtmlArticleEntity>(article);
+        }
+
+        public static ImageViewModel ToImageViewModel(this ImageEntity image)
+        {
+            InitMapper<ImageEntity, ImageViewModel>();
+            return Mapper.Map<ImageViewModel>(image);
+        }
+
+        public static ImageEntity ToImageEntity(this ImageViewModel image)
+        {
+            InitMapper<ImageViewModel, ImageEntity>();
+            return Mapper.Map<ImageEntity>(image);
         }
     }
 }

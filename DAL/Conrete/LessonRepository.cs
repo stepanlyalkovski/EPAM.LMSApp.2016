@@ -50,6 +50,15 @@ namespace DAL.Conrete
             return _context.Set<Module>().Find(moduleId).Lesson.ToDalLesson();
         }
 
+        public void AttachPage(DalLessonPage page, DalLesson lesson)
+        {
+            var localLesson = _context.Set<Lesson>().Local.First(l => l.Title == lesson.Title
+                                                                 && l.PageCount == lesson.PageCount);
+            if(localLesson.Pages == null)
+                localLesson.Pages = new List<LessonPage>();
+            localLesson.Pages.Add(page.ToOrmLessonPage());
+        }
+
         public void Remove(DalLesson lesson)
         {
             var ormLesson = _context.Set<Lesson>().Find(lesson.Id);

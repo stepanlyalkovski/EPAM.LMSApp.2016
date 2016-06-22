@@ -1,9 +1,47 @@
-﻿
-
+﻿@model IEnumerable<MvcPL.Models.CourseModels.CourseBaseViewModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "List";
     Layout = "~/Views/Shared/_CourseLayout.cshtml";
 }
-
-<h2>Courses</h2>
-     
+<h2>Course Catalog</h2>
+<div class="row">
+    <div class="input-group" id="adv-search">
+        @using (Ajax.BeginForm("Index", "Course",
+            new AjaxOptions
+            {
+                UpdateTargetId = "searchResult",
+                LoadingElementId = "loader",
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "post"
+            }))
+        {
+            <div class="form-group">
+                <b>Search By</b>
+                @Html.RadioButton("searchBy", "Name", true) Name
+                @Html.RadioButton("searchBy", "Author") Author
+                <div class="form-group">
+                    <label for="contain">
+                        Contains the tags
+                        <input class="form-control" type="text" name="tags" placeholder="You can enter tags here"/>
+                    </label>
+                    @*<label for="contain">
+                            <input class="form-control" type="text" name="searchField"/>
+                        </label>*@
+                </div>
+                <input type="text" class="form-control" placeholder="Search for courses" name="searchField"/>
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+        }
+    </div>
+    <hr/>
+</div>
+<p style="margin: 0 auto;width: 130px;">
+    <img class ="img-responsive"src="/Content/loader.gif" alt="loading..." style="display: none; margin: 0 auto;" id="loader">
+</p>
+<div class="row" id ="searchResult">
+    @Html.Partial("_CourseBaseList", Model)
+</div>
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}

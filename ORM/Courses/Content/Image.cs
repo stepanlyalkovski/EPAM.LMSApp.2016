@@ -7,7 +7,7 @@ namespace ORM.Courses.Content
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public byte[] Data { get; set; }
+        public string Path { get; set; }
         [ForeignKey("UserStorage")]
         public int StorageId { get; set; }
         public virtual UserStorage UserStorage { get; set; }

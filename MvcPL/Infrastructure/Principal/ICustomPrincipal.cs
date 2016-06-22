@@ -10,6 +10,5 @@ namespace MvcPL.Infrastructure.Principal
     public interface ICustomPrincipal : IPrincipal
     {
         int Id { get; set; }
-        string Email { get; set; }
     }
 }

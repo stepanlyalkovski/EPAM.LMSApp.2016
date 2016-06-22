@@ -39,6 +39,37 @@ namespace DAL.Conrete
             return _context.Set<Course>().FirstOrDefault(c => c.Title == title).ToDalCourse();
         }
 
+        public IEnumerable<DalCourse> GetRandom(int number)
+        {
+            return _context.Set<Course>().Where(c => c.Published)
+                                         .OrderBy(c => Guid.NewGuid())
+                                         .Take(number)
+                                         .AsEnumerable()
+                                         .Select(c => c.ToDalCourse())
+                                         .ToList();
+        }
+
+        public IEnumerable<DalCourse> GetByTags(IEnumerable<string> tags)
+        {
+            var result = new HashSet<Course>();
+            foreach (var tag in tags)
+            {
+               var courses =  _context.Set<Course>().Where(c => c.Tags.Any(t => t.TagField == tag));
+                foreach (var course in courses)
+                {
+                    result.Add(course);
+                }
+            }
+            return result.Select(t => t.ToDalCourse());
+        }
+
+        public IEnumerable<DalCourse> GetBySubString(string substring)
+        {
+            return _context.Set<Course>().Where(c => c.Title.StartsWith(substring))
+                                         .AsEnumerable()
+                                         .ToDalCourses();
+        }
+
         public IEnumerable<DalCourse> GetStorageCourses(int storageId)
         {
             return _context.Set<UserStorage>().Find(storageId).Courses.ToDalCourses();
@@ -71,7 +102,11 @@ namespace DAL.Conrete
             ormCourse.Title = course.Title;
             ormCourse.Description = course.Description;
             ormCourse.Published = course.Published;
-            ormCourse.Tags = course.TagList.Select(t => new Tag(t)).ToList();
+            var tags = DistinctTags(course.TagList.Select(t => new Tag(t)).ToList());
+            ormCourse.Tags.Clear();
+            ormCourse.Tags = tags;
+
+
         }
 
         public IEnumerable<DalCourse> GetAll()
@@ -80,6 +115,19 @@ namespace DAL.Conrete
         }
 
         private IList<Tag> DistinctTags(IList<Tag> tags)
+        {
+            var distinctTags = new List<Tag>();
+
+            foreach (var tag in tags)
+            {
+                var dbTag = _context.Set<Tag>().FirstOrDefault(t => t.TagField == tag.TagField);
+                distinctTags.Add(dbTag ?? tag);
+            }
+
+            return distinctTags;
+        }
+
+        private IList<Tag> DistinctTags(IList<Tag> tags, IList<Tag> ormCollection)
         {
             var distinctTags = new List<Tag>();
 

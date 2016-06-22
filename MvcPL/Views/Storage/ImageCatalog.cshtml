@@ -1,0 +1,48 @@
+﻿@using System.Web.Mvc.Ajax
+@model IList<MvcPL.Models.ImageViewModel>
+@{
+    ViewBag.Title = "ImageCatalog";
+    Layout = "~/Views/Shared/_CourseLayout.cshtml";
+}
+
+<h2>ImageCatalog</h2>
+<h3>Выберите файл для загрузки</h3>
+<div class="col-md-12">
+    @using (Html.BeginForm("Upload", "Storage", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    {
+
+        <input type="text" name="title"/>
+        <input type="file" name="upload"/><br>
+        <input type="submit" value="Загрузить"/>
+    }
+    <hr />
+</div>
+
+<div class="row">
+    @foreach (var image in Model)
+    {
+
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="#">
+                <img src="@Url.Action("GetImage", new {id = image.Id})" class="img-responsive" />
+            </a>
+            <div class="caption">
+                <h3>@image.Title</h3>
+                @Html.ActionLink("Delete", "DeleteImage","Storage", new {id = image.Id}, null)
+            </div>
+        </div>
+
+    }
+</div>
+
+@Ajax.ActionLink("Ajax Link", "Test", new AjaxOptions
+{
+    UpdateTargetId = "dest",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "GET"
+});
+<div id="dest"></div>
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}

@@ -19,5 +19,6 @@ namespace DAL
         ICodeSampleRepository CreateCodeSampleRepository(DbContext context);
         IEnrolmentRepository CreatEnrolmentRepository(DbContext context);
         ICourseProgressRepository CreateCourseProgressRepository(DbContext context);
+        ITagRepository CreaTagRepository(DbContext context);
     }
 }

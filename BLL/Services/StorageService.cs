@@ -35,6 +35,11 @@ namespace BLL.Services
             return _uow.Images.GetStorageImages(storageId).Select(im => im.ToImageEntity()).ToList();
         }
 
+        public ImageEntity GetImage(int id)
+        {
+            return _uow.Images.Get(id).ToImageEntity();
+        }
+
         public void RemoveImage(ImageEntity image)
         {
             _uow.Images.Remove(image.ToDalImage());

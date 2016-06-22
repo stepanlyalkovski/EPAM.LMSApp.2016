@@ -22,6 +22,7 @@ namespace DAL.Interfaces.Repository
         ICodeSampleRepository CodeSamples { get; set; }
         IEnrolmentRepository Enrolments { get; set; }
         ICourseProgressRepository CourseProgresses { get; set; }
+        ITagRepository Tags { get; set; }
         int Complete();
     }
 }

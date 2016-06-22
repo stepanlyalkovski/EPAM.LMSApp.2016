@@ -57,6 +57,8 @@ namespace DependencyResolver
             kernel.Bind<ICodeSampleRepository>().To<CodeSampleRepository>();
             kernel.Bind<IEnrolmentRepository>().To<EnrolmentRepository>();
             kernel.Bind<ICourseProgressRepository>().To<CourseProgressRepository>();
+            kernel.Bind<ITagRepository>().To<TagRepository>();
+
             kernel.Bind<IRepositoryFactory>().ToFactory();
 
             kernel.Bind<IUserService>().To<UserService>();
@@ -67,7 +69,7 @@ namespace DependencyResolver
             kernel.Bind<IModuleService>().To<ModuleService>();
             kernel.Bind<ILessonService>().To<LessonService>();
             kernel.Bind<IEnrolmentService>().To<EnrolmentService>();
-            kernel.Bind<ILessonPageService>().To<ILessonPageService>();
+            kernel.Bind<ILessonPageService>().To<LessonPageService>();
         }
     }
 }

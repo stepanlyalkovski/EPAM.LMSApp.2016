@@ -7,5 +7,6 @@ namespace DAL.Interfaces.Repository
     public interface ILessonRepository : IRepository<DalLesson>
     {
         DalLesson GetModuleLesson(int moduleId);
+        void AttachPage(DalLessonPage page, DalLesson lesson);
     }
 }
