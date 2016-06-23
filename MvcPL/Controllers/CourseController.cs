@@ -25,20 +25,21 @@ namespace MvcPL.Controllers
             _courseService = courseService;
             _userService = userService;
             _moduleService = moduleService;
+            //Temporary
         }
 
         // GET: Course
 
-        public ActionResult Index(string searchBy, string searchField, string tags)
+        public ActionResult Index(string searchBy, string searchField, string tags, int page = 1)
         {
             ViewBag.Title = "Courses";
             ViewBag.Id = _userService.GetUserEntity(User.Identity.Name).Id;
             IEnumerable<CourseBaseViewModel> courses;
-
+            int pageSize = 5;
             //TODO searchBy
             if (String.IsNullOrEmpty(searchField) && String.IsNullOrEmpty(tags))
             {
-                int courseNumber = 5;
+                int courseNumber = 10;
 
                 courses = _courseService.GetRandom(courseNumber).Select(c => c.ToCourseBaseViewModel()).ToList();
             }
@@ -47,12 +48,14 @@ namespace MvcPL.Controllers
                 courses = _courseService.Search(searchField, tags.Split()).Select(c => c.ToCourseBaseViewModel()).ToList();
             }
 
+            var courseList = GetPageCourseList(courses, page, pageSize);
+            courseList.PageUrl = courseList.PageUrl = x => Url.Action("Index", "Course", new { page = x });
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_CourseBaseList", courses);
+                return PartialView("_CourseBaseList", courseList);
             }
 
-            return View(courses);
+            return View(courseList);
         }
 
         //[ChildActionOnly]
@@ -82,16 +85,28 @@ namespace MvcPL.Controllers
         //}
 
         [Authorize(Roles = "Manager")]
-        public ActionResult ManageList()
+        public ActionResult ManageList(int page = 1)
         {
             int storageId = _userService.GetUserEntity(User.Identity.Name).Id;
+            int pageSize = 5;
+
             var courses = _courseService.GetCreatedCourses(storageId).Select(c =>
             {
                 var course = c.ToCourseBaseViewModel();
                 course.IsEditable = true;
                 return course;
             }).ToList();
-            return View(courses);
+
+            var courseList = GetPageCourseList(courses, page, pageSize);
+            courseList.PageUrl = x => Url.Action("ManageList", "Course", new {page = x});
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_CourseBaseList", courseList);
+
+            }
+            return View(courseList);
+            
         }
 
         [Authorize(Roles = "Manager")]
@@ -182,6 +197,27 @@ namespace MvcPL.Controllers
                 _courseService.Update(course.ToCourseEntity());
                return RedirectToAction("ManageList", "Course");
 
+        }
+
+        private CourseBaseListViewModel GetPageCourseList(IEnumerable<CourseBaseViewModel> courses, int page, int pageSize)
+        {
+            if (courses == null)
+                return null;
+
+            var PageCourses = courses.Skip((page - 1)*pageSize).Take(pageSize);
+
+            PageInfo pageInfo = new PageInfo
+            {
+                PageNumber = page,
+                PageSize = pageSize,
+                TotalItems = courses.Count()
+            };
+
+            return new CourseBaseListViewModel
+            {
+                Courses = PageCourses,
+                PageInfo = pageInfo
+            };
         }
     }
 

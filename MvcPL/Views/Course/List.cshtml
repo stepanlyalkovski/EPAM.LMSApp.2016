@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MvcPL.Models.CourseModels.CourseBaseViewModel>
+﻿@model MvcPL.Models.CourseModels.CourseBaseListViewModel
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_CourseLayout.cshtml";
@@ -6,7 +6,7 @@
 <h2>Course Catalog</h2>
 <div class="row">
     <div class="input-group" id="adv-search">
-        @using (Html.BeginForm("List", "Course", FormMethod.Get))
+        @using (Html.BeginForm("Index", "Course", FormMethod.Get))
         {
             <div class="form-group">
                 <b>Search By</b>
@@ -28,14 +28,14 @@
     </div>
     <hr/>
 </div>
-@if (!Model.Any())
+@if (!Model.Courses.Any())
 {
     <p>There is no courses:(</p>
 }
 else
 {
     <div class="row" id="searchResult">
-        @{Html.RenderPartial("_CourseBaseList", Model);}
+        @{Html.RenderPartial("_CourseBaseList", Model.Courses);}
     </div>
 }
 

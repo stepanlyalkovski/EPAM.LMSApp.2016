@@ -4,11 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using BLL.Interfaces.Services;
 
 namespace MvcPL.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUserService _userService;
+        public HomeController(IUserService userService)
+        {
+            // Temporary check
+            _userService = userService;
+
+        }
         public ActionResult Index()
         {
             return View();

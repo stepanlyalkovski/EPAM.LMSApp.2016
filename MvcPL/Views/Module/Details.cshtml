@@ -26,10 +26,38 @@ else
 
 @if (Model.Lesson != null)
 {
-    <p>@Html.ActionLink(Model.Lesson.Title, "ContentEdit", "Lesson", new {lessonId = Model.Lesson.Id}, null)</p>
-}
-else
-{
-   @Html.ActionLink("Create Lesson", "Create", "Lesson", new {moduleId = Model.BaseInfo.Id}, null)
-}
+    <dl class="dl-horizontal">
+        <dt>
+            Title
+        </dt>
 
+        <dd>
+            @Model.Lesson.Title
+        </dd>
+
+        <dt>
+            Description
+        </dt>
+
+        <dd>
+            @Model.Lesson.Description
+        </dd>
+
+        <dt>
+            Pages
+        </dt>
+
+        <dd>
+            @Model.Lesson.PageCount
+        </dd>
+    </dl>
+        <p>@Html.ActionLink(Model.Lesson.Title, "ContentEdit", "Lesson", new { lessonId = Model.Lesson.Id }, null)</p>
+        }
+        else
+        {
+        @Html.ActionLink("Create Lesson", "Create", "Lesson", new { moduleId = Model.BaseInfo.Id }, null)
+        }
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MvcPL.Models.CourseModels.CourseBaseViewModel>
+﻿@model MvcPL.Models.CourseModels.CourseBaseListViewModel
 
 @{
     ViewBag.Title = "ManageList";
@@ -6,5 +6,8 @@
 }
 
 <h2>ManageList</h2>
- @{Html.RenderPartial("_CourseBaseList", Model);}
+
+<div class="row" id="searchResult">
+    @Html.Partial("_CourseBaseList", Model)
+</div>
 

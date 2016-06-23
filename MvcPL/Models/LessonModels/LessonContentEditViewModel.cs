@@ -5,9 +5,11 @@ using System.Web;
 
 namespace MvcPL.Models.LessonModels
 {
-    public class LessonContentViewModel
+    public class LessonContentEditViewModel
     {
         public LessonBaseViewModel BaseInfo { get; set; }
-        public  IList<LessonPageEditModel> Pages {get; set;}
+        public LessonPageEditModel Page {get; set;}
+        public PageInfo PageInfo { get; set; }
+
     }
 }

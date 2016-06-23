@@ -157,6 +157,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LessonController.cs" />
+    <Compile Include="Controllers\LessonPageController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StorageController.cs" />
@@ -164,20 +165,24 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CaptchaImage.cs" />
+    <Compile Include="Infrastructure\FileStorage.cs" />
+    <Compile Include="Infrastructure\Helpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\Mappers\CourseMappers.cs" />
     <Compile Include="Infrastructure\Mappers\ProfileMappers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Infrastructure\Principal\CustomPrincipal.cs" />
     <Compile Include="Infrastructure\Principal\ICustomPrincipal.cs" />
     <Compile Include="Models\ArticleModels\ArticleBaseViewModel.cs" />
+    <Compile Include="Models\CourseModels\CourseBaseListViewModel.cs" />
     <Compile Include="Models\CourseModels\CourseBaseViewModel.cs" />
     <Compile Include="Models\CourseModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\CourseModels\CourseEditViewModel.cs" />
     <Compile Include="Models\CourseModels\CourseFullViewModel.cs" />
+    <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
-    <Compile Include="Models\LessonModels\LessonContentViewModel.cs" />
+    <Compile Include="Models\LessonModels\LessonContentEditViewModel.cs" />
     <Compile Include="Models\LessonModels\LessonBaseViewModel.cs" />
-    <Compile Include="Models\LessonModels\LessonPageEditModel.cs" />
+    <Compile Include="Models\LessonPageModels\LessonPageEditModel.cs" />
     <Compile Include="Models\LogOnViewModel.cs" />
     <Compile Include="Models\ModuleModels\ModuleBaseViewModel.cs" />
     <Compile Include="Models\ModuleModels\ModuleContentViewModel.cs" />
@@ -199,6 +204,7 @@
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\loader-horizontal.gif" />
     <Content Include="Content\loader.gif" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -273,6 +279,7 @@
     <Content Include="Views\Shared\_CourseBaseList.cshtml" />
     <Content Include="Views\Course\ManageList.cshtml" />
     <Content Include="Views\Module\Edit.cshtml" />
+    <Content Include="Views\Shared\_LessonPageEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

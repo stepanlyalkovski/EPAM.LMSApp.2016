@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BLL.Interfaces.Services;
 using MvcPL.Infrastructure.Mappers;
+using MvcPL.Models;
 using MvcPL.Models.LessonModels;
 
 namespace MvcPL.Controllers
@@ -49,24 +50,42 @@ namespace MvcPL.Controllers
             return RedirectToAction("ContentEdit", "Lesson", new {lessonId});
         }
 
-        public ActionResult ContentEdit(int lessonId)
+        public ActionResult ContentEdit(int lessonId, int page = 1)
         {
             var dbLesson = _lessonService.GetLesson(lessonId);
-            var dbPages = _lessonPageService.GetLessonPages(lessonId);
-            var viewLesson = new LessonContentViewModel
+            var dbPages = _lessonPageService.GetLessonPages(lessonId).ToList();
+            int pagesCount = dbPages.Count();
+
+            var currentPage = dbPages.Skip((page - 1)).First();
+
+            PageInfo pageInfo= new PageInfo
+            {
+                PageSize = 1,
+                PageNumber = page,
+                TotalItems = pagesCount
+            };
+
+            var viewLesson = new LessonContentEditViewModel
             {
                 BaseInfo = dbLesson.ToLessonBaseViewModel(),
-                Pages = new List<LessonPageEditModel>(dbPages.Select(p => p.ToLessonPageEditModel()))
+                Page = currentPage.ToLessonPageEditModel(),
+                PageInfo = pageInfo
             };
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_LessonPageEdit", viewLesson);
+            }
             return View(viewLesson);
         }
 
         [HttpPost]
-        public ActionResult ContentEdit(LessonContentViewModel lesson)
+        public ActionResult ContentEdit(LessonContentEditViewModel lesson)
         {
-
+            
 
             return View();
         }
+
+        
     }
 }

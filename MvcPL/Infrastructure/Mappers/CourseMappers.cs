@@ -91,15 +91,15 @@ namespace MvcPL.Infrastructure.Mappers
             return Mapper.Map<LessonEntity>(lesson);
         }
 
-        public static LessonContentViewModel ToLessonContentViewModel(this LessonEntity lesson)
+        public static LessonContentEditViewModel ToLessonContentViewModel(this LessonEntity lesson)
         {
-            InitMapper<LessonEntity, LessonContentViewModel>();
-            return Mapper.Map<LessonContentViewModel>(lesson);
+            InitMapper<LessonEntity, LessonContentEditViewModel>();
+            return Mapper.Map<LessonContentEditViewModel>(lesson);
         }
 
-        public static LessonEntity ToLessonEntity(this LessonContentViewModel lesson)
+        public static LessonEntity ToLessonEntity(this LessonContentEditViewModel lesson)
         {
-            InitMapper<LessonContentViewModel, LessonEntity>();
+            InitMapper<LessonContentEditViewModel, LessonEntity>();
             return Mapper.Map<LessonEntity>(lesson);
         }
 

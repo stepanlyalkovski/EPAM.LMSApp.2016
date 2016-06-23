@@ -1,9 +1,10 @@
-﻿@model IEnumerable<MvcPL.Models.CourseModels.CourseBaseViewModel>
+﻿@using MvcPL.Infrastructure.Helpers
+@model MvcPL.Models.CourseModels.CourseBaseListViewModel
 @{
     Layout = null;
 }
 
-@foreach (var course in Model)
+@foreach (var course in Model.Courses)
 {
     <div>
 
@@ -56,5 +57,11 @@
         <hr />
     </div>
 }
+<p style="margin: 0 auto; width: 130px;">
+    <img class="img-responsive" src="/Content/loader-horizontal.gif" alt="loading..." style="display: none; margin: 0 auto;" id="paging-loader">
+</p>
+<div class="btn-group">
+    @Html.PageLinks(Model.PageInfo, "searchResult", "paging-loader", Model.PageUrl)
+</div>
 
 

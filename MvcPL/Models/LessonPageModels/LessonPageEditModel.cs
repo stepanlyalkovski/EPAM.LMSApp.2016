@@ -15,6 +15,7 @@ namespace MvcPL.Models.LessonModels
         [ScaffoldColumn(false)]
         public int LessonId { get; set; }
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Text { get; set; }
         public byte[] ImageData { get; set; }
         public string CodeSample { get; set; }

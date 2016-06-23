@@ -44,6 +44,7 @@ namespace MvcPL.Controllers
             return View(images);
         }
 
+
         public ActionResult Create(ImageViewModel image)
         {
 
@@ -62,10 +63,14 @@ namespace MvcPL.Controllers
                 Directory.CreateDirectory(path);
                 string virtualPath = $"~/App_Data/Storages/User{storageId}/" + fileName;               
                 upload.SaveAs(Server.MapPath(virtualPath));
-                ImageEntity image = new ImageEntity { Path = virtualPath };
-                image.StorageId = storageId;
-                image.Title = title;
+                ImageEntity image = new ImageEntity
+                {
+                    Path = virtualPath,
+                    StorageId = storageId,
+                    Title = title
+                };
                 _storageService.AddImage(image);
+
             }
             return RedirectToAction("ImageCatalog");
         }
