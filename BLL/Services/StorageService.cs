@@ -40,6 +40,36 @@ namespace BLL.Services
             return _uow.Images.Get(id).ToImageEntity();
         }
 
+        public ImageEntity GetImage(string path)
+        {
+            return _uow.Images.Get(path).ToImageEntity();
+        }
+
+        public bool ImageInUse(int imageId)
+        {
+            var image = _uow.Images.Get(imageId);
+            var storage = _uow.Storages.Get(image.StorageId);
+            var courses = _uow.Courses.GetStorageCourses(storage.UserId);
+            foreach (var course in courses)
+            {
+                var modules = _uow.Modules.GetCourseModules(course.Id);
+                foreach (var module in modules)
+                {
+                    var lesson = _uow.Lessons.GetModuleLesson(module.Id);
+                    if (lesson == null) continue;
+
+                    var pages = _uow.LessonPages.GetLessonPages(lesson.Id);
+
+                    if (pages.Any(page => page.ImageId == imageId))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public void RemoveImage(ImageEntity image)
         {
             _uow.Images.Remove(image.ToDalImage());

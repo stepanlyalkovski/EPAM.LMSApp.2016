@@ -51,8 +51,8 @@ namespace DAL.Conrete
         {
             var ormPage = _context.Set<LessonPage>().Find(page.Id);
             ormPage.Title = page.Title;
-            ormPage.Text = ormPage.Text;
-
+            ormPage.Text = page.Text;
+            ormPage.ImageId = page.ImageId;
         }
 
         public IEnumerable<DalLessonPage> GetAll()

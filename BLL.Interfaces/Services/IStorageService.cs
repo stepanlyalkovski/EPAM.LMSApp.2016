@@ -12,6 +12,8 @@ namespace BLL.Interfaces.Services
         void AddImage(ImageEntity image);
         IEnumerable<ImageEntity> GetImages(int storageId);
         ImageEntity GetImage(int id);
+        ImageEntity GetImage(string path);
+        bool ImageInUse(int imageId);
         void RemoveImage(ImageEntity image);
 
         void AddCodeSample(CodeSampleEntity code);

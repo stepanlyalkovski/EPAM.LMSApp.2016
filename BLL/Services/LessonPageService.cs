@@ -58,7 +58,7 @@ namespace BLL.Services
             {               
                 var image = _uow.Images.GetPageImage(page.Id).ToImageEntity();
                 var codeSample = _uow.CodeSamples.GetPageCodeSample(page.Id).ToCodeSampleEntity();
-                var fullPage = new LessonPageFullEntity {PageInfo = page, Image = image, CodeSample = codeSample};
+                var fullPage = new LessonPageFullEntity {Pages = page, Image = image, CodeSample = codeSample};
                 fullPages.Add(fullPage);
             }
 

@@ -5,7 +5,7 @@ namespace BLL.Interfaces.Entities.Courses
 {
     public class LessonPageFullEntity
     {
-        public LessonPageEntity PageInfo { get; set; }
+        public LessonPageEntity Pages { get; set; }
         public ImageEntity Image { get; set; }
         public CodeSampleEntity CodeSample { get; set; }
     }

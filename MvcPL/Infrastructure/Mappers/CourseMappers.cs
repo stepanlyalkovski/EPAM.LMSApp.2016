@@ -91,6 +91,18 @@ namespace MvcPL.Infrastructure.Mappers
             return Mapper.Map<LessonEntity>(lesson);
         }
 
+        public static LessonBaseEditModel ToLessonBaseEditModel(this LessonEntity lesson)
+        {
+            InitMapper<LessonEntity,LessonBaseEditModel>();
+            return Mapper.Map<LessonBaseEditModel>(lesson);
+        }
+
+        public static LessonEntity ToLessonEntity(this LessonBaseEditModel lesson)
+        {
+            InitMapper<LessonBaseEditModel, LessonEntity>();
+            return Mapper.Map<LessonEntity>(lesson);
+        }
+
         public static LessonContentEditViewModel ToLessonContentViewModel(this LessonEntity lesson)
         {
             InitMapper<LessonEntity, LessonContentEditViewModel>();
@@ -114,6 +126,8 @@ namespace MvcPL.Infrastructure.Mappers
             InitMapper<LessonPageEditModel, LessonPageEntity>();
             return Mapper.Map<LessonPageEntity>(page);
         }
+
+
 
 
         public static QuizBaseViewModel ToQuizBaseViewModel(this QuizEntity quiz)

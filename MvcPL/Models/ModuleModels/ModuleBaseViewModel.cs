@@ -7,6 +7,7 @@ namespace MvcPL.Models.ModuleModels
     {
         [HiddenInput]
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }

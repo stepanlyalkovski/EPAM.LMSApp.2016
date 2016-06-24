@@ -10,7 +10,7 @@ using ORM.Courses.Content;
 
 namespace ORM
 {
-    class DbInitializer : DropCreateDatabaseIfModelChanges<EntityModel>
+    class DbInitializer : CreateDatabaseIfNotExists<EntityModel>
     {
         protected override void Seed(EntityModel db)
         {

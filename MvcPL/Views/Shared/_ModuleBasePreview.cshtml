@@ -20,9 +20,9 @@
         </dd>
 
     </dl>
-@Html.ActionLink("Show more", "Details", "Module", new {moduleId = Model.Id}, null)
+@Html.ActionLink("Show more", "Details", "Module", new {moduleId = Model.Id, courseId = Model.CourseId }, null)
     @if (Model.IsEditable)
     {
-        @Html.ActionLink("Edit", "Edit", "Module", new { Id = Model.Id }, null)
+        @Html.ActionLink("Edit", "Edit", "Module", new { Id = Model.Id}, null)
     }
 </div>

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using BLL.Interfaces.Entities.Courses.Content;
 using BLL.Interfaces.Services;
+using MvcPL.Infrastructure;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models;
 
@@ -52,17 +53,16 @@ namespace MvcPL.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(string title, HttpPostedFileBase upload)
+        public ActionResult UploadImage(string title, HttpPostedFileBase upload)
         {
             if (upload != null)
             {
-                string fileName = System.IO.Path.GetFileName(upload.FileName);
                 
                 var storageId = _userService.GetUserEntity(User.Identity.Name).Id;
-                string path = Server.MapPath($"~/App_Data/Storages/User{storageId}/");           
-                Directory.CreateDirectory(path);
-                string virtualPath = $"~/App_Data/Storages/User{storageId}/" + fileName;               
-                upload.SaveAs(Server.MapPath(virtualPath));
+                string path = Server.MapPath($"~/App_Data/Storages/User{storageId}/");
+                string fileName =  FileStorageHepler.SaveFileToDisk(upload, path);                       
+                string virtualPath = $"~/App_Data/Storages/User{storageId}/" + fileName; 
+                              
                 ImageEntity image = new ImageEntity
                 {
                     Path = virtualPath,
@@ -79,6 +79,22 @@ namespace MvcPL.Controllers
         {
             var image = _storageService.GetImage(id).ToImageViewModel();
             return new FilePathResult(Server.MapPath(image.Path),"image/*");
+        }
+
+        public ActionResult DeleteImage(int id)
+        {
+            var image = _storageService.GetImage(id);
+            bool isUsed = _storageService.ImageInUse(image.Id);
+            if (isUsed)
+            {
+                TempData["Message"] =
+                    "Current image is used by one of yours lesson pages! First of all, remove image from lesson page";
+                return RedirectToAction("ImageCatalog");
+            }
+            string path = Server.MapPath(image.Path);
+            _storageService.RemoveImage(image);
+            System.IO.File.Delete(path);
+            return RedirectToAction("ImageCatalog");
         }
 
 

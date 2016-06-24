@@ -32,7 +32,14 @@ else
         </dt>
 
         <dd>
-            @Model.Lesson.Title
+@if (Model.BaseInfo.IsEditable)
+{
+    @Html.ActionLink(Model.Lesson.Title, "ContentEdit", "Lesson", new {lessonId = Model.Lesson.Id}, null)
+}
+else
+{
+    <p>Lesson Content</p>
+}
         </dd>
 
         <dt>
@@ -51,12 +58,26 @@ else
             @Model.Lesson.PageCount
         </dd>
     </dl>
-        <p>@Html.ActionLink(Model.Lesson.Title, "ContentEdit", "Lesson", new { lessonId = Model.Lesson.Id }, null)</p>
-        }
-        else
-        {
-        @Html.ActionLink("Create Lesson", "Create", "Lesson", new { moduleId = Model.BaseInfo.Id }, null)
-        }
+    if (Model.BaseInfo.IsEditable)
+    {
+        @Html.ActionLink("Edit", "Edit", "Lesson", new { lessonId = Model.Lesson.Id }, null)
+        @Html.ActionLink("Delete", "Delete", "Lesson", new { lessonId = Model.Lesson.Id, moduleId = Model.BaseInfo.Id }, null)
+    }
+
+}
+else
+{
+    if (Model.BaseInfo.IsEditable)
+    {
+
+        @Html.ActionLink("Create Lesson", "Create", "Lesson", new {moduleId = Model.BaseInfo.Id}, null)
+    }
+    else
+    {
+        <p>No Lesson here</p>
+    }
+}
+
 @section scripts
 {
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")

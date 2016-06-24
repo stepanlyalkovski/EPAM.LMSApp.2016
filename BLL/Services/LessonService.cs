@@ -35,6 +35,7 @@ namespace BLL.Services
         public void RemoveLesson(LessonEntity lesson)
         {
             _uow.Lessons.Remove(lesson.ToDalLesson());
+            _uow.Complete();
         }
 
         public void Update(LessonEntity lesson)
@@ -50,7 +51,9 @@ namespace BLL.Services
 
         public LessonEntity GetModuleLesson(int moduleId)
         {
-            return _uow.Lessons.GetModuleLesson(moduleId).ToLessonEntity();
+            var lesson = _uow.Lessons.GetModuleLesson(moduleId).ToLessonEntity();
+            lesson.ModuleId = moduleId;
+            return lesson;
         }
     }
 }

@@ -1,0 +1,37 @@
+﻿@using MvcPL.Infrastructure.Helpers
+@model MvcPL.Models.LessonModels.LessonContentEditViewModel
+@*@{Layout == null}*@
+
+    <div id="pageBlock">
+        <p>@Model.PageInfo.PageNumber / @Model.PageInfo.TotalPages </p>
+
+        @using (Html.BeginForm("Edit", "LessonPage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="hidden" value="@Model.PageInfo.PageNumber" name="pageNumber">
+            @Html.HiddenFor(m => m.Page.Id)
+            @Html.HiddenFor(m => m.Page.LessonId)
+            <div class="well clearfix" id="editBlock">
+                <div class="col-sm-6 col-lg-6">
+                    @Html.EditorFor(m => m.Page.Title)
+                    <div class="form-group">
+                        @*<textarea class="form-control" rows="5" name="Text" id="comment" placeholder="Enter your info"> @Model.Page.Text</textarea>*@
+                        @Html.EditorFor(m => m.Page.Text)
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    @if (Model.Page.Image != null)
+                    {
+                        @Html.HiddenFor(m => m.Page.Image.Id)
+                        <img src="@Url.Action("GetImage","Storage", new {id = Model.Page.Image.Id})" class="img-responsive" alt="@Model.Page.Image.Title" />
+
+                    }
+                    @Html.EditorFor(m => m.Page.Image.Title)
+                    <input type="file" name="upload" value="Load" /><br>
+                    <input type="submit" value="Submit" />
+                </div>
+            </div>
+        }
+        
+        @Html.LessonPageLinks(Model.PageInfo, "pageBlock", "", x => Url.Action("ContentEdit", "Lesson", new {lessonId = Model.BaseInfo.Id, page = x}))
+    </div>
+

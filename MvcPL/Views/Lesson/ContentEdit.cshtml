@@ -6,11 +6,17 @@
 }
 
 <div class="row">
-    <h2>@Model.BaseInfo.Title</h2>
-    <p>@Model.BaseInfo.Description</p>
-    <hr/>
-    @Html.Partial("_LessonPageEdit", Model)
+    @if (Model != null)
+    {
+        <h2>@Model.BaseInfo.Title</h2>
+        <p>@Model.BaseInfo.Description</p>
+        <hr/>
+        @Html.Partial("_LessonPageEdit", Model)
+    }
+
+    @Html.ActionLink("Back to List", "Details", "Module", new { moduleId = Model.BaseInfo.ModuleId}, null)
 </div>
+
 @section scripts
 {
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")

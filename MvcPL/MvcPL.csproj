@@ -165,7 +165,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CaptchaImage.cs" />
-    <Compile Include="Infrastructure\FileStorage.cs" />
+    <Compile Include="Infrastructure\FileStorageHelper.cs" />
     <Compile Include="Infrastructure\Helpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\Mappers\CourseMappers.cs" />
     <Compile Include="Infrastructure\Mappers\ProfileMappers.cs" />
@@ -178,6 +178,7 @@
     <Compile Include="Models\CourseModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\CourseModels\CourseEditViewModel.cs" />
     <Compile Include="Models\CourseModels\CourseFullViewModel.cs" />
+    <Compile Include="Models\LessonModels\LessonBaseEditModel.cs" />
     <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\LessonModels\LessonContentEditViewModel.cs" />
@@ -280,6 +281,8 @@
     <Content Include="Views\Course\ManageList.cshtml" />
     <Content Include="Views\Module\Edit.cshtml" />
     <Content Include="Views\Shared\_LessonPageEdit.cshtml" />
+    <Content Include="Views\Lesson\Edit.cshtml" />
+    <Content Include="Views\Lesson\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
