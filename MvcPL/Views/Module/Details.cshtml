@@ -34,7 +34,10 @@ else
         <dd>
 @if (Model.BaseInfo.IsEditable)
 {
-    @Html.ActionLink(Model.Lesson.Title, "ContentEdit", "Lesson", new {lessonId = Model.Lesson.Id}, null)
+    @Html.ActionLink(Model.Lesson.Title, "ContentEdit", "Lesson", new
+    {
+        lessonId = Model.Lesson.Id, moduleId = Model.BaseInfo.Id, courseId = Model.BaseInfo.CourseId
+    }, null)
 }
 else
 {
@@ -60,8 +63,17 @@ else
     </dl>
     if (Model.BaseInfo.IsEditable)
     {
-        @Html.ActionLink("Edit", "Edit", "Lesson", new { lessonId = Model.Lesson.Id, moduleId = Model.BaseInfo.Id }, null)
-        @Html.ActionLink("Delete", "Delete", "Lesson", new { lessonId = Model.Lesson.Id, moduleId = Model.BaseInfo.Id }, null)
+        @Html.ActionLink("Edit", "Edit", "Lesson", new
+   {
+       courseId = Model.BaseInfo.CourseId,
+       moduleId = Model.BaseInfo.Id,
+       lessonId = Model.Lesson.Id
+
+   }, null)
+        @Html.ActionLink("Delete", "Delete", "Lesson", new
+        {
+            lessonId = Model.Lesson.Id, moduleId = Model.BaseInfo.Id, courseId = Model.BaseInfo.CourseId
+        }, null)
     }
 
 }
@@ -77,7 +89,7 @@ else
         <p>No Lesson here</p>
     }
 }
-
+@Html.ActionLink("Back to Module List", "Content", "Course", new { courseId = Model.BaseInfo.CourseId }, null)
 @section scripts
 {
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")

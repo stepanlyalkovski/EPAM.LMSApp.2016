@@ -13,6 +13,8 @@ namespace MvcPL.Models.LessonModels
         public int Id { get; set; }
         [HiddenInput]
         public int ModuleId { get; set; }
+        [HiddenInput]
+        public int CourseId { get; set; }
         [Required]
         public string Title { get; set; }
         [DataType(DataType.MultilineText)]

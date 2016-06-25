@@ -4,12 +4,15 @@
 
     <div id="pageBlock">
         <p>@Model.PageInfo.PageNumber / @Model.PageInfo.TotalPages </p>
-
+        <p>Course - @Model.BaseInfo.CourseId | Module - @Model.BaseInfo.ModuleId</p>
         @using (Html.BeginForm("Edit", "LessonPage", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <input type="hidden" value="@Model.PageInfo.PageNumber" name="pageNumber">
             @Html.HiddenFor(m => m.Page.Id)
             @Html.HiddenFor(m => m.Page.LessonId)
+            <input type="hidden" name="moduleId" value="@Model.BaseInfo.ModuleId"/>
+            <input type="hidden" name="courseId" value="@Model.BaseInfo.CourseId"/>
+
             <div class="well clearfix" id="editBlock">
                 <div class="col-sm-6 col-lg-6">
                     @Html.EditorFor(m => m.Page.Title)
@@ -32,6 +35,12 @@
             </div>
         }
         
-        @Html.LessonPageLinks(Model.PageInfo, "pageBlock", "", x => Url.Action("ContentEdit", "Lesson", new {lessonId = Model.BaseInfo.Id, page = x}))
+        @Html.LessonPageLinks(Model.PageInfo, "pageBlock", "", x => Url.Action("ContentEdit", "Lesson", new
+                                                                               {
+                                                                                   lessonId = Model.BaseInfo.Id,
+                                                                                   moduleId = Model.BaseInfo.ModuleId,
+                                                                                   courseId = Model.BaseInfo.CourseId,
+                                                                                   page = x
+                                                                               }))
     </div>
 

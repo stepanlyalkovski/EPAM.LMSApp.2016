@@ -41,10 +41,11 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.Id)
-        <input type="hidden" value="@ViewBag.ModuleId" name="moduleId"/>
+        @Html.HiddenFor(m => m.ModuleId)
+        @Html.HiddenFor(m => m.CourseId)
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to Module", "Details", "Module", new { moduleId = Model.ModuleId, courseId = Model.CourseId }, null)
         </div>
     }
 </div>

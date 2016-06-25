@@ -33,10 +33,11 @@ namespace MvcPL.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(LessonPageEditModel page, int pageNumber, HttpPostedFileBase upload)
+        public ActionResult Edit(LessonPageEditModel page, int pageNumber, HttpPostedFileBase upload,
+                                 int moduleId, int courseId)
         {
             var resultPage = page.ToLessonPageEntity();
-
+            
             if (upload != null)
             {
                 var storageId = _userService.GetUserEntity(User.Identity.Name).Id;
@@ -58,7 +59,13 @@ namespace MvcPL.Controllers
             }
 
             _lessonPage.Update(resultPage);
-            return RedirectToAction("ContentEdit", "Lesson", new {lessonId = page.LessonId, page = pageNumber});
+            return RedirectToAction("ContentEdit", "Lesson", new
+            {
+                lessonId = page.LessonId,
+                moduleId = moduleId,
+                courseId = courseId,
+                page = pageNumber
+            });
         }
     }
 }

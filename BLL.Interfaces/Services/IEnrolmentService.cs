@@ -11,6 +11,7 @@ namespace BLL.Interfaces.Services
         void Remove(EnrolmentEntity enrolment);
         IEnumerable<CourseProgressEntity> GetModulesProgress(int enrolmentId);
         IEnumerable<EnrolmentEntity> GetStudentEnrolments(int profileId); 
+
         void ChangeQuizProgress(int enrolmentId, int moduleId, bool completeStatus);
         void ChangeLessonProgress(int enrolmentId, int moduleId, bool completeStatus);
         void ChangeCourseProgress(int profileId, int courseId, bool completeStatus);

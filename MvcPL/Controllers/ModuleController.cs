@@ -57,7 +57,7 @@ namespace MvcPL.Controllers
                     Quiz = quiz,
                     BaseInfo = module
                 };
-
+                fullModule.BaseInfo.CourseId = courseId;
                     if (editMode)
                     {
                         fullModule.BaseInfo.IsEditable = true;
@@ -65,7 +65,7 @@ namespace MvcPL.Controllers
 
                     if(fullModule.Lesson != null)
                         fullModule.Lesson.ModuleId = module.Id;
-
+                   
                 return View(fullModule);
             }
             return View("Error");

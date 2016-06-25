@@ -44,10 +44,11 @@ namespace MvcPL.Controllers
             return View(lesson);
         }
 
-        public ActionResult Edit(int lessonId, int moduleId)
+        public ActionResult Edit(int courseId, int moduleId, int lessonId)
         {
             var lesson = _lessonService.GetLesson(lessonId).ToLessonBaseEditModel();
             lesson.ModuleId = moduleId;
+            lesson.CourseId = courseId;
             return View(lesson);
         }
 
@@ -55,7 +56,7 @@ namespace MvcPL.Controllers
         public ActionResult Edit(LessonBaseEditModel lesson)
         {
             _lessonService.Update(lesson.ToLessonEntity());
-            return RedirectToAction("Details", "Module", new {moduleId = lesson.ModuleId});
+            return RedirectToAction("Details", "Module", new {moduleId = lesson.ModuleId, courseId = lesson.CourseId});
         }
 
         [HttpPost]
@@ -75,29 +76,31 @@ namespace MvcPL.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete(int lessonId, int moduleId)
+        public ActionResult Delete(int courseId, int moduleId, int lessonId)
         {
             var lesson = _lessonService.GetLesson(lessonId).ToLessonBaseViewModel();
-            ViewBag.ModuleId = moduleId;
+            lesson.ModuleId = moduleId;
+            lesson.CourseId = courseId;
+
             return View(lesson);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int lessonId, int moduleId)
+        public ActionResult DeleteConfirmed(LessonBaseViewModel lesson)
         {
-            var lesson = _lessonService.GetLesson(lessonId);
-            if (lesson != null)
+            var lessonEntity = _lessonService.GetLesson(lesson.Id);
+            if (lessonEntity != null)
             {
-                var module = _moduleService.Get(moduleId);
+                var module = _moduleService.Get(lesson.ModuleId);
                 module.LessonId = null;
                 _moduleService.Update(module);
-                _lessonService.RemoveLesson(lesson);
+                _lessonService.RemoveLesson(lessonEntity);
             }
-            return RedirectToAction("ManageList", "Course"); //TODO redirect to module content
+            return RedirectToAction("Details", "Module", new { moduleId = lesson.ModuleId, courseId = lesson.CourseId});
         }
 
-        public ActionResult ContentEdit(int lessonId, int page = 1)
+        public ActionResult ContentEdit(int lessonId, int moduleId, int courseId, int page = 1)
         {
             var lesson = _lessonService.GetLesson(lessonId);
             var fullPages = _lessonPageService.GetFullPages(lessonId).ToList();
@@ -125,7 +128,10 @@ namespace MvcPL.Controllers
                 Page = currentPage.Pages.ToLessonPageEditModel()
             };
             viewLesson.Page.Image = image.ToImageViewModel();
-            viewLesson.BaseInfo.ModuleId = (int)Session["CurrentModuleId"];
+
+            viewLesson.BaseInfo.CourseId = courseId;
+            viewLesson.BaseInfo.ModuleId = moduleId;
+
             if (Request.IsAjaxRequest())
             {
                 return PartialView("_LessonPageEdit", viewLesson);

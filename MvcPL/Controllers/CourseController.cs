@@ -217,17 +217,17 @@ namespace MvcPL.Controllers
             return enrolmentInfo;
         }
 
-        private EnrolmentInfo GetModuleEnrolmentInfo(int userId, int courseId, int moduleId)
-        {
-            var enrolment = _enrolmentService.GetEnrolment(userId, courseId);
-            EnrolmentInfo enrolmentInfo = new EnrolmentInfo();
-            if (enrolment == null)
-            {
-                enrolmentInfo.
-            }
-            var moduleProgresses = _enrolmentService.GetModulesProgress(enrolment.Id);
-            var currentModuleProgress = moduleProgresses.FirstOrDefault(m => m.ModuleId == moduleId);
-        }
+        //private EnrolmentInfo GetModuleEnrolmentInfo(int userId, int courseId, int moduleId)
+        //{
+        //    var enrolment = _enrolmentService.GetEnrolment(userId, courseId);
+        //    EnrolmentInfo enrolmentInfo = new EnrolmentInfo();
+        //    if (enrolment == null)
+        //    {
+        //        enrolmentInfo.
+        //    }
+        //    var moduleProgresses = _enrolmentService.GetModulesProgress(enrolment.Id);
+        //    var currentModuleProgress = moduleProgresses.FirstOrDefault(m => m.ModuleId == moduleId);
+        //}
     }
 
 
