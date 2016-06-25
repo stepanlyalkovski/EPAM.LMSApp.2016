@@ -11,8 +11,39 @@
     @foreach (var article in Model.Articles)
     {
         <li>
-            @Html.ActionLink(article.Title, "Article", "Details", new {articleId = article.Id}, null)
+            @Html.ActionLink(article.Title, "Details", "Article", new
+            {
+                articleId = article.Id,
+                moduleId = Model.BaseInfo.Id,
+                courseId = Model.BaseInfo.CourseId
+            }, null)
         </li>
+
+        if (Model.BaseInfo.IsEditable)
+        {
+                    @Html.ActionLink("Edit", "Edit", "Article", new
+                                                   {
+                                                       articleId = article.Id,
+                                                       moduleId = Model.BaseInfo.Id,
+                                                       courseId = Model.BaseInfo.CourseId
+                                                   }, null)
+
+                    @Html.ActionLink("Delete", "Delete", "Article", new
+                           {
+                               articleId = article.Id,
+                               moduleId = Model.BaseInfo.Id,
+                               courseId = Model.BaseInfo.CourseId
+                           }, null)
+         }
+    }
+
+    @if (Model.BaseInfo.IsEditable)
+    {
+                @Html.ActionLink("Create Article", "Create", "Article", new
+            {
+                moduleId = Model.BaseInfo.Id,
+                courseId = Model.BaseInfo.CourseId
+            }, null)
     }
 </ul>
 @if (Model.Quiz != null)

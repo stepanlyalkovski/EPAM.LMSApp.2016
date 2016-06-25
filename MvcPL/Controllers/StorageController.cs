@@ -45,13 +45,6 @@ namespace MvcPL.Controllers
             return View(images);
         }
 
-
-        public ActionResult Create(ImageViewModel image)
-        {
-
-            throw new NotImplementedException();
-        }
-
         [HttpPost]
         public ActionResult UploadImage(string title, HttpPostedFileBase upload)
         {

@@ -62,6 +62,16 @@ namespace DAL.Conrete
             module.HtmlArticles.Add(dbArticle);
         }
 
+        public void DetachArticle(DalHtmlArticle article, int moduleId)
+        {
+            var ormArticle = _context.Set<HtmlArticle>().Find(article.Id);
+            if (ormArticle == null)
+                throw new NullReferenceException("Article with current Id is not exist in database!");
+
+            var module = _context.Set<Module>().Find(moduleId);
+            module.HtmlArticles.Remove(ormArticle);
+        }
+
         public DalModule Get(int id)
         {
             return _context.Set<Module>().Find(id).ToDalModule();

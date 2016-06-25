@@ -142,6 +142,7 @@ namespace MvcPL.Controllers
             }
             return View(courseModel);
         }
+
         [HttpGet]
         public ActionResult Delete(int courseId)
         {

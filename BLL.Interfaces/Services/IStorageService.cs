@@ -25,7 +25,9 @@ namespace BLL.Interfaces.Services
         void RemoveQuiz(QuizEntity quiz);
 
         void AddHtmlArticle(HtmlArticleEntity article);
-        IEnumerable<HtmlArticleEntity> GetArticles(int storageId);
+        HtmlArticleEntity GetHtmlArticle(int id);
+        void UpdateHtmlArticle(HtmlArticleEntity article);
+        IEnumerable<HtmlArticleEntity> GetHtmlArticles(int storageId);
         void RemoveHtmlArticle(HtmlArticleEntity article);
 
     }

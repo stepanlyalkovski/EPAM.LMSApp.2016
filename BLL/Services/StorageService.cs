@@ -116,7 +116,18 @@ namespace BLL.Services
             _uow.Complete();
         }
 
-        public IEnumerable<HtmlArticleEntity> GetArticles(int storageId)
+        public HtmlArticleEntity GetHtmlArticle(int id)
+        {
+           return  _uow.Articles.Get(id).ToHtmlArticleEntity();
+        }
+
+        public void UpdateHtmlArticle(HtmlArticleEntity article)
+        {
+            _uow.Articles.Update(article.ToDalHtmlArticle());
+            _uow.Complete();
+        }
+
+        public IEnumerable<HtmlArticleEntity> GetHtmlArticles(int storageId)
         {
             return _uow.Articles.GetStorageArticles(storageId).Select(a => a.ToHtmlArticleEntity()).ToList();
         }

@@ -15,7 +15,7 @@ namespace BLL.Interfaces.Services
         void AttachLesson(LessonEntity lesson, int moduleId);
         void AttachQuiz(QuizEntity quiz, int moduleId);
         void AttachArticle(HtmlArticleEntity article, int moduleId);
-
+        void DetachArticle(HtmlArticleEntity article, int moduleId);
         LessonEntity GetModuleLesson(int moduleId);
         QuizEntity GetModuleQuiz(int moduleId);
         IEnumerable<HtmlArticleEntity> GetModuleArticles(int moduleId);

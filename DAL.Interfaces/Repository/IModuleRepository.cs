@@ -12,6 +12,6 @@ namespace DAL.Interfaces.Repository
         void AttachLesson(DalLesson lesson, int moduleId);
         void AttachQuiz(DalQuiz quiz, int moduleId);
         void AttachArticle(DalHtmlArticle article, int moduleId);
-
+        void DetachArticle(DalHtmlArticle article, int moduleId);
     }
 }

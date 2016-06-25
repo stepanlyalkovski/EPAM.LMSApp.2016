@@ -27,6 +27,9 @@ namespace MvcPL.Controllers
                       "~/Content/bootstrap.flatly.min.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new ScriptBundle("~/bundles/text-editor").Include(
+                            "~/Scripts/tinymce/tinymce.min.js").Include(
+                            "~/Scripts/text-editor-init.js"));
         }
     }
 }

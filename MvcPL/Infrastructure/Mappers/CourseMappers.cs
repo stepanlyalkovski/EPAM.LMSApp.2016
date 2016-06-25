@@ -8,6 +8,7 @@ using BLL.Interfaces.Entities.Courses.Content;
 using MvcPL.Models;
 using MvcPL.Models.ArticleModels;
 using MvcPL.Models.CourseModels;
+using MvcPL.Models.ImageModels;
 using MvcPL.Models.LessonModels;
 using MvcPL.Models.ModuleModels;
 using MvcPL.Models.QuizModels;

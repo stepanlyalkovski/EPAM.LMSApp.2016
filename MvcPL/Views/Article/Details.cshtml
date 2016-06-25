@@ -1,0 +1,35 @@
+﻿@model MvcPL.Models.ArticleModels.ArticleBaseViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ArticleBaseViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HtmlData)
+        </dt>
+
+        <dd>
+            <article id="module-article">
+                @Html.Raw(Model.HtmlData)
+            </article>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to Module", "Details", "Module", new {moduleId = Model.ModuleId, courseId = Model.CourseId}, null)
+</p>

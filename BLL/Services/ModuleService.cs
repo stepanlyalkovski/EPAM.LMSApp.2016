@@ -70,6 +70,12 @@ namespace BLL.Services
             _uow.Complete();
         }
 
+        public void DetachArticle(HtmlArticleEntity article, int moduleId)
+        {
+            _uow.Modules.DetachArticle(article.ToDalHtmlArticle(), moduleId);
+            _uow.Complete();
+        }
+
         public LessonEntity GetModuleLesson(int moduleId)
         {
             return _uow.Lessons.GetModuleLesson(moduleId).ToLessonEntity();

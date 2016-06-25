@@ -1,0 +1,45 @@
+﻿@model MvcPL.Models.ArticleModels.ArticleBaseViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ArticleBaseViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HtmlData)
+        </dt>
+
+        <dd>
+            <article id="module-article">
+                @Html.Raw(Model.HtmlData)
+            </article>
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.CourseId)
+        @Html.HiddenFor(m => m.ModuleId)
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to Module", "Details", "Module", new { moduleId = Model.ModuleId, courseId = Model.CourseId }, null)
+        </div>
+    }
+</div>
