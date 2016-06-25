@@ -60,7 +60,7 @@ else
     </dl>
     if (Model.BaseInfo.IsEditable)
     {
-        @Html.ActionLink("Edit", "Edit", "Lesson", new { lessonId = Model.Lesson.Id }, null)
+        @Html.ActionLink("Edit", "Edit", "Lesson", new { lessonId = Model.Lesson.Id, moduleId = Model.BaseInfo.Id }, null)
         @Html.ActionLink("Delete", "Delete", "Lesson", new { lessonId = Model.Lesson.Id, moduleId = Model.BaseInfo.Id }, null)
     }
 

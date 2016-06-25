@@ -19,12 +19,12 @@ namespace BLL.Services
             _uow = uow;
         }
 
-        public void AttendCourse(ProfileEntity profile, int courseId)
+        public void AttendCourse(int profileId, int courseId)
         {
             var dalEnrolment = new DalEnrolment
             {
                 CourseId = courseId,
-                ProfileId = profile.ProfileId,
+                ProfileId = profileId,
                 CourseCompleted = false
             };
             _uow.Enrolments.Add(dalEnrolment);

@@ -38,7 +38,12 @@ namespace BLL.Services
 
         public IEnumerable<ModuleEntity> GetCourseModules(int courseId)
         {
-            return _uow.Modules.GetCourseModules(courseId).Select(c => c.ToModuleEntity()).ToList();
+            return _uow.Modules.GetCourseModules(courseId).Select(c =>
+            {
+                var course = c.ToModuleEntity();
+                course.CourseId = courseId;
+                return course;
+            }).ToList();
         }
 
         public void Update(ModuleEntity module)

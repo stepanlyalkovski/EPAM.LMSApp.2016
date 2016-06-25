@@ -30,25 +30,40 @@
             </dt>
 
             <dd>
-                @foreach (var tag in course.Tags)
-                {
-                    <span class="label label-info">@tag</span>
-                }
+            @foreach (var tag in course.Tags)
+            {
+                <span class="label label-info">@tag</span>
+            }
             </dd>
-@if (!course.IsEditable)
-{
-    <dt>
-        Author
-    </dt>
+            @if (!course.IsEditable) // so, it's not user created course
+            {
+                <dt>
+                    Author
+                </dt>
 
-            <dd>
-                @course.Author
-            </dd>
-}
-           
+                <dd>
+                    @course.Author
+                </dd>
+
+                if (course.EnrolmentInfo.IsCompleted)
+                {
+                    <span class="label label-success">Completed</span>
+                }
+                else
+                {
+                    if (course.EnrolmentInfo.UserEnrolled)
+                    {
+                        <span class="label label-default">In progress</span>
+                        @Html.ActionLink("Leave", "Delete", "Enrolment", new { courseId = course.Id }, new { @class = "btn btn-sm btn-danger" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Enrol", "Register", "Enrolment", new {courseId = course.Id}, new {@class="btn btn-sm btn-success"})
+                    }
+                }
+            }
         </dl>
         @Html.ActionLink("Show more", "Content", "Course", new { courseId = course.Id }, null)
-
         @if (course.IsEditable)
         {
             @Html.ActionLink("Edit", "Edit", "Course", new { courseId = course.Id }, null)

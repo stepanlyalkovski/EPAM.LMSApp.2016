@@ -12,8 +12,11 @@ namespace MvcPL.Models.LessonModels
         public int Id { get; set; }
         [ScaffoldColumn(false)]
         public int ModuleId { get; set; }
+        [ScaffoldColumn(false)]
+        public int CourseId { get; set; }
         [Required]
         public string Title { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         [Range(1, 20)]        
         public int PageCount { get; set; }

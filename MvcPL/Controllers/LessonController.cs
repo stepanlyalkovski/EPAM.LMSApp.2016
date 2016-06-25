@@ -44,10 +44,10 @@ namespace MvcPL.Controllers
             return View(lesson);
         }
 
-        public ActionResult Edit(int lessonId)
+        public ActionResult Edit(int lessonId, int moduleId)
         {
             var lesson = _lessonService.GetLesson(lessonId).ToLessonBaseEditModel();
-            lesson.ModuleId = (int)Session["CurrentModuleId"];
+            lesson.ModuleId = moduleId;
             return View(lesson);
         }
 

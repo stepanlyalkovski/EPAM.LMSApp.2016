@@ -6,7 +6,7 @@ namespace BLL.Interfaces.Services
 {
     public interface IEnrolmentService
     {
-        void AttendCourse(ProfileEntity profile, int courseId);
+        void AttendCourse(int profileId, int courseId);
         EnrolmentEntity GetEnrolment(int profileId, int courseId);
         void Remove(EnrolmentEntity enrolment);
         IEnumerable<CourseProgressEntity> GetModulesProgress(int enrolmentId);

@@ -15,5 +15,7 @@ namespace MvcPL.Models.ModuleModels
         public bool IsEditable { get; set; }
         [ScaffoldColumn(false)]
         public int CourseId { get; set; }
+
+        public EnrolmentInfo EnrolmentInfo { get; set; }
     }
 }

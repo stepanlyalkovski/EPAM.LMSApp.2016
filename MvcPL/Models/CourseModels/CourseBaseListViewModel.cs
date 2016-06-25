@@ -10,5 +10,6 @@ namespace MvcPL.Models.CourseModels
         public IEnumerable<CourseBaseViewModel> Courses { get; set; }
         public PageInfo PageInfo { get; set; }
         public Func<int, string> PageUrl { get; set; }
+
     }
 }

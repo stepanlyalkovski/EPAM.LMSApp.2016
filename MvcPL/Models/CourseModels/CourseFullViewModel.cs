@@ -13,5 +13,6 @@ namespace MvcPL.Models.CourseModels
 
         public CourseBaseViewModel CourseBase { get; set; }
         public IEnumerable<ModuleBaseViewModel> Modules { get; set; }
+        public EnrolmentInfo EnrolmentInfo { get; set; }
     }
 }
