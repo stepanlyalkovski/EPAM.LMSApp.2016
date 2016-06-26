@@ -191,6 +191,7 @@
     <Compile Include="Models\LogOnViewModel.cs" />
     <Compile Include="Models\ModuleModels\ModuleBaseViewModel.cs" />
     <Compile Include="Models\ModuleModels\ModuleContentViewModel.cs" />
+    <Compile Include="Models\PathContextModel.cs" />
     <Compile Include="Models\ProfileModels\ProfileViewModule.cs" />
     <Compile Include="Models\QuizModels\QuizBaseViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
@@ -461,6 +462,7 @@
     <Content Include="Views\Article\Details.cshtml" />
     <Content Include="Views\Article\Delete.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
+    <Content Include="Views\Shared\_ImageList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BLL.Interfaces.Entities.Courses.Content;
 using BLL.Interfaces.Services;
 using MvcPL.Infrastructure;
+using MvcPL.Infrastructure.Helpers;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models;
 using MvcPL.Models.LessonModels;
@@ -65,6 +66,24 @@ namespace MvcPL.Controllers
                 moduleId = moduleId,
                 courseId = courseId,
                 page = pageNumber
+            });
+        }
+
+        public ActionResult AttachStorageImage(PathContextModel path, int imageId)
+        {
+            var page = _lessonPage.Get(path.LessonPageId);
+            page.ImageId = imageId;
+            _lessonPage.Update(page);
+            if (Request.IsAjaxRequest())
+            {
+                
+            }
+            return RedirectToAction("ContentEdit", "Lesson", new
+            {
+                lessonId = path.LessonId,
+                moduleId = path.ModuleId,
+                courseId = path.CourseId,
+                page = path.Page
             });
         }
     }

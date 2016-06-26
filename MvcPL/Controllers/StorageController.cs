@@ -10,6 +10,7 @@ using BLL.Interfaces.Services;
 using MvcPL.Infrastructure;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models;
+using MvcPL.Models.ImageModels;
 
 namespace MvcPL.Controllers
 {
@@ -33,16 +34,33 @@ namespace MvcPL.Controllers
             return View("Index");
         }
 
-        public ActionResult ImageCatalog()
+        public ActionResult ImageCatalog(bool attachMode = false, PathContextModel path = null)
         {
             int storageId = _userService.GetUserEntity(User.Identity.Name).Id;
             ViewBag.StorageId = storageId;
             var images = _storageService.GetImages(storageId).Select(im => im.ToImageViewModel()).ToList();
+
+            
             foreach (var image in images)
             {
                 image.Path = Server.MapPath(image.Path);
             }
-            return View(images);
+            var imageList = new ImageListViewModel
+            {
+                Images = images,
+                AttachMode = attachMode,
+            };
+
+            if (path != null)
+            {
+                imageList.Path = path; // so we can go back to Lesson Page
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_ImageList", imageList);
+            }
+            return View(imageList);
         }
 
         [HttpPost]

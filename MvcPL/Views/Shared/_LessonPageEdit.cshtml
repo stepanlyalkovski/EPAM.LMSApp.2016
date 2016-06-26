@@ -1,8 +1,9 @@
 ﻿@using MvcPL.Infrastructure.Helpers
+@using MvcPL.Models
 @model MvcPL.Models.LessonModels.LessonContentEditViewModel
 @*@{Layout == null}*@
 
-    <div id="pageBlock">
+    <div id="page-block">
         <p>@Model.PageInfo.PageNumber / @Model.PageInfo.TotalPages </p>
         <p>Course - @Model.BaseInfo.CourseId | Module - @Model.BaseInfo.ModuleId</p>
         @using (Html.BeginForm("Edit", "LessonPage", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -22,20 +23,44 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-6">
-                    @if (Model.Page.Image != null)
-                    {
-                        @Html.HiddenFor(m => m.Page.Image.Id)
-                        <img src="@Url.Action("GetImage","Storage", new {id = Model.Page.Image.Id})" class="img-responsive" alt="@Model.Page.Image.Title" />
+                    <div id="image-block">
+                        @if (Model.Page.Image != null)
+                        {
+                            @Html.HiddenFor(m => m.Page.Image.Id)
+                            <img src="@Url.Action("GetImage", "Storage", new {id = Model.Page.Image.Id})" class="img-responsive" alt="@Model.Page.Image.Title"/>
 
-                    }
+                        }
+                    </div>
+
+
+                    @Ajax.ActionLink("Add from Storage", "ImageCatalog", "Storage", new
+                    {
+                        attachMode = true,
+                        CourseId = Model.BaseInfo.CourseId,
+                        ModuleId = Model.BaseInfo.ModuleId,
+                        LessonId = Model.BaseInfo.Id,
+                        LessonPageId = Model.Page.Id,
+                        Page = Model.PageInfo.PageNumber
+                    },
+                        new AjaxOptions
+                        {
+                            UpdateTargetId = "page-block",
+                            LoadingElementId = "loader",
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "get"
+                        })
+
                     @Html.EditorFor(m => m.Page.Image.Title)
-                    <input type="file" name="upload" value="Load" /><br>
-                    <input type="submit" value="Submit" />
+                    <input type="file" name="upload" value="Load"/><br>
+                    <input type="submit" value="Submit"/>
                 </div>
             </div>
+            <p style="margin: 0 auto; width: 130px;">
+                <img class="img-responsive" src="/Content/loader-horizontal.gif" alt="loading..." style="display: none; margin: 0 auto;" id="loader">
+            </p>
         }
-        
-        @Html.LessonPageLinks(Model.PageInfo, "pageBlock", "", x => Url.Action("ContentEdit", "Lesson", new
+
+        @Html.LessonPageLinks(Model.PageInfo, "page-block", "", x => Url.Action("ContentEdit", "Lesson", new
                                                                                {
                                                                                    lessonId = Model.BaseInfo.Id,
                                                                                    moduleId = Model.BaseInfo.ModuleId,
