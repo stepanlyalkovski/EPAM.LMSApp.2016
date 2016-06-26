@@ -10,13 +10,33 @@
         <p>@Model.CourseBase.Description</p>
         <p>
             @foreach (var tag in Model.CourseBase.Tags)
-                 {
-                     <span class="label label-info">@tag</span>
-                 }
+            {
+                <span class="label label-info">@tag</span>
+            }
         </p>
+    </div>
+    <div class="col-md-6">
+        @if (!Model.CourseBase.EnrolmentInfo.UserEnrolled)
+        {
+            @Html.ActionLink("Enrol", "Register", "Enrolment", new {courseId = Model.CourseBase.Id}, new {@class = "btn btn-sm btn-success"})
+        }
+        else
+        {
+            if (Model.CourseBase.EnrolmentInfo.IsCompleted)
+            {
+                <p><span class="label label-success">You completed this course</span></p>
+            }
+            else
+            {
+
+                <p><span class="label label-default">In Progress</span></p>
+            }
+        }
+       
     </div>
 </div>
 @foreach (var module in Model.Modules)
 {
   Html.RenderPartial("_ModuleBasePreview", module);
 }
+

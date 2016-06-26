@@ -11,12 +11,16 @@ namespace MvcPL.Controllers
     public class EnrolmentController : Controller
     {
         private readonly ICourseService _courseService;
+        private readonly IModuleService _moduleService;
+        private readonly ILessonService _lessonService;
         private readonly IEnrolmentService _enrolmentService;
         private readonly IUserService _userService;
 
-        public EnrolmentController(ICourseService courseService, IEnrolmentService enrolmentService, IUserService userService)
+        public EnrolmentController(ICourseService courseService, IModuleService moduleService, ILessonService lessonService, IEnrolmentService enrolmentService, IUserService userService)
         {
             _courseService = courseService;
+            _moduleService = moduleService;
+            _lessonService = lessonService;
             _enrolmentService = enrolmentService;
             _userService = userService;
         }
@@ -37,9 +41,9 @@ namespace MvcPL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CofirmRegister(int courseId)
         {
-            var course = _courseService.Get(courseId);
             int userId = _userService.GetUserEntity(User.Identity.Name).Id;
             _enrolmentService.AttendCourse(userId, courseId);
+
             return RedirectToAction("Content","Course", new {courseId});
         }
 
@@ -58,5 +62,6 @@ namespace MvcPL.Controllers
             _enrolmentService.Remove(enrolment);
             return RedirectToAction("Index", "Course");
         }
+
     }
 }

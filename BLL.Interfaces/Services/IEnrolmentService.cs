@@ -8,13 +8,15 @@ namespace BLL.Interfaces.Services
     {
         void AttendCourse(int profileId, int courseId);
         EnrolmentEntity GetEnrolment(int profileId, int courseId);
+        EnrolmentEntity GetEnrolment(int enrolmentId);
         void Remove(EnrolmentEntity enrolment);
         IEnumerable<CourseProgressEntity> GetModulesProgress(int enrolmentId);
+        CourseProgressEntity GetModuleProgress(int enrolmentId, int moduleId);
         IEnumerable<EnrolmentEntity> GetStudentEnrolments(int profileId); 
 
         void ChangeQuizProgress(int enrolmentId, int moduleId, bool completeStatus);
         void ChangeLessonProgress(int enrolmentId, int moduleId, bool completeStatus);
-        void ChangeCourseProgress(int profileId, int courseId, bool completeStatus);
-        void ChangeCourseProgress(int enrolmentId, bool completeStatus);
+        //void ChangeCourseProgress(int profileId, int courseId, bool completeStatus);
+        //void ChangeCourseProgress(int enrolmentId, bool completeStatus);
     }
 }

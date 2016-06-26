@@ -111,9 +111,10 @@ namespace MvcPL.Controllers
             var modules = _moduleService.GetCourseModules(courseId).Select(m => m.ToModuleBaseViewModel()).ToList();
             var course = _courseService.Get(courseId).ToCourseBaseViewModel();
             int userId = _userService.GetUserEntity(User.Identity.Name).Id;
-
+            course.EnrolmentInfo = GetCourseEnrolmentInfo(userId, courseId);
             foreach (var module in modules)
             {
+                module.EnrolmentInfo = GetModuleEnrolmentInfo(course.EnrolmentInfo.Id, module.Id);
 
                 if (userId == course.UserStorageId)
                 {
@@ -218,18 +219,25 @@ namespace MvcPL.Controllers
             return enrolmentInfo;
         }
 
-        //private EnrolmentInfo GetModuleEnrolmentInfo(int userId, int courseId, int moduleId)
-        //{
-        //    var enrolment = _enrolmentService.GetEnrolment(userId, courseId);
-        //    EnrolmentInfo enrolmentInfo = new EnrolmentInfo();
-        //    if (enrolment == null)
-        //    {
-        //        enrolmentInfo.
-        //    }
-        //    var moduleProgresses = _enrolmentService.GetModulesProgress(enrolment.Id);
-        //    var currentModuleProgress = moduleProgresses.FirstOrDefault(m => m.ModuleId == moduleId);
-        //}
-    }
+        private EnrolmentInfo GetModuleEnrolmentInfo(int enrolmentId, int moduleId)
+        {
+            var progress = _enrolmentService.GetModuleProgress(enrolmentId, moduleId);
+            EnrolmentInfo enrolmentInfo = new EnrolmentInfo();
+            if (progress != null)
+            {
 
+                enrolmentInfo.UserEnrolled = true;
+                enrolmentInfo.IsCompleted = progress.LessonCompleted && progress.QuizCompleted;
+            }
+            else
+            {
+                enrolmentInfo.IsCompleted = false;
+                enrolmentInfo.UserEnrolled = false;
+            }
+
+            return enrolmentInfo;
+        }
+
+    }
 
 }

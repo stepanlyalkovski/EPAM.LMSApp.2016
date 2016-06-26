@@ -53,9 +53,10 @@ namespace DAL.Conrete
 
         public DalCourseProgress Get(int enrolmentId, int moduleId)
         {
-            return _context.Set<Enrolment>().Find(enrolmentId)
-                                            .Progress.FirstOrDefault(p => p.ModuleId == moduleId)
-                                            .ToDalCourseProgress();
+            var enrolment =  _context.Set<Enrolment>().Find(enrolmentId);
+
+            return  enrolment?.Progress.FirstOrDefault(p => p.ModuleId == moduleId)
+               .ToDalCourseProgress();
         }
     }
 }
