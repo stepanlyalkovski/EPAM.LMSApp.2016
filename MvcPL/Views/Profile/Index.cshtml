@@ -7,6 +7,10 @@
 <h2>Profile Menu</h2>
 <div class="list-group">
     @Html.ActionLink("My Profile", "Details", new { id = ViewBag.Id }, new { @class = "list-group-item" })
-    @Html.ActionLink("My Storage", "ImageCatalog", "Storage", null, new { @class = "list-group-item" })
+    @if (User.IsInRole("Manager"))
+    {
+        @Html.ActionLink("My Storage", "ImageCatalog", "Storage", null, new { @class = "list-group-item" })
+    }
+
 </div>
 
