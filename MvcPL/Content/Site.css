@@ -69,3 +69,13 @@ textarea {
         min-width: 500px;
     }
 }
+
+.lesson-text {
+    max-width: 95%;
+    max-height: 500px !important;
+    min-height: 200px;
+    overflow:auto
+}
+.btn-space {
+    margin-right: 5px;
+}

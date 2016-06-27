@@ -1,0 +1,11 @@
+﻿@model MvcPL.Models.CourseModels.CourseBaseListViewModel
+
+@{
+    ViewBag.Title = "MyCourseList";
+    Layout = "~/Views/Shared/_CourseLayout.cshtml";
+}
+
+<h2>MyCourseList</h2>
+<div class="row" id="searchResult">
+    @Html.Partial("_CourseBaseList", Model)
+</div>

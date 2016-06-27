@@ -16,24 +16,26 @@
                 HttpMethod = "post"
             }))
         {
+            <input type="hidden" value="false" name="randMode"/>
             <div class="form-group">
-                <b>Search By</b>
-                @Html.RadioButton("searchBy", "Name", true) Name
-                @Html.RadioButton("searchBy", "Author") Author
                 <div class="form-group">
                     <label for="contain">
                         Contains the tags
                         <input class="form-control" type="text" name="tags" placeholder="You can enter tags here"/>
                     </label>
-                    @*<label for="contain">
-                            <input class="form-control" type="text" name="searchField"/>
-                        </label>*@
                 </div>
-                <input type="text" class="form-control" placeholder="Search for courses" name="searchField"/>
+                <input type="text" class="form-control" placeholder="Search by Course Name" name="searchField"/>
                 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </div>
         }
     </div>
+    @Ajax.ActionLink("Get Random Courses","Index", "Course", new AjaxOptions
+            {
+                UpdateTargetId = "searchResult",
+                LoadingElementId = "loader",
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "get"
+            }, new {randMode = true })
     <hr/>
 </div>
 <p style="margin: 0 auto; width: 130px;">

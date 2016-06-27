@@ -85,7 +85,7 @@ namespace MvcPL.Controllers
             }
             return RedirectToAction("ImageCatalog");
         }
-
+        [AllowAnonymous]
         public FileResult GetImage(int id)
         {
             var image = _storageService.GetImage(id).ToImageViewModel();

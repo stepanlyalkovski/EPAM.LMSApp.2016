@@ -7,7 +7,7 @@
         <ul class="nav nav-sidebar">
             <li>@Html.ActionLink("Course Catalog", "Index", "Course")</li>
             <li>@Html.ActionLink("My Profile", "Details", "Profile", new {id = ViewBag.Id}, null)</li>
-            <li><a href="#">My Courses</a></li>
+            <li>@Html.ActionLink("My Courses", "MyCourseList", "Course")</li>
         </ul>
         
         @if (User.IsInRole("Manager"))
@@ -15,7 +15,7 @@
             <hr />
             <ul class="nav nav-sidebar">
                 <li>@Html.ActionLink("Manage Courses", "ManageList", "Course")</li>
-                <li>@Html.ActionLink("My Storage", "Catalog", "Storage")</li>
+                <li>@Html.ActionLink("My Storage", "ImageCatalog", "Storage")</li>
             </ul>
         }
     </div>

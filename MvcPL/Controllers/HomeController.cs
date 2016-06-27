@@ -13,7 +13,6 @@ namespace MvcPL.Controllers
         private readonly IUserService _userService;
         public HomeController(IUserService userService)
         {
-            // Temporary check
             _userService = userService;
 
         }
@@ -24,8 +23,6 @@ namespace MvcPL.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-            ViewBag.Id = Session["userId"];
             return View();
         }
 

@@ -20,5 +20,7 @@ namespace MvcPL.Models.LessonModels
         public string Description { get; set; }
         [Range(1, 20)]        
         public int PageCount { get; set; }
+
+        public EnrolmentInfo EnrolmentInfo { get; set; }
     }
 }

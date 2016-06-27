@@ -183,6 +183,8 @@
     <Compile Include="Models\EnrolmentInfo.cs" />
     <Compile Include="Models\ImageModels\ImageListViewModel.cs" />
     <Compile Include="Models\LessonModels\LessonBaseEditModel.cs" />
+    <Compile Include="Models\LessonModels\LessonContentViewModel.cs" />
+    <Compile Include="Models\LessonPageModels\LessonPageViewModel.cs" />
     <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\ImageModels\ImageViewModel.cs" />
     <Compile Include="Models\LessonModels\LessonContentEditViewModel.cs" />
@@ -463,6 +465,9 @@
     <Content Include="Views\Article\Delete.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Shared\_ImageList.cshtml" />
+    <Content Include="Views\Shared\_LessonPage.cshtml" />
+    <Content Include="Views\Lesson\Content.cshtml" />
+    <Content Include="Views\Course\MyCourseList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

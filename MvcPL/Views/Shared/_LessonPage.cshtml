@@ -1,0 +1,59 @@
+﻿@using MvcPL.Infrastructure.Helpers
+@model MvcPL.Models.LessonModels.LessonContentViewModel
+
+<div id="page-block">
+    <p>@Model.PageInfo.PageNumber / @Model.PageInfo.TotalPages </p>
+    <h3>@Html.DisplayFor(m => m.Page.Title)</h3>
+        <input type="hidden" value="@Model.PageInfo.PageNumber" name="pageNumber">
+        @Html.HiddenFor(m => m.Page.Id)
+        @Html.HiddenFor(m => m.Page.LessonId)
+        <input type="hidden" name="moduleId" value="@Model.BaseInfo.ModuleId" />
+            <input type="hidden" name="courseId" value="@Model.BaseInfo.CourseId" />
+
+            <div class="well clearfix" id="editBlock">
+                <div class="col-sm-7 col-lg-7">
+                    <div class="panel panel-default" style="margin-top: 0;">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                @*<textarea class="form-control" rows="5" name="Text" id="comment" placeholder="Enter your info"> @Model.Page.Text</textarea>*@
+                                @Html.DisplayFor(m => m.Page.Text, new { htmlAttributes = new { @class = "form-control"} })
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="col-sm-5 col-lg-5">
+                    <div id="image-block">
+                        @if (Model.Page.Image != null)
+                        {
+                            @Html.HiddenFor(m => m.Page.Image.Id)
+                            <img src="@Url.Action("GetImage", "Storage", new {id = Model.Page.Image.Id})" class="img-responsive pull-right" alt="@Model.Page.Image.Title" />
+
+                        }
+                    </div>
+
+                </div>
+            </div>
+            <p style="margin: 0 auto; width: 130px;">
+                <img class="img-responsive" src="/Content/loader-horizontal.gif" alt="loading..." style="display: none; margin: 0 auto;" id="loader">
+            </p>
+    @if (Model.PageInfo.PageNumber == Model.PageInfo.TotalPages)
+    {
+        @Html.ActionLink("Complete Lesson","Complete","Lesson", new
+           {
+               lessonId = Model.BaseInfo.Id,
+               moduleId = Model.BaseInfo.ModuleId,
+               courseId = Model.BaseInfo.CourseId,
+               enrolmentId = Model.EnrolmentInfo.Id
+           }, null)
+    }
+
+    @Html.LessonPageLinks(Model.PageInfo, "page-block", "", x => Url.Action("Content", "Lesson", new
+   {
+       lessonId = Model.BaseInfo.Id,
+       moduleId = Model.BaseInfo.ModuleId,
+       courseId = Model.BaseInfo.CourseId,
+       page = x
+   }))
+</div>
+

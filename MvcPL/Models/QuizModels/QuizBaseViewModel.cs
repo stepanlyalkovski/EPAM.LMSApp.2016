@@ -14,5 +14,7 @@ namespace MvcPL.Models.QuizModels
         public string DataFilePath { get; set; }
         [ScaffoldColumn(false)]
         public int StorageId { get; set; }
+
+        public EnrolmentInfo EnrolmentInfo { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace DAL.Conrete
             var result = new HashSet<Course>();
             foreach (var tag in tags)
             {
-               var courses =  _context.Set<Course>().Where(c => c.Tags.Any(t => t.TagField == tag));
+               var courses =  _context.Set<Course>().Where(c => c.Tags.Any(t => t.TagField == tag) && c.Published);
                 foreach (var course in courses)
                 {
                     result.Add(course);
@@ -65,7 +65,7 @@ namespace DAL.Conrete
 
         public IEnumerable<DalCourse> GetBySubString(string substring)
         {
-            return _context.Set<Course>().Where(c => c.Title.StartsWith(substring))
+            return _context.Set<Course>().Where(c => c.Title.StartsWith(substring) && c.Published)
                                          .AsEnumerable()
                                          .ToDalCourses();
         }

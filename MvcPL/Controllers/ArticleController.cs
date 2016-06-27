@@ -9,6 +9,7 @@ using MvcPL.Models.ArticleModels;
 
 namespace MvcPL.Controllers
 {
+    [Authorize]
     public class ArticleController : Controller
     {
         private readonly IStorageService _storageService;

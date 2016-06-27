@@ -23,7 +23,9 @@
   
         @if (Model.EnrolmentInfo.UserEnrolled || Model.IsEditable)
         {
-            @Html.ActionLink("Show more", "Details", "Module", new { moduleId = Model.Id, courseId = Model.CourseId }, null)
+            @Html.ActionLink("Show more", "Details", "Module",
+           new { moduleId = Model.Id, courseId = Model.CourseId },
+           new { @class = "btn btn-primary btn-xs btn-space" })
 
             if (!Model.IsEditable)
             {
@@ -42,6 +44,7 @@
 
     @if (Model.IsEditable)
     {
-        @Html.ActionLink("Edit", "Edit", "Module", new { Id = Model.Id}, null)
+        @Html.ActionLink("Edit", "Edit", "Module", new { Id = Model.Id, courseId = Model.CourseId}, 
+       new { @class = "btn btn-primary btn-xs" })
     }
 </div>

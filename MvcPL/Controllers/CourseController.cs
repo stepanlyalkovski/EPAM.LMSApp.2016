@@ -19,7 +19,8 @@ namespace MvcPL.Controllers
         private readonly IUserService _userService;
         private readonly IModuleService _moduleService;
         private readonly IEnrolmentService _enrolmentService;
-
+        private string _searchField = String.Empty;
+        private string _tags = String.Empty;
         public CourseController(IStorageService storageService, ICourseService courseService, IUserService userService, IModuleService moduleService, IEnrolmentService enrolmentService)
         {
             _storageService = storageService;
@@ -31,25 +32,42 @@ namespace MvcPL.Controllers
 
         // GET: Course
 
-        public ActionResult Index(string searchBy, string searchField, string tags, int page = 1)
+        public ActionResult Index(string searchField, string tags, int page = 1, bool randMode = true)
         {
             ViewBag.Title = "Courses";
             int userId = _userService.GetUserEntity(User.Identity.Name).Id;
             ViewBag.Id = userId;
             IEnumerable<CourseBaseViewModel> courses;
             int pageSize = 5;
-            //TODO searchBy
 
-            if (String.IsNullOrEmpty(searchField) && String.IsNullOrEmpty(tags))
+            if (randMode)
             {
-                int courseNumber = 10;
+                int courseNumber = pageSize;
 
                 courses = _courseService.GetRandom(courseNumber).Select(c => c.ToCourseBaseViewModel())
                                                                 .ToList();
             }
             else
             {
-                courses = _courseService.Search(searchField, tags.Split()).Select(c => c.ToCourseBaseViewModel())
+                string search = String.Empty;
+                string tagSearch = String.Empty;
+
+                if (String.IsNullOrEmpty(tags) && String.IsNullOrEmpty(searchField))
+                {
+                    if (Session["searchField"] != null)
+                        search = (string) Session["searchField"];
+                    if (Session["tags"] != null)
+                        tagSearch = (string) Session["tags"];
+                }
+                else
+                {
+                    search = searchField;
+                    Session["searchField"] = searchField;
+                    tagSearch = tags;
+                    Session["tags"] = tags;
+                }
+
+                courses = _courseService.Search(search, tagSearch?.Split(',')).Select(c => c.ToCourseBaseViewModel())
                                                                           .ToList();
             }
 
@@ -63,7 +81,7 @@ namespace MvcPL.Controllers
                 }
             }
 
-            courseList.PageUrl = courseList.PageUrl = x => Url.Action("Index", "Course", new { page = x });
+            courseList.PageUrl = courseList.PageUrl = x => Url.Action("Index", "Course", new { page = x, randMode = false});
             
 
             if (Request.IsAjaxRequest())
@@ -99,6 +117,40 @@ namespace MvcPL.Controllers
             
         }
 
+        public ActionResult MyCourseList(int page = 1)
+        {
+            int userId = _userService.GetUserEntity(User.Identity.Name).Id;
+            var enrolments = _enrolmentService.GetStudentEnrolments(userId);
+            var courses = new List<CourseBaseViewModel>();
+            foreach (var enrolment in enrolments)
+            {
+                var course = _courseService.Get(enrolment.CourseId).ToCourseBaseViewModel();
+                course.IsEditable = false;
+                courses.Add(course);
+            }
+            int pageSize = 5;
+
+            var courseList = GetPageCourseList(courses, page, pageSize);
+            courseList.PageUrl = x => Url.Action("MyCourseList", "Course", new { page = x });
+
+            foreach (var course in courseList.Courses)
+            {
+                course.EnrolmentInfo = GetCourseEnrolmentInfo(userId, course.Id);
+                if (userId == course.UserStorageId)
+                {
+                    course.IsEditable = true;
+                }
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_CourseBaseList", courseList);
+
+            }
+            return View(courseList);
+
+        }
+
         [Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult Create()
@@ -112,6 +164,12 @@ namespace MvcPL.Controllers
             var course = _courseService.Get(courseId).ToCourseBaseViewModel();
             int userId = _userService.GetUserEntity(User.Identity.Name).Id;
             course.EnrolmentInfo = GetCourseEnrolmentInfo(userId, courseId);
+
+            if (userId == course.UserStorageId)
+            {
+                course.IsEditable = true;
+            }
+
             foreach (var module in modules)
             {
                 module.EnrolmentInfo = GetModuleEnrolmentInfo(course.EnrolmentInfo.Id, module.Id);

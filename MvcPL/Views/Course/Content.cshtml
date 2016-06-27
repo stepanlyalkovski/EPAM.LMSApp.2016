@@ -14,24 +14,34 @@
                 <span class="label label-info">@tag</span>
             }
         </p>
-    </div>
-    <div class="col-md-6">
-        @if (!Model.CourseBase.EnrolmentInfo.UserEnrolled)
-        {
-            @Html.ActionLink("Enrol", "Register", "Enrolment", new {courseId = Model.CourseBase.Id}, new {@class = "btn btn-sm btn-success"})
-        }
-        else
-        {
-            if (Model.CourseBase.EnrolmentInfo.IsCompleted)
+        <p>
+            @if (!Model.CourseBase.EnrolmentInfo.UserEnrolled)
             {
-                <p><span class="label label-success">You completed this course</span></p>
+                if (!Model.CourseBase.IsEditable)
+                {
+                    @Html.ActionLink("Enrol", "Register", "Enrolment",
+               new { courseId = Model.CourseBase.Id },
+               new { @class = "btn btn-sm btn-success" })
+                }
+
             }
             else
             {
+                if (Model.CourseBase.EnrolmentInfo.IsCompleted)
+                {
+                <p><span class="label label-success">You completed this course</span></p>
+                }
+                else
+                {
 
-                <p><span class="label label-default">In Progress</span></p>
+                    <p><span class="label label-default">In Progress</span></p>
+                }
             }
-        }
+        </p>
+
+    </div>
+    <div class="col-md-6">
+
        
     </div>
 </div>

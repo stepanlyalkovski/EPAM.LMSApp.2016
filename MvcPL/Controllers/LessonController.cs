@@ -19,14 +19,16 @@ namespace MvcPL.Controllers
         private readonly ILessonService _lessonService;
         private readonly IStorageService _storageService;
         private readonly IUserService _userService;
+        private readonly IEnrolmentService _enrolmentService;
         private readonly ILessonPageService _lessonPageService;
         private readonly IModuleService _moduleService;
 
-        public LessonController(ILessonService lessonService, IStorageService storageService, IUserService userService, ILessonPageService lessonPageService, IModuleService moduleService)
+        public LessonController(ILessonService lessonService, IStorageService storageService, IUserService userService, IEnrolmentService enrolmentService, ILessonPageService lessonPageService, IModuleService moduleService)
         {
             _lessonService = lessonService;
             _storageService = storageService;
             _userService = userService;
+            _enrolmentService = enrolmentService;
             _lessonPageService = lessonPageService;
             _moduleService = moduleService;
         }
@@ -38,9 +40,9 @@ namespace MvcPL.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create(int moduleId)
+        public ActionResult Create(int moduleId, int courseId)
         {
-            var lesson = new LessonBaseViewModel {ModuleId = moduleId};
+            var lesson = new LessonBaseViewModel {ModuleId = moduleId, CourseId = courseId};
             return View(lesson);
         }
 
@@ -72,7 +74,12 @@ namespace MvcPL.Controllers
                 return View();
             }
             var lessonId = _lessonService.GetModuleLesson(lesson.ModuleId).Id;
-            return RedirectToAction("ContentEdit", "Lesson", new {lessonId});
+            return RedirectToAction("ContentEdit", "Lesson", new
+                        {
+                            lessonId,
+                            moduleId = lesson.ModuleId,
+                            courseId = lesson.CourseId
+                        });
         }
 
         [HttpGet]
@@ -136,6 +143,60 @@ namespace MvcPL.Controllers
             {
                 return PartialView("_LessonPageEdit", viewLesson);
             }
+            return View(viewLesson);
+        }
+
+        public ActionResult Complete(int lessonId, int moduleId, int courseId, int enrolmentId)
+        {
+            _enrolmentService.ChangeLessonProgress(enrolmentId, moduleId, true);
+            return RedirectToAction("Details", "Module", new
+                    {
+                        moduleId,
+                        courseId,
+                    });
+        }
+
+        public ActionResult Content(int lessonId, int moduleId, int courseId, int page = 1)
+        {
+            var lesson = _lessonService.GetLesson(lessonId);
+            var fullPages = _lessonPageService.GetFullPages(lessonId).ToList();
+            var user = _userService.GetUserEntity(User.Identity.Name);
+            int pagesCount = fullPages.Count();
+            var enrolment = _enrolmentService.GetEnrolment(user.Id, courseId);
+            var progress = _enrolmentService.GetModuleProgress(enrolment.Id, moduleId);
+            _enrolmentService.GetModuleProgress(enrolment.Id, moduleId);
+
+            var currentPage = fullPages.Skip((page - 1)).First();
+
+            var image = currentPage.Image;
+            if (image != null)
+            {
+                image.Path = Server.MapPath(image.Path);
+            }
+
+            PageInfo pageInfo = new PageInfo
+            {
+                PageSize = 1,
+                PageNumber = page,
+                TotalItems = pagesCount
+            };
+            var viewLesson = new LessonContentViewModel
+            {
+                BaseInfo = lesson.ToLessonBaseViewModel(),
+                PageInfo = pageInfo,
+                Page = currentPage.Pages.ToLessonPageEditModel(),
+                EnrolmentInfo =  new EnrolmentInfo { Id = enrolment.Id, IsCompleted = progress.LessonCompleted}
+            };
+            viewLesson.Page.Image = image.ToImageViewModel();
+
+            viewLesson.BaseInfo.CourseId = courseId;
+            viewLesson.BaseInfo.ModuleId = moduleId;
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_LessonPage", viewLesson);
+            }
+
             return View(viewLesson);
         }
 

@@ -103,12 +103,24 @@ namespace BLL.Services
 
         public IEnumerable<CourseEntity> SearchBySubstring(string name)
         {
-           return _uow.Courses.GetBySubString(name).Select(c => c.ToBllCourseEntity()).ToList();
+           var courses = _uow.Courses.GetBySubString(name).Select(c => c.ToBllCourseEntity()).ToList();
+
+            foreach (var course in courses)
+            {
+                course.Author = GetAuthorName(course.UserStorageId);
+            }
+            return courses;
         }
 
         public IEnumerable<CourseEntity> SearchByTags(IList<string> tags)
         {
-            return _uow.Courses.GetByTags(tags).Select(c => c.ToBllCourseEntity()).ToList();
+            var courses = _uow.Courses.GetByTags(tags).Select(c => c.ToBllCourseEntity()).ToList();
+
+            foreach (var course in courses)
+            {
+                course.Author = GetAuthorName(course.UserStorageId);
+            }
+            return courses;
         }
 
         public IEnumerable<CourseEntity> Search(string name, IList<string> tags = null)
@@ -124,8 +136,13 @@ namespace BLL.Services
 
             var tagSearchResult = SearchByTags(tags).ToList();
             var nameSearchResult = SearchBySubstring(name).ToList();
-            // TODO fix search result
-            return nameSearchResult.Union(tagSearchResult).Distinct().ToList();
+            var searchResult = new List<CourseEntity>();
+            foreach (var courseByName in nameSearchResult)
+            {
+                searchResult.AddRange(tagSearchResult.Where(courseByTag => courseByName.Id == courseByTag.Id));
+            }
+
+            return searchResult.ToList();
         }
 
         private string GetAuthorName(int profileId)

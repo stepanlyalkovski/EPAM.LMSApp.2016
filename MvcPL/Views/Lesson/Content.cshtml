@@ -1,0 +1,25 @@
+﻿@model MvcPL.Models.LessonModels.LessonContentViewModel
+
+@{
+    ViewBag.Title = "Content";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Content</h2>
+<div class="row">
+    @if (Model != null)
+    {
+        <h2>@Model.BaseInfo.Title</h2>
+        <p>@Model.BaseInfo.Description</p>
+        <hr />
+        @Html.Partial("_LessonPage", Model)
+        @Html.ActionLink("Back to Module", "Details", "Module", new { moduleId = Model.BaseInfo.ModuleId, courseId = Model.BaseInfo.CourseId }, null)
+    }
+
+
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}

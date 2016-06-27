@@ -8,6 +8,7 @@ using MvcPL.Infrastructure.Mappers;
 
 namespace MvcPL.Controllers
 {
+    [Authorize]
     public class EnrolmentController : Controller
     {
         private readonly ICourseService _courseService;

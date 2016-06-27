@@ -6,55 +6,60 @@
 }
 
 <h2>@Model.BaseInfo.Title</h2>
+<h3>Articles</h3>
 
-<ul>
     @foreach (var article in Model.Articles)
     {
-        <li>
+        <div class="panel panel-default">
+        <div class="panel-body">
+
             @Html.ActionLink(article.Title, "Details", "Article", new
+                {
+                    articleId = article.Id,
+                    moduleId = Model.BaseInfo.Id,
+                    courseId = Model.BaseInfo.CourseId
+                }, null)
+        </div>
+        <div class="panel-footer">
+            @if (Model.BaseInfo.IsEditable)
             {
-                articleId = article.Id,
-                moduleId = Model.BaseInfo.Id,
-                courseId = Model.BaseInfo.CourseId
-            }, null)
-        </li>
+                @Html.ActionLink("Edit", "Edit", "Article", new
+               {
+                   articleId = article.Id,
+                   moduleId = Model.BaseInfo.Id,
+                   courseId = Model.BaseInfo.CourseId
+               }, new { @class = "btn btn-default btn-xs btn-space" })
 
-        if (Model.BaseInfo.IsEditable)
-        {
-                    @Html.ActionLink("Edit", "Edit", "Article", new
-                                                   {
-                                                       articleId = article.Id,
-                                                       moduleId = Model.BaseInfo.Id,
-                                                       courseId = Model.BaseInfo.CourseId
-                                                   }, null)
-
-                    @Html.ActionLink("Delete", "Delete", "Article", new
-                           {
-                               articleId = article.Id,
-                               moduleId = Model.BaseInfo.Id,
-                               courseId = Model.BaseInfo.CourseId
-                           }, null)
-         }
+                @Html.ActionLink("Delete", "Delete", "Article", new
+               {
+                   articleId = article.Id,
+                   moduleId = Model.BaseInfo.Id,
+                   courseId = Model.BaseInfo.CourseId
+               }, new { @class = "btn btn-danger btn-xs btn-space" })
+            }
+        </div>
+    </div>
     }
 
     @if (Model.BaseInfo.IsEditable)
     {
-                @Html.ActionLink("Create Article", "Create", "Article", new
-            {
-                moduleId = Model.BaseInfo.Id,
-                courseId = Model.BaseInfo.CourseId
-            }, null)
+        @Html.ActionLink("Create Article", "Create", "Article", new
+        {
+            moduleId = Model.BaseInfo.Id,
+            courseId = Model.BaseInfo.CourseId
+        },  new { @class = "btn btn-success btn-xs btn-space" })
     }
-</ul>
-@if (Model.Quiz != null)
+<hr/>
+
+@*@if (Model.Quiz != null)
 {
     <p> @Html.ActionLink(Model.Quiz.Title, "Quiz", "Details", new {quizId = Model.Quiz.Id}, null)</p>
 }
 else
 {
     <p>No quiz here</p>
-}
-
+}*@
+<h3>Lesson</h3>
 @if (Model.Lesson != null)
 {
     <dl class="dl-horizontal">
@@ -63,17 +68,33 @@ else
         </dt>
 
         <dd>
-@if (Model.BaseInfo.IsEditable)
-{
-    @Html.ActionLink(Model.Lesson.Title, "ContentEdit", "Lesson", new
-    {
-        lessonId = Model.Lesson.Id, moduleId = Model.BaseInfo.Id, courseId = Model.BaseInfo.CourseId
-    }, null)
-}
-else
-{
-    <p>Lesson Content</p>
-}
+            @if (Model.BaseInfo.IsEditable)
+            {
+                @Html.ActionLink(Model.Lesson.Title, "ContentEdit", "Lesson", new
+                   {
+                       lessonId = Model.Lesson.Id,
+                       moduleId = Model.BaseInfo.Id,
+                       courseId = Model.BaseInfo.CourseId
+                   }, null)
+            }
+            else
+            {
+                @Html.ActionLink(Model.Lesson.Title, "Content", "Lesson", new
+                   {
+                       lessonId = Model.Lesson.Id,
+                       moduleId = Model.BaseInfo.Id,
+                       courseId = Model.BaseInfo.CourseId
+                   }, null)
+
+                if (Model.Lesson.EnrolmentInfo.IsCompleted)
+                {
+                    <p><span class="label label-success">Completed</span></p>
+                }
+                else
+                {
+                    <p><span class="label label-warning">In Progress</span></p>
+                }               
+            }
         </dd>
 
         <dt>
@@ -92,20 +113,22 @@ else
             @Model.Lesson.PageCount
         </dd>
     </dl>
-    if (Model.BaseInfo.IsEditable)
-    {
-        @Html.ActionLink("Edit", "Edit", "Lesson", new
-   {
-       courseId = Model.BaseInfo.CourseId,
-       moduleId = Model.BaseInfo.Id,
-       lessonId = Model.Lesson.Id
 
-   }, null)
-        @Html.ActionLink("Delete", "Delete", "Lesson", new
+        if (Model.BaseInfo.IsEditable)
         {
-            lessonId = Model.Lesson.Id, moduleId = Model.BaseInfo.Id, courseId = Model.BaseInfo.CourseId
-        }, null)
-    }
+            @Html.ActionLink("Edit", "Edit", "Lesson", new
+               {
+                   courseId = Model.BaseInfo.CourseId,
+                   moduleId = Model.BaseInfo.Id,
+                   lessonId = Model.Lesson.Id
+
+               }, new { @class = "btn btn-default btn-xs btn-space" })
+
+            @Html.ActionLink("Delete", "Delete", "Lesson", new
+               {
+                   lessonId = Model.Lesson.Id, moduleId = Model.BaseInfo.Id, courseId = Model.BaseInfo.CourseId
+               }, new { @class = "btn btn-danger btn-xs btn-space" })
+        }
 
 }
 else
@@ -113,14 +136,19 @@ else
     if (Model.BaseInfo.IsEditable)
     {
 
-        @Html.ActionLink("Create Lesson", "Create", "Lesson", new {moduleId = Model.BaseInfo.Id}, null)
+        @Html.ActionLink("Create Lesson", "Create", "Lesson",
+       new {moduleId = Model.BaseInfo.Id, courseId = Model.BaseInfo.CourseId},
+        new { @class = "btn btn-success btn-xs btn-space" })
     }
     else
     {
         <p>No Lesson here</p>
     }
 }
-@Html.ActionLink("Back to Module List", "Content", "Course", new { courseId = Model.BaseInfo.CourseId }, null)
+<hr/>
+<p>
+@Html.ActionLink("Back to Module List", "Content", "Course", new { courseId = Model.BaseInfo.CourseId }, null)    
+</p>
 @section scripts
 {
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")

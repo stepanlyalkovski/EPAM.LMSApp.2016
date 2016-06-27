@@ -8,8 +8,7 @@
 <h2>Article editor</h2>
 
 
-@using (Html.BeginForm()) 
-{
+@using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.CourseId)
     @Html.HiddenFor(m => m.ModuleId)
